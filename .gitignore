@@ -21,9 +21,16 @@ $RECYCLE.BIN/
 # =========================
 # Operating System Files
 # =========================
+*.bat
 
+
+#Editor
+.vscode/*
 
 #Folders
 data/*
 literature/*
 images/*
+env/*
+
+
