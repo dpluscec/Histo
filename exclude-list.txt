@@ -1,0 +1,14 @@
+.git
+.vscode
+data
+doc
+env
+images
+literature
+.gitattributes
+.gitignore
+activate_env.bat
+deactivate_env.bat
+exclude-list.txt
+Upute_za_izradu_i_predaju_diplomskog_rada.pdf
+sync.bat
