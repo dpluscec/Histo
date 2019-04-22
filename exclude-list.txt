@@ -1,8 +1,8 @@
 .git
 .vscode
-data
 doc
 env
+data
 images
 literature
 .gitattributes
@@ -12,3 +12,7 @@ deactivate_env.bat
 exclude-list.txt
 Upute_za_izradu_i_predaju_diplomskog_rada.pdf
 sync.bat
+*/__pycache__/*
+histo/__pycache__
+bin
+*.pdf
