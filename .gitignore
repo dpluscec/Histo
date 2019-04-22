@@ -32,5 +32,9 @@ data/*
 literature/*
 images/*
 env/*
-
-
+bin/
+.eggs
+histo.egg-info
+*.pdf
+__pycache__
+exclude-list.txt
