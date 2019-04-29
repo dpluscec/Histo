@@ -36,9 +36,10 @@ class PCamDatasets:
 
 
 class PCamDataset(data.Dataset):
-    def __init__(self, files):
+    def __init__(self, files, transform=None, target_transform=None):
         super(PCamDataset, self).__init__()
-
+        self.transform = transform
+        self.target_transform = target_transform
         x_path = files[0]
         x_file = h5py.File(x_path)
         self.data = x_file.get('x')
@@ -50,8 +51,14 @@ class PCamDataset(data.Dataset):
         meta_path = files[2]
 
     def __getitem__(self, index):
-        return (torch.from_numpy(self.data[index, :, :, :]).float().permute(2, 0, 1)/255,
-                torch.from_numpy(self.target[index, :, :, :].ravel()).long())
+        img = torch.from_numpy(self.data[index, :, :, :]).float().permute(2, 0, 1)
+        target = torch.from_numpy(self.target[index, :, :, :].ravel()).long()
+        if self.transform is not None:
+            img = self.transform(img)
+        if self.target_transform is not None:
+            target = self.target_transform(target)
+
+        return img, target
 
     def __len__(self):
         return self.data.shape[0]
