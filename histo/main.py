@@ -18,10 +18,11 @@ if __name__ == "__main__":
     print(device)
 
     # hyperparameters
-    lr = 1e-5
+    lr = 1e-3
     batch_size = 256
-    num_epochs = 10
+    num_epochs = 30
     num_outputs = 2
+    weight_decay = 1e-4
 
     # development dataset
     dataset = PCamDatasets() ## add normalization
@@ -38,7 +39,7 @@ if __name__ == "__main__":
 
     # criterion and optimizer
     criterion = nn.CrossEntropyLoss()
-    optimizer = torch.optim.SGD(model.parameters(), lr=lr)
+    optimizer = torch.optim.Adam(params=model.parameters(), lr=lr, weight_decay=weight_decay)
     
     # train model
     train.train(model=model, loaders_dict=loaders, num_epochs=num_epochs,

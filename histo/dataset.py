@@ -50,7 +50,7 @@ class PCamDataset(data.Dataset):
         meta_path = files[2]
 
     def __getitem__(self, index):
-        return (torch.from_numpy(self.data[index, :, :, :]).float().permute(2, 0, 1),
+        return (torch.from_numpy(self.data[index, :, :, :]).float().permute(2, 0, 1)/255,
                 torch.from_numpy(self.target[index, :, :, :].ravel()).long())
 
     def __len__(self):
