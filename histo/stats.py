@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from histo.dataset import PCamDatasets
 
+
 def stats(dataset):
     data = dataset.data
     target = dataset.target
@@ -62,16 +63,15 @@ def visualize_examples():
     index = 0
     while len(pos_examples) < 9 or len(neg_examples) < 9:
         example = train_dataset[index]
-        data = example[0].permute(1,2,0)
+        data = example[0].permute(1, 2, 0)
         label = example[1]
         if label == 1 and len(pos_examples) < 9:
             pos_examples.append(data)
         elif label == 0 and len(neg_examples) < 9:
             neg_examples.append(data)
         index += 1
-    show_multiple_images(images = pos_examples, shape= (3,3), title="Pozitivni primjeri")
-    show_multiple_images(images=neg_examples, shape=(3,3), title="Negativni primjeri")
-
+    show_multiple_images(images=pos_examples, shape=(3, 3), title="Pozitivni primjeri")
+    show_multiple_images(images=neg_examples, shape=(3, 3), title="Negativni primjeri")
 
 
 if __name__ == "__main__":

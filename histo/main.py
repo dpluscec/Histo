@@ -15,12 +15,13 @@ def save_img(fname, img):
 if __name__ == "__main__":
     # determine device
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+   # device = torch.device("cpu")
     print(device)
 
     # hyperparameters
     lr = 1e-3
-    batch_size = 256
-    num_epochs = 30
+    batch_size = 32
+    num_epochs = 10
     num_outputs = 2
     weight_decay = 1e-4
 
@@ -56,6 +57,18 @@ if __name__ == "__main__":
     train.eval(model=model, data=valid_iter, device=device)
     print("test set")
     train.eval(model=model, data=test_iter, device=device)
+
+'''
+    # Print model's state_dict
+    print("Model's state_dict:")
+    for param_tensor in model.state_dict():
+        print(param_tensor, "\t", model.state_dict()[param_tensor].size())
+
+    # Print optimizer's state_dict
+    print("Optimizer's state_dict:")
+    for var_name in optimizer.state_dict():
+        print(var_name, "\t", optimizer.state_dict()[var_name])
+'''
 
 
     # exp_lr_scheduler = lr_scheduler.StepLR(optimizer_conv, step_size=7, gamma=0.1)

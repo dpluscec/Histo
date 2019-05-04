@@ -1,9 +1,18 @@
-import os
 import h5py
 import torch
 import torch.utils.data as data
-import psutil
-import numpy as np
+import torchvision.transforms as transforms
+
+
+PCAM_TRAIN_TRANSFORM = transforms.Compose([
+    transforms.Normalize(mean=[178.69278045, 137.28123996, 176.36324185],
+                         std=[59.91942025, 70.73932419, 54.28812066])
+])
+PCAM_VALID_TRANSFORM = PCAM_TRAIN_TRANSFORM
+PCAM_TEST_TRANSFORM = transforms.Compose([
+    transforms.Normalize(mean=[178.69278045, 137.28123996, 176.36324185],
+                         std=[59.91942025, 70.73932419, 54.28812066])
+])
 
 
 class PCamDatasets:
@@ -28,11 +37,23 @@ class PCamDatasets:
     test_meta_path = "data/pcam/camelyonpatch_level_2_split_test_meta.csv"
     test_paths = [test_x_path, test_y_path, test_meta_path]
 
-    def __init__(self):
+    def __init__(self, data_transforms=None, target_transforms=None):
         super(PCamDatasets, self).__init__()
-        self.train = PCamDataset(PCamDatasets.train_paths)
-        self.valid = PCamDataset(PCamDatasets.valid_paths)
-        self.test = PCamDataset(PCamDatasets.test_paths)
+        self.train = PCamDataset(PCamDatasets.train_paths,
+                                 transform=data_transforms.get('train')
+                                 if data_transforms is not None else None,
+                                 target_transform=data_transforms.get('train')
+                                 if target_transforms is not None else None)
+        self.valid = PCamDataset(PCamDatasets.valid_paths,
+                                 transform=data_transforms.get('valid')
+                                 if data_transforms is not None else None,
+                                 target_transform=target_transforms.get('valid')
+                                 if target_transforms is not None else None)
+        self.test = PCamDataset(PCamDatasets.test_paths,
+                                transform=data_transforms.get('test')
+                                if data_transforms is not None else None,
+                                target_transform=target_transforms.get('test')
+                                if target_transforms is not None else None)
 
 
 class PCamDataset(data.Dataset):
