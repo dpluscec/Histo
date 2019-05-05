@@ -1,4 +1,14 @@
-## Confussion matrix metrics
+# Confussion matrix metrics
+
+confusion_matrix_metrics_dict = {
+    "Accuracy": accuracy,
+    "Recall": recall,
+    "Specificity": specificity,
+    "Precision": precision,
+    "Fall_out": fall_out,
+    "F1": f1 
+    }
+
 
 def accuracy(confusion_matrix):
     tn, fp, fn, tp = confusion_matrix.ravel()
@@ -28,3 +38,13 @@ def fall_out(confusion_matrix):
 def f1(confusion_matrix):
     tn, fp, fn, tp = confusion_matrix.ravel()
     return 2*tp/(2*tp+fp+fn)
+
+
+def output_metrics(confusion_matrix, metrics):
+    print("Evaluation results")
+    print("#############################")
+    for name, metric in metrics:
+        print(name)
+        print(metric(confusion_matrix))
+        print("------------------------")
+    print("#############################")

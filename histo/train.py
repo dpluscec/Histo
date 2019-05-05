@@ -18,9 +18,9 @@ def train(model, loaders_dict, num_epochs, optimizer, criterion, device):
     for epoch in range(0, num_epochs):
         print('Epoch {}/{}'.format(epoch+1, num_epochs))
         print('-' * 10)
-        train_epoch(model, loaders_dict[TRAIN], optimizer, criterion,
+        run_epoch(model, loaders_dict[TRAIN], optimizer, criterion,
                     phase=TRAIN, device=device)
-        train_epoch(model, loaders_dict[VALID], optimizer, criterion,
+        run_epoch(model, loaders_dict[VALID], optimizer, criterion,
                     phase=VALID, device=device)
 
     print()
@@ -35,7 +35,24 @@ def train(model, loaders_dict, num_epochs, optimizer, criterion, device):
     return model
 
 
-def train_epoch(model, data, optimizer, criterion, phase, device):
+def run_epoch(model, data, optimizer, criterion, phase, device):
+    '''Method trains or evaluates given model for one epoch (one pass through whole data).
+
+    Parameters
+    ----------
+    model : nn.Module
+        model that needs to be trained or evaluated
+    data : torch.utils.data.DataLoader
+        dataloader used for iterating over data
+    optimizer : torch.optim.Optimizer
+        model optimizer, None if validation phase
+    criterion : loss
+        pytorch loss function
+    phase : str
+        TRAIN or VALID phase id
+    device : torch.device
+        device on which to perform operations
+    '''
     if phase == TRAIN:
         model.train()
     else:
@@ -77,4 +94,4 @@ def eval(model, data, device):
             y_pred = indices.cpu().numpy()
             m = confusion_matrix(y_true, y_pred)
             result_mat += m
-    print(result_mat)
+    return result_mat
