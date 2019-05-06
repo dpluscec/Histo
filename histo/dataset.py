@@ -6,14 +6,14 @@ from PIL import Image
 
 PCAM_TRAIN_TRANSFORM = transforms.Compose([
     transforms.ToTensor(),
-    transforms.Normalize(mean=[178.69278045, 137.28123996, 176.36324185],
-                         std=[59.91942025, 70.73932419, 54.28812066])
+    # transforms.Normalize(mean=[178.69278045, 137.28123996, 176.36324185],
+    #                      std=[59.91942025, 70.73932419, 54.28812066])
 ])
 PCAM_VALID_TRANSFORM = PCAM_TRAIN_TRANSFORM
 PCAM_TEST_TRANSFORM = transforms.Compose([
     transforms.ToTensor(),
-    transforms.Normalize(mean=[178.69278045, 137.28123996, 176.36324185],
-                         std=[59.91942025, 70.73932419, 54.28812066])
+    #  transforms.Normalize(mean=[178.69278045, 137.28123996, 176.36324185],
+    #                       std=[59.91942025, 70.73932419, 54.28812066])
 ])
 
 PCAM_DATA_TRANSFORM = {
@@ -76,10 +76,12 @@ class PCamDataset(data.Dataset):
         y_path = files[1]
         y_file = h5py.File(y_path)
         self.target = y_file.get('y')
-
-        meta_path = files[2]
+        self.num_examples = self.data.shape[0]
+        # meta_path = files[2]
 
     def __getitem__(self, index):
+        if index < 0 or index >= self.num_examples:
+            raise IndexError
         img = Image.fromarray(self.data[index, :, :, :])
         target = torch.from_numpy(self.target[index, :, :, :].ravel()).float()
 
@@ -90,4 +92,4 @@ class PCamDataset(data.Dataset):
         return img, target
 
     def __len__(self):
-        return self.data.shape[0]
+        return self.num_examples

@@ -54,6 +54,17 @@ def show_multiple_images(images, shape, title):
     plt.show()
 
 
+def white_dataset_histogram(dataset):
+    freqs = {}
+    for ex in dataset:
+        img = ex[0].numpy()
+        img_sum = np.sum(img, axis=(0))
+        hist, bin_edges = np.histogram(img_sum, [i*0.2 for i in range(16)])
+        white_bin = hist[-1]
+        freqs[white_bin] = freqs.get(white_bin, 0) + 1
+    return freqs
+
+
 def visualize_examples():
     ds = PCamDatasets()
     train_dataset = ds.train
