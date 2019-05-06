@@ -2,17 +2,25 @@ import h5py
 import torch
 import torch.utils.data as data
 import torchvision.transforms as transforms
-
+from PIL import Image
 
 PCAM_TRAIN_TRANSFORM = transforms.Compose([
+    transforms.ToTensor(),
     transforms.Normalize(mean=[178.69278045, 137.28123996, 176.36324185],
                          std=[59.91942025, 70.73932419, 54.28812066])
 ])
 PCAM_VALID_TRANSFORM = PCAM_TRAIN_TRANSFORM
 PCAM_TEST_TRANSFORM = transforms.Compose([
+    transforms.ToTensor(),
     transforms.Normalize(mean=[178.69278045, 137.28123996, 176.36324185],
                          std=[59.91942025, 70.73932419, 54.28812066])
 ])
+
+PCAM_DATA_TRANSFORM = {
+    'train': PCAM_TRAIN_TRANSFORM,
+    'valid': PCAM_VALID_TRANSFORM,
+    'test': PCAM_TEST_TRANSFORM
+}
 
 
 class PCamDatasets:
@@ -72,13 +80,13 @@ class PCamDataset(data.Dataset):
         meta_path = files[2]
 
     def __getitem__(self, index):
-        img = torch.from_numpy(self.data[index, :, :, :]).float().permute(2, 0, 1)
-        target = torch.from_numpy(self.target[index, :, :, :].ravel()).long()
+        img = Image.fromarray(self.data[index, :, :, :])
+        target = torch.from_numpy(self.target[index, :, :, :].ravel()).float()
+
         if self.transform is not None:
             img = self.transform(img)
         if self.target_transform is not None:
             target = self.target_transform(target)
-
         return img, target
 
     def __len__(self):

@@ -19,9 +19,9 @@ def train(model, loaders_dict, num_epochs, optimizer, criterion, device):
         print('Epoch {}/{}'.format(epoch+1, num_epochs))
         print('-' * 10)
         run_epoch(model, loaders_dict[TRAIN], optimizer, criterion,
-                    phase=TRAIN, device=device)
+                  phase=TRAIN, device=device)
         run_epoch(model, loaders_dict[VALID], optimizer, criterion,
-                    phase=VALID, device=device)
+                  phase=VALID, device=device)
 
     print()
 
@@ -67,7 +67,7 @@ def run_epoch(model, data, optimizer, criterion, phase, device):
 
         with torch.set_grad_enabled(phase == TRAIN):
             logits = model(batch_x)
-            loss = criterion(input=logits, target=batch_y.view(-1))
+            loss = criterion(input=logits, target=batch_y)
             running_loss += loss
             if phase == TRAIN:
                 loss.backward()
@@ -80,18 +80,18 @@ def run_epoch(model, data, optimizer, criterion, phase, device):
     print(f"Epoch loss: {running_loss/(batch_n+1)}")
 
 
-def eval(model, data, device):
-    result_mat = np.zeros((2,2))
+def evaluate(model, data, device):
+    result_mat = np.zeros((2, 2))
     model.eval()
-    prob_output = nn.Softmax(dim=1)
+    prob_output = nn.Sigmoid()
     with torch.no_grad():
         for batch_x, batch_y in data:
             batch_x = batch_x.to(device)
             logits = model(batch_x)
-            probs, indices = torch.max(prob_output(logits), 1)
-
+            probs = prob_output(logits).cpu().numpy()
+            y_pred = np.where(probs >= 0.5, 1, 0)
             y_true = batch_y.cpu().numpy()
-            y_pred = indices.cpu().numpy()
+
             m = confusion_matrix(y_true, y_pred)
             result_mat += m
     return result_mat
