@@ -27,9 +27,9 @@ if __name__ == "__main__":
     print(device)
 
     # hyperparameters
-    lr = 1e-3
+    lr = 1e-4
     batch_size = 32
-    num_epochs = 10
+    num_epochs = 50
     num_outputs = 1
     weight_decay = 0
 
@@ -81,5 +81,5 @@ if __name__ == "__main__":
     # print("Optimizer's state_dict:")
     # for var_name in optimizer.state_dict():
     #     print(var_name, "\t", optimizer.state_dict()[var_name])
-    
+
     # exp_lr_scheduler = lr_scheduler.StepLR(optimizer_conv, step_size=7, gamma=0.1)

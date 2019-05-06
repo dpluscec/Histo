@@ -4,9 +4,24 @@ import torch
 import torch.nn as nn
 from sklearn.metrics import confusion_matrix
 import numpy as np
+import histo.metrics as metrics
 
 TRAIN = 'train'
 VALID = 'valid'
+
+
+class TrainingHook:
+    def epoch_start(self):
+        pass
+
+    def epoch_end(self):
+        pass
+
+    def batch_start(self):
+        pass
+
+    def batch_end(self):
+        pass
 
 
 def train(model, loaders_dict, num_epochs, optimizer, criterion, device):
@@ -22,7 +37,12 @@ def train(model, loaders_dict, num_epochs, optimizer, criterion, device):
                   phase=TRAIN, device=device)
         run_epoch(model, loaders_dict[VALID], optimizer, criterion,
                   phase=VALID, device=device)
-
+        train_conf_mat = evaluate(model, loaders_dict[TRAIN], device)
+        print("train metrics", 
+              metrics.accuracy(train_conf_mat), metrics.f1(train_conf_mat))
+        eval_conf_mat = evaluate(model, loaders_dict[VALID], device)
+        print("eval metrics",
+              metrics.accuracy(eval_conf_mat), metrics.f1(eval_conf_mat))
     print()
 
     time_elapsed = time.time()-since

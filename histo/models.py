@@ -10,6 +10,8 @@ def get_alexnet(num_outputs, pretrained=True, fixed_weights=False):
     num_features = alexnet.classifier[-1].in_features
     alexnet.classifier[-1] = nn.Linear(num_features, num_outputs)
     alexnet.classifier[-1].requires_grad = True
+    # nn.init.xavier_uniform(alexnet.classifier[-1])
+    # alexnet.classifier[-1].bias.data.fill_(0.01)
     return alexnet
 
 
@@ -20,7 +22,21 @@ def get_resnet(num_outputs, pretrained=True, fixed_weights=False):
             param.requires_grad = False
     num_features = resnet.fc.in_features
     resnet.fc = nn.Linear(num_features, num_outputs)
+    # nn.init.xavier_uniform(resnet.fc)
+    # resnet.fc.bias.data.fill_(0.01)
     return resnet
+
+
+def get_inception(num_outputs, pretrained=True, fixed_weights=False):
+    inception = models.inception_v3(pretrained=pretrained)
+    if fixed_weights:
+        for param in inception.parameters():
+            param.requires_grad = False
+    num_features = inception.fc.in_features
+    inception.fc = nn.Linear(num_features, num_outputs)
+    # nn.init.xavier_uniform(inception.fc)
+    # inception.fc.bias.data.fill_(0.01)
+    return inception
 
 
 def get_dummy_model(input_size, hidden_size, output_size):
