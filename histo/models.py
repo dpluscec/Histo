@@ -19,7 +19,7 @@ def get_resnet(num_outputs, pretrained=True, fixed_weights=False):
         for param in resnet.parameters():
             param.requires_grad = False
     num_features = resnet.fc.in_features
-    resnet.fc = nn.Linear(num_features, num_outputs)
+    resnet.fc = nn.Linear(in_features=num_features, out_features=num_outputs)
     return resnet
 
 
@@ -29,7 +29,7 @@ def get_inception(num_outputs, pretrained=True, fixed_weights=False):
         for param in inception.parameters():
             param.requires_grad = False
     num_features = inception.fc.in_features
-    inception.fc = nn.Linear(num_features, num_outputs)
+    inception.fc = nn.Linear(in_features=num_features, out_features=num_outputs)
     return inception
 
 
