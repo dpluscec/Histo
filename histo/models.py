@@ -8,7 +8,7 @@ def get_alexnet(num_outputs, pretrained=True, fixed_weights=False):
         for param in alexnet.features.parameters():
             param.requires_grad = False
     num_features = alexnet.classifier[-1].in_features
-    alexnet.classifier[-1] = nn.Linear(num_features, num_outputs)
+    alexnet.classifier[-1] = nn.Linear(in_features=num_features, out_features=num_outputs)
     alexnet.classifier[-1].requires_grad = True
     return alexnet
 

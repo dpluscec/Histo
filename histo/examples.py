@@ -9,7 +9,7 @@ import histo.dataset as dataset
 import histo.models as models
 import histo.train as train
 import histo.metrics as metrics
-import histo.experiments as experiments
+
 
 if __name__ == "__main__":
     # set random seed
@@ -21,15 +21,20 @@ if __name__ == "__main__":
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     print(device)
 
+    # hyperparameters
+    lr = 1e-5
+    batch_size = 32
+    num_epochs = 5
+    num_outputs = 1
+    weight_decay = 0
 
     # development dataset
     pcam_dataset = dataset.PCamDatasets(data_transforms=dataset.PCAM_DATA_TRANSFORM)
     train_set = pcam_dataset.train
     valid_set = pcam_dataset.valid
-    test_set = pcam_dataset.test
-    data_dict = {experiments.TRAIN: train_set, experiments.VALID: valid_set,
-                 experiments.TEST: test_set}
-    
+    train_iter = DataLoader(dataset=train_set, batch_size=batch_size, shuffle=True)
+    valid_iter = DataLoader(dataset=valid_set, batch_size=batch_size, shuffle=False)
+    loaders = {train.TRAIN: train_iter, train.VALID: valid_iter}
 
     # obtain model
     model = models.get_alexnet(
@@ -49,7 +54,8 @@ if __name__ == "__main__":
     torch.save(obj=model.state_dict(), f="curr_model.pt")
 
     # test set
-    
+    test_set = pcam_dataset.test
+    test_iter = DataLoader(dataset=test_set, batch_size=batch_size, shuffle=False)
 
     # validation
     print("train set")

@@ -3,6 +3,10 @@ import matplotlib.pyplot as plt
 from histo.dataset import PCamDatasets
 
 
+from matplotlib import pyplot as plt
+def save_img(fname, img):
+    plt.imsave(fname=fname, arr=img)
+
 def stats(dataset):
     data = dataset.data
     target = dataset.target
