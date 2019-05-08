@@ -38,7 +38,7 @@ def train(model, loaders_dict, num_epochs, optimizer, criterion, device, hook=No
 
         if hook_flag:
             hook.epoch_end(epoch=epoch, num_epochs=num_epochs, loaders_dict=loaders_dict,
-                           train_loss=train_loss, valid_loss=valid_loss)
+                           model=model, train_loss=train_loss, valid_loss=valid_loss)
 
     if hook_flag:
         hook.training_end()
@@ -111,8 +111,8 @@ def evaluate(model, data, device):
 
             y_pred = np.where(probs >= 0.5, 1, 0)
             y_true = batch_y.cpu().numpy()
-            m = confusion_matrix(y_true, y_pred)
-            result_mat += m
+            curr_cmat = confusion_matrix(y_true, y_pred)
+            result_mat += curr_cmat
     return result_mat
 
 
@@ -129,7 +129,7 @@ class TrainingHook:
     def epoch_start(self, epoch, num_epochs, loaders_dict):
         pass
 
-    def epoch_end(self, epoch, num_epochs, loaders_dict, train_loss, valid_loss):
+    def epoch_end(self, epoch, num_epochs, loaders_dict, model, train_loss, valid_loss):
         pass
 
     def batch_start(self, phase, batch_num, data, model):
@@ -177,12 +177,12 @@ class BasicTrainingHook(TrainingHook):
             time_elapsed // 60, time_elapsed % 60))
 
     def epoch_start(self, epoch, num_epochs, loaders_dict):
-        _LOGGER.info('Epoch {}/{}'.format(epoch+1, num_epochs))
+        _LOGGER.info('Epoch %s/%s', str(epoch+1), str(num_epochs))
         _LOGGER.info('-' * 10)
 
-    def epoch_end(self, epoch, num_epochs, loaders_dict, train_loss, valid_loss):
-        _LOGGER.info(f"Epoch loss - train: {train_loss}")
-        _LOGGER.info(f"Epoch loss - valid: {valid_loss}")
+    def epoch_end(self, epoch, num_epochs, loaders_dict, model, train_loss, valid_loss):
+        _LOGGER.info("Epoch loss - train: %s", train_loss)
+        _LOGGER.info("Epoch loss - valid: %s", valid_loss)
 
     def batch_train_end(self, batch_num, data, model, batch_loss):
         _LOGGER.info("[Batch]: {}/{}, loss {:.5f}".format(
@@ -205,14 +205,14 @@ class DetailedMeasurementTrainingHook(BasicTrainingHook):
         self.loaders_dict = loaders_dict
         _LOGGER.info("start metrics")
         val_conf_mat = evaluate(model=model, data=loaders_dict[VALID], device=self.device)
-        _LOGGER.info(f"eval metrics acc "
-                     f"{metrics.accuracy(confusion_matrix=val_conf_mat)}, f1 "
-                     f"{metrics.f1(confusion_matrix=val_conf_mat)}")
+        _LOGGER.info("eval metrics acc, f1")
+        _LOGGER.info("%s, %s", str(metrics.accuracy(confusion_matrix=val_conf_mat)),
+                     str(metrics.f1(confusion_matrix=val_conf_mat)))
         train_conf_mat = evaluate(model=model, data=loaders_dict[TRAIN],
                                   device=self.device)
-        _LOGGER.info(f"train metrics acc "
-                     f"{metrics.accuracy(confusion_matrix=train_conf_mat)}, f1 "
-                     f"{metrics.f1(confusion_matrix=train_conf_mat)}")
+        _LOGGER.info("train metrics acc, f1")
+        _LOGGER.info("%s, %s", str(metrics.accuracy(confusion_matrix=train_conf_mat)),
+                     str(metrics.f1(confusion_matrix=train_conf_mat)))
 
     def batch_train_end(self, batch_num, data, model, batch_loss):
         # super(DetailedMeasurementTrainingHook, self).batch_train_end(
@@ -220,16 +220,31 @@ class DetailedMeasurementTrainingHook(BasicTrainingHook):
         if batch_num % 1024 == 0 and batch_num > 0:
             val_conf_mat = evaluate(model=model, data=self.loaders_dict[VALID],
                                     device=self.device)
-            _LOGGER.info(f"eval metrics, batch: {batch_num}, acc "
-                         f"{metrics.accuracy(confusion_matrix=val_conf_mat)}, "
-                         f"f1 {metrics.f1(confusion_matrix=val_conf_mat)}")
+            _LOGGER.info("eval metrics, batch: %s acc, f1", str(batch_num))
+            _LOGGER.info("%s, %s", str(metrics.accuracy(confusion_matrix=val_conf_mat)),
+                         str(metrics.f1(confusion_matrix=val_conf_mat)))
 
         if batch_num == 4096:
             train_conf_mat = evaluate(model=model, data=self.loaders_dict[TRAIN],
                                       device=self.device)
-            _LOGGER.info(f"train metrics, batch {batch_num}, acc "
-                         f"{metrics.accuracy(confusion_matrix=train_conf_mat)},"
-                         f" f1 {metrics.f1(confusion_matrix=train_conf_mat)}")
+            _LOGGER.info("train metrics, batch: %s  acc, f1 ", str(batch_num))
+            _LOGGER.info("%s, %s", str(metrics.accuracy(confusion_matrix=train_conf_mat)),
+                         str(metrics.f1(confusion_matrix=train_conf_mat)))
 
     def batch_valid_end(self, batch_num, data, model, batch_loss):
         pass
+
+    def epoch_end(self, epoch, num_epochs, loaders_dict, model, train_loss, valid_loss):
+        super(DetailedMeasurementTrainingHook, self).epoch_end(
+            epoch=epoch, num_epochs=num_epochs, loaders_dict=loaders_dict, model=model,
+            train_loss=train_loss, valid_loss=valid_loss)
+        _LOGGER.info("epoch end metrics")
+        val_conf_mat = evaluate(model=model, data=loaders_dict[VALID], device=self.device)
+        _LOGGER.info("eval metrics acc, f1 ")
+        _LOGGER.info("%s, %s", str(metrics.accuracy(confusion_matrix=val_conf_mat)),
+                     str(metrics.f1(confusion_matrix=val_conf_mat)))
+        train_conf_mat = evaluate(model=model, data=loaders_dict[TRAIN],
+                                  device=self.device)
+        _LOGGER.info("train metrics acc, f1 ")
+        _LOGGER.info("%s, %s", str(metrics.accuracy(confusion_matrix=train_conf_mat)),
+                     str(metrics.f1(confusion_matrix=train_conf_mat)))
