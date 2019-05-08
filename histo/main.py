@@ -30,7 +30,7 @@ if __name__ == "__main__":
 
     # experiment
     series_one = [
-        experiments.get_experiment_alexnet_1(data_dict=data_dict, device=device),
+        # experiments.get_experiment_alexnet_1(data_dict=data_dict, device=device), done
         experiments.get_experiment_alexnet_2(data_dict=data_dict, device=device),
         experiments.get_experiment_alexnet_3(data_dict=data_dict, device=device),
         experiments.get_experiment_alexnet_4(data_dict=data_dict, device=device),
