@@ -4,6 +4,11 @@ import torch.utils.data as data
 import torchvision.transforms as transforms
 from PIL import Image
 
+
+TRAIN = 'train'
+VALID = 'valid'
+TEST = 'test'
+
 PCAM_TRAIN_TRANSFORM = transforms.Compose([
     transforms.ToTensor(),
     # transforms.Normalize(mean=[178.69278045, 137.28123996, 176.36324185],

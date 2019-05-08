@@ -1,13 +1,14 @@
 import time
+import logging
 import copy
 import torch
 import torch.nn as nn
 from sklearn.metrics import confusion_matrix
 import numpy as np
 import histo.metrics as metrics
+from histo.dataset import TRAIN, VALID
 
-TRAIN = 'train'
-VALID = 'valid'
+_LOGGER = logging.getLogger(__name__)
 
 
 def train(model, loaders_dict, num_epochs, optimizer, criterion, device, hook=None):
@@ -171,27 +172,25 @@ class BasicTrainingHook(TrainingHook):
         self.train_start_time = time.time()
 
     def training_end(self):
-        print()
         time_elapsed = time.time()-self.train_start_time
-        print('Training complete in {:.0f}m {:.0f}s'.format(
+        _LOGGER.info('Training time {:.0f}m {:.0f}s'.format(
             time_elapsed // 60, time_elapsed % 60))
 
     def epoch_start(self, epoch, num_epochs, loaders_dict):
-        print('Epoch {}/{}'.format(epoch+1, num_epochs))
-        print('-' * 10)
+        _LOGGER.info('Epoch {}/{}'.format(epoch+1, num_epochs))
+        _LOGGER.info('-' * 10)
 
     def epoch_end(self, epoch, num_epochs, loaders_dict, train_loss, valid_loss):
-        print()
-        print(f"Epoch loss - train: {train_loss}")
-        print(f"Epoch loss - valid: {valid_loss}")
+        _LOGGER.info(f"Epoch loss - train: {train_loss}")
+        _LOGGER.info(f"Epoch loss - valid: {valid_loss}")
 
     def batch_train_end(self, batch_num, data, model, batch_loss):
-        print("[Batch]: {}/{}, loss {:.5f}".format(
-            batch_num + 1, len(data), batch_loss), end='\r', flush=True)
+        _LOGGER.info("[Batch]: {}/{}, loss {:.5f}".format(
+            batch_num + 1, len(data), batch_loss))
 
     def batch_valid_end(self, batch_num, data, model, batch_loss):
-        print("[Batch]: {}/{}, loss {:.5f}".format(
-            batch_num + 1, len(data), batch_loss), end='\r', flush=True)
+        _LOGGER.info("[Batch]: {}/{}, loss {:.5f}".format(
+            batch_num + 1, len(data), batch_loss))
 
 
 class DetailedMeasurementTrainingHook(BasicTrainingHook):
@@ -204,28 +203,33 @@ class DetailedMeasurementTrainingHook(BasicTrainingHook):
         super(DetailedMeasurementTrainingHook, self).training_start(
             model=model, loaders_dict=loaders_dict, criterion=criterion)
         self.loaders_dict = loaders_dict
-        print("start metrics")
+        _LOGGER.info("start metrics")
         val_conf_mat = evaluate(model=model, data=loaders_dict[VALID], device=self.device)
-        print("eval metrics, batch: ", metrics.accuracy(confusion_matrix=val_conf_mat),
-              metrics.f1(confusion_matrix=val_conf_mat))
+        _LOGGER.info(f"eval metrics acc "
+                     f"{metrics.accuracy(confusion_matrix=val_conf_mat)}, f1 "
+                     f"{metrics.f1(confusion_matrix=val_conf_mat)}")
         train_conf_mat = evaluate(model=model, data=loaders_dict[TRAIN],
                                   device=self.device)
-        print("train metrics", metrics.accuracy(confusion_matrix=train_conf_mat),
-              metrics.f1(confusion_matrix=train_conf_mat))
+        _LOGGER.info(f"train metrics acc "
+                     f"{metrics.accuracy(confusion_matrix=train_conf_mat)}, f1 "
+                     f"{metrics.f1(confusion_matrix=train_conf_mat)}")
 
     def batch_train_end(self, batch_num, data, model, batch_loss):
-        super(DetailedMeasurementTrainingHook, self).batch_train_end(
-            batch_num=batch_num, data=data, model=model, batch_loss=batch_loss)
-
-        if batch_num % 256:
+        # super(DetailedMeasurementTrainingHook, self).batch_train_end(
+        #    batch_num=batch_num, data=data, model=model, batch_loss=batch_loss)
+        if batch_num % 1024 == 0 and batch_num > 0:
             val_conf_mat = evaluate(model=model, data=self.loaders_dict[VALID],
                                     device=self.device)
-            print("eval metrics, batch: ", batch_num,
-                  metrics.accuracy(confusion_matrix=val_conf_mat),
-                  metrics.f1(confusion_matrix=val_conf_mat))
+            _LOGGER.info(f"eval metrics, batch: {batch_num}, acc "
+                         f"{metrics.accuracy(confusion_matrix=val_conf_mat)}, "
+                         f"f1 {metrics.f1(confusion_matrix=val_conf_mat)}")
 
-        if batch_num % 1024:
+        if batch_num == 4096:
             train_conf_mat = evaluate(model=model, data=self.loaders_dict[TRAIN],
                                       device=self.device)
-            print("train metrics", metrics.accuracy(confusion_matrix=train_conf_mat),
-                  metrics.f1(confusion_matrix=train_conf_mat))
+            _LOGGER.info(f"train metrics, batch {batch_num}, acc "
+                         f"{metrics.accuracy(confusion_matrix=train_conf_mat)},"
+                         f" f1 {metrics.f1(confusion_matrix=train_conf_mat)}")
+
+    def batch_valid_end(self, batch_num, data, model, batch_loss):
+        pass
