@@ -1,0 +1,294 @@
+----------------------------------------
+Starting experiment alexnet_6
+Experiment parameters Experiment[name: alexnet_6, model: AlexNet(
+  (features): Sequential(
+    (0): Conv2d(3, 64, kernel_size=(11, 11), stride=(4, 4), padding=(2, 2))
+    (1): ReLU(inplace)
+    (2): MaxPool2d(kernel_size=3, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (3): Conv2d(64, 192, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2))
+    (4): ReLU(inplace)
+    (5): MaxPool2d(kernel_size=3, stride=2, padding=0, dilation=1, ceil_mode=False)
+    (6): Conv2d(192, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (7): ReLU(inplace)
+    (8): Conv2d(384, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (9): ReLU(inplace)
+    (10): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (11): ReLU(inplace)
+    (12): MaxPool2d(kernel_size=3, stride=2, padding=0, dilation=1, ceil_mode=False)
+  )
+  (avgpool): AdaptiveAvgPool2d(output_size=(6, 6))
+  (classifier): Sequential(
+    (0): Dropout(p=0.5)
+    (1): Linear(in_features=9216, out_features=4096, bias=True)
+    (2): ReLU(inplace)
+    (3): Dropout(p=0.5)
+    (4): Linear(in_features=4096, out_features=4096, bias=True)
+    (5): ReLU(inplace)
+    (6): Linear(in_features=4096, out_features=1, bias=True)
+  )
+), params: Params(lr: 0.0001, weight_decay: 0, batch_size: 32, num_epochs: 10), optimizer: Adam (
+Parameter Group 0
+    amsgrad: False
+    betas: (0.9, 0.999)
+    eps: 1e-08
+    lr: 0.0001
+    weight_decay: 0
+), criterion: BCEWithLogitsLoss()]
+start metrics
+eval metrics acc, f1
+0.6219482421875, 0.605829196894489
+train metrics acc, f1
+0.5633773803710938, 0.5287622278581074
+Epoch 1/10
+----------
+eval metrics, batch: 1024 acc, f1
+0.7788298644724104, 0.7954335599764962
+eval metrics, batch: 2048 acc, f1
+0.786376953125, 0.7744845360824743
+eval metrics, batch: 3072 acc, f1
+0.7722431840311588, 0.7608702597361107
+eval metrics, batch: 4096 acc, f1
+0.777891074856046, 0.7531826967939745
+train metrics, batch: 4096  acc, f1 
+0.841705322265625, 0.832089733421815
+eval metrics, batch: 5120 acc, f1
+0.7915652385589095, 0.778417545448664
+eval metrics, batch: 6144 acc, f1
+0.7833191333982473, 0.7689112445237709
+eval metrics, batch: 7168 acc, f1
+0.7886745374878287, 0.7920845433044936
+Epoch loss - train: tensor(0.3679, device='cuda:0', grad_fn=<DivBackward0>)
+Epoch loss - valid: tensor(0.4522, device='cuda:0')
+epoch end metrics
+eval metrics acc, f1 
+0.7840854247104247, 0.7671437865972675
+train metrics acc, f1 
+0.8670272827148438, 0.8660266117316074
+Epoch 2/10
+----------
+eval metrics, batch: 1024 acc, f1
+0.7880578214971209, 0.7728602192009771
+eval metrics, batch: 2048 acc, f1
+0.758325404376784, 0.7278510681041988
+eval metrics, batch: 3072 acc, f1
+0.7721029270633397, 0.7489842433851948
+eval metrics, batch: 4096 acc, f1
+0.7738597972972973, 0.7482115869017633
+train metrics, batch: 4096  acc, f1 
+0.8702888488769531, 0.8670620569940691
+eval metrics, batch: 5120 acc, f1
+0.7680300096805421, 0.7416616130988478
+eval metrics, batch: 6144 acc, f1
+0.7689785851780558, 0.7414065919267414
+eval metrics, batch: 7168 acc, f1
+0.7697431018078021, 0.7413666421748715
+Epoch loss - train: tensor(0.3098, device='cuda:0', grad_fn=<DivBackward0>)
+Epoch loss - valid: tensor(0.5503, device='cuda:0')
+epoch end metrics
+eval metrics acc, f1 
+0.7639952153110048, 0.731363605419021
+train metrics acc, f1 
+0.8732681274414062, 0.8677015220178883
+Epoch 3/10
+----------
+eval metrics, batch: 1024 acc, f1
+0.7734901347449471, 0.7491923935125054
+eval metrics, batch: 2048 acc, f1
+0.7569085136406397, 0.725236750290746
+eval metrics, batch: 3072 acc, f1
+0.7850314617618587, 0.7673367821360749
+eval metrics, batch: 4096 acc, f1
+0.7859087608906099, 0.7657785867946384
+train metrics, batch: 4096  acc, f1 
+0.8890037536621094, 0.8882736694172353
+eval metrics, batch: 5120 acc, f1
+0.7935430866601753, 0.7827618224314027
+eval metrics, batch: 6144 acc, f1
+0.7779007177033492, 0.751064186358304
+eval metrics, batch: 7168 acc, f1
+0.738295664206642, 0.6977022977022977
+Epoch loss - train: tensor(0.2784, device='cuda:0', grad_fn=<DivBackward0>)
+Epoch loss - valid: tensor(0.5515, device='cuda:0')
+epoch end metrics
+eval metrics acc, f1 
+0.7669935033686237, 0.7359307359307359
+train metrics acc, f1 
+0.8945884704589844, 0.8920666044317024
+Epoch 4/10
+----------
+eval metrics, batch: 1024 acc, f1
+0.793975830078125, 0.783739629048275
+eval metrics, batch: 2048 acc, f1
+0.7783070388349514, 0.7555124301535785
+eval metrics, batch: 3072 acc, f1
+0.7360749763481551, 0.6898731978461004
+eval metrics, batch: 4096 acc, f1
+0.7969970703125, 0.7859303597863165
+train metrics, batch: 4096  acc, f1 
+0.8930015563964844, 0.8954226678050654
+eval metrics, batch: 5120 acc, f1
+0.7908958130477117, 0.773709167544784
+eval metrics, batch: 6144 acc, f1
+0.7503557874762808, 0.7140916808149406
+eval metrics, batch: 7168 acc, f1
+0.7895024271844661, 0.7714003294892916
+Epoch loss - train: tensor(0.2555, device='cuda:0', grad_fn=<DivBackward0>)
+Epoch loss - valid: tensor(0.5163, device='cuda:0')
+epoch end metrics
+eval metrics acc, f1 
+0.7858952702702703, 0.7693807264929495
+train metrics acc, f1 
+0.90625, 0.9074559421599638
+Epoch 5/10
+----------
+eval metrics, batch: 1024 acc, f1
+0.7783458373668926, 0.7571991914371873
+eval metrics, batch: 2048 acc, f1
+0.7467441860465116, 0.7109872611464968
+eval metrics, batch: 3072 acc, f1
+0.7760919401544402, 0.7536914755947838
+eval metrics, batch: 4096 acc, f1
+0.7774521531100479, 0.7563993453355156
+train metrics, batch: 4096  acc, f1 
+0.9116325378417969, 0.9115140588174626
+eval metrics, batch: 5120 acc, f1
+0.7457841981132075, 0.7054885754294887
+eval metrics, batch: 6144 acc, f1
+0.7706027430221367, 0.7415715108596211
+eval metrics, batch: 7168 acc, f1
+0.7510643330179754, 0.7159627580623398
+Epoch loss - train: tensor(0.2350, device='cuda:0', grad_fn=<DivBackward0>)
+Epoch loss - valid: tensor(0.5750, device='cuda:0')
+epoch end metrics
+eval metrics acc, f1 
+0.7866182821497121, 0.765529741308288
+train metrics acc, f1 
+0.9137840270996094, 0.9132708860176597
+Epoch 6/10
+----------
+eval metrics, batch: 1024 acc, f1
+0.789461020211742, 0.7695397379337592
+eval metrics, batch: 2048 acc, f1
+0.7715652069297402, 0.7455526148279674
+eval metrics, batch: 3072 acc, f1
+0.7448109925788498, 0.7081910697119369
+eval metrics, batch: 4096 acc, f1
+0.7573408018867924, 0.7232253942634251
+train metrics, batch: 4096  acc, f1 
+0.9179229736328125, 0.9158551751648403
+eval metrics, batch: 5120 acc, f1
+0.7822755791505791, 0.7646867053530677
+eval metrics, batch: 6144 acc, f1
+0.7790416263310745, 0.7536593591905565
+eval metrics, batch: 7168 acc, f1
+0.7618850520340587, 0.7287850215517241
+Epoch loss - train: tensor(0.2182, device='cuda:0', grad_fn=<DivBackward0>)
+Epoch loss - valid: tensor(0.6584, device='cuda:0')
+epoch end metrics
+eval metrics acc, f1 
+0.7503206623134329, 0.7139756219736183
+train metrics acc, f1 
+0.9166908264160156, 0.9138973107447987
+Epoch 7/10
+----------
+eval metrics, batch: 1024 acc, f1
+0.7642423882017126, 0.7354089498448293
+eval metrics, batch: 2048 acc, f1
+0.7680701335877863, 0.7411647254575707
+eval metrics, batch: 3072 acc, f1
+0.784496359223301, 0.7640120934250307
+eval metrics, batch: 4096 acc, f1
+0.7692838291746641, 0.7385201046871283
+train metrics, batch: 4096  acc, f1 
+0.9289703369140625, 0.9282726103068638
+eval metrics, batch: 5120 acc, f1
+0.7713815789473685, 0.7488254427177449
+eval metrics, batch: 6144 acc, f1
+0.7601967370441459, 0.7273223298322193
+eval metrics, batch: 7168 acc, f1
+0.7574676103646834, 0.7195033124067843
+Epoch loss - train: tensor(0.2027, device='cuda:0', grad_fn=<DivBackward0>)
+Epoch loss - valid: tensor(0.8089, device='cuda:0')
+epoch end metrics
+eval metrics acc, f1 
+0.7430914863593603, 0.7009342596078163
+train metrics acc, f1 
+0.9317588806152344, 0.9299456843111071
+Epoch 8/10
+----------
+eval metrics, batch: 1024 acc, f1
+0.7792706333973128, 0.7565493516803388
+eval metrics, batch: 2048 acc, f1
+0.7794046466602129, 0.7601631364294171
+eval metrics, batch: 3072 acc, f1
+0.7687078922040423, 0.7403956518803592
+eval metrics, batch: 4096 acc, f1
+0.7759416986564299, 0.7538628801106975
+train metrics, batch: 4096  acc, f1 
+0.9302978515625, 0.9307411815542297
+eval metrics, batch: 5120 acc, f1
+0.7688696172248803, 0.7433504897891416
+eval metrics, batch: 6144 acc, f1
+0.7783980582524271, 0.752457127363926
+eval metrics, batch: 7168 acc, f1
+0.7496156575212867, 0.7102733399473162
+Epoch loss - train: tensor(0.1877, device='cuda:0', grad_fn=<DivBackward0>)
+Epoch loss - valid: tensor(0.8449, device='cuda:0')
+epoch end metrics
+eval metrics acc, f1 
+0.7563152277039848, 0.7220587737986541
+train metrics acc, f1 
+0.9351539611816406, 0.9339949755572899
+Epoch 9/10
+----------
+eval metrics, batch: 1024 acc, f1
+0.7636477164605138, 0.7318965226483186
+eval metrics, batch: 2048 acc, f1
+0.7646883920076119, 0.7354946524064171
+eval metrics, batch: 3072 acc, f1
+0.7686240403071017, 0.742171573705845
+eval metrics, batch: 4096 acc, f1
+0.7608838263358778, 0.7308247457285757
+train metrics, batch: 4096  acc, f1 
+0.9425048828125, 0.9422023836915007
+eval metrics, batch: 5120 acc, f1
+0.7654283639883833, 0.7348697257744649
+eval metrics, batch: 6144 acc, f1
+0.755218388030888, 0.7191750008651417
+eval metrics, batch: 7168 acc, f1
+0.7591589581304771, 0.7268711825804893
+Epoch loss - train: tensor(0.1756, device='cuda:0', grad_fn=<DivBackward0>)
+Epoch loss - valid: tensor(0.9000, device='cuda:0')
+epoch end metrics
+eval metrics acc, f1 
+0.770694971537002, 0.7457593688362919
+train metrics acc, f1 
+0.9434890747070312, 0.9433212941140461
+Epoch 10/10
+----------
+eval metrics, batch: 1024 acc, f1
+0.791747572815534, 0.7731958762886598
+eval metrics, batch: 2048 acc, f1
+0.7794348983543078, 0.758696011914612
+eval metrics, batch: 3072 acc, f1
+0.7452963311382879, 0.7095151880909274
+eval metrics, batch: 4096 acc, f1
+0.772472249034749, 0.7484408871102218
+train metrics, batch: 4096  acc, f1 
+0.944732666015625, 0.9450883483296821
+eval metrics, batch: 5120 acc, f1
+0.7612788739172281, 0.7303550195345677
+eval metrics, batch: 6144 acc, f1
+0.7401844843897823, 0.6967982335081424
+eval metrics, batch: 7168 acc, f1
+0.7679777992277992, 0.7375818777292577
+Epoch loss - train: tensor(0.1651, device='cuda:0', grad_fn=<DivBackward0>)
+Epoch loss - valid: tensor(1.1079, device='cuda:0')
+epoch end metrics
+eval metrics acc, f1 
+0.7495565279091769, 0.7129933931899034
+train metrics acc, f1 
+0.9497032165527344, 0.9491376350639782
+Training time 109m 45s
+Experiment end
+########################################
