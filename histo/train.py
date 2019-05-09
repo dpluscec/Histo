@@ -6,7 +6,7 @@ import torch.nn as nn
 from sklearn.metrics import confusion_matrix
 import numpy as np
 import histo.metrics as metrics
-from histo.dataset import TRAIN, VALID
+from histo.dataset import TRAIN, VALID, TEST
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -40,11 +40,12 @@ def train(model, loaders_dict, num_epochs, optimizer, criterion, device, hook=No
             hook.epoch_end(epoch=epoch, num_epochs=num_epochs, loaders_dict=loaders_dict,
                            model=model, train_loss=train_loss, valid_loss=valid_loss)
 
-    if hook_flag:
-        hook.training_end()
-
     # load best model weights
     model.load_state_dict(best_model_wts)
+
+    if hook_flag:
+        hook.training_end(best_model=model)
+
     return model
 
 
@@ -123,7 +124,7 @@ class TrainingHook:
     def training_start(self, model, loaders_dict, criterion):
         pass
 
-    def training_end(self):
+    def training_end(self, best_model):
         pass
 
     def epoch_start(self, epoch, num_epochs, loaders_dict):
@@ -171,7 +172,7 @@ class BasicTrainingHook(TrainingHook):
     def training_start(self, model, loaders_dict, criterion):
         self.train_start_time = time.time()
 
-    def training_end(self):
+    def training_end(self, best_model):
         time_elapsed = time.time()-self.train_start_time
         _LOGGER.info('Training time {:.0f}m {:.0f}s'.format(
             time_elapsed // 60, time_elapsed % 60))
@@ -207,12 +208,28 @@ class DetailedMeasurementTrainingHook(BasicTrainingHook):
             'valid_loss': []
             }
 
-    def training_end(self):
+    def training_end(self, best_model):
         super(DetailedMeasurementTrainingHook, self).training_end()
         for metric_key in self.metrics_dict:
             values_str = "\t".join([str(i) for i in self.metrics_dict[metric_key]])
             _LOGGER.info("%s", metric_key)
             _LOGGER.info("%s", values_str)
+        _LOGGER.info("Best model metrics: train, valid, test: acc, f1")
+        train_conf_mat = evaluate(model=best_model, data=self.loaders_dict[TRAIN],
+                                  device=self.device)
+        train_acc = metrics.accuracy(confusion_matrix=train_conf_mat)
+        train_f1 = metrics.f1(confusion_matrix=train_conf_mat)
+        _LOGGER.info("%s, %s", str(train_acc), str(train_f1))
+        val_conf_mat = evaluate(model=best_model, data=self.loaders_dict[VALID],
+                                device=self.device)
+        val_acc = metrics.accuracy(confusion_matrix=val_conf_mat)
+        val_f1 = metrics.f1(confusion_matrix=val_conf_mat)
+        _LOGGER.info("%s, %s", str(val_acc), str(val_f1))
+        test_conf_mat = evaluate(model=best_model, data=self.loaders_dict[TEST],
+                                 device=self.device)
+        test_acc = metrics.accuracy(confusion_matrix=test_conf_mat)
+        test_f1 = metrics.f1(confusion_matrix=test_conf_mat)
+        _LOGGER.info("%s, %s", str(test_acc), str(test_f1))
 
     def training_start(self, model, loaders_dict, criterion):
         super(DetailedMeasurementTrainingHook, self).training_start(
