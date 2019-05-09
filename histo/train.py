@@ -198,6 +198,21 @@ class DetailedMeasurementTrainingHook(BasicTrainingHook):
         super(DetailedMeasurementTrainingHook, self).__init__()
         self.device = device
         self.loaders_dict = None
+        self.metrics_dict = {
+            'train_acc': [],
+            'train_f1': [],
+            'train_loss': [],
+            'valid_acc': [],
+            'valid_f1': [],
+            'valid_loss': []
+            }
+
+    def training_end(self):
+        super(DetailedMeasurementTrainingHook, self).training_end()
+        for metric_key in self.metrics_dict:
+            values_str = "\t".join([str(i) for i in self.metrics_dict[metric_key]])
+            _LOGGER.info("%s", metric_key)
+            _LOGGER.info("%s", values_str)
 
     def training_start(self, model, loaders_dict, criterion):
         super(DetailedMeasurementTrainingHook, self).training_start(
@@ -205,14 +220,20 @@ class DetailedMeasurementTrainingHook(BasicTrainingHook):
         self.loaders_dict = loaders_dict
         _LOGGER.info("start metrics")
         val_conf_mat = evaluate(model=model, data=loaders_dict[VALID], device=self.device)
+        val_acc = metrics.accuracy(confusion_matrix=val_conf_mat)
+        val_f1 = metrics.f1(confusion_matrix=val_conf_mat)
+        self.metrics_dict['valid_acc'].append(val_acc)
+        self.metrics_dict['valid_f1'].append(val_f1)
         _LOGGER.info("eval metrics acc, f1")
-        _LOGGER.info("%s, %s", str(metrics.accuracy(confusion_matrix=val_conf_mat)),
-                     str(metrics.f1(confusion_matrix=val_conf_mat)))
+        _LOGGER.info("%s, %s", str(val_acc), str(val_f1))
         train_conf_mat = evaluate(model=model, data=loaders_dict[TRAIN],
                                   device=self.device)
+        train_acc = metrics.accuracy(confusion_matrix=train_conf_mat)
+        train_f1 = metrics.f1(confusion_matrix=train_conf_mat)
+        self.metrics_dict['train_acc'].append(train_acc)
+        self.metrics_dict['train_f1'].append(train_f1)
         _LOGGER.info("train metrics acc, f1")
-        _LOGGER.info("%s, %s", str(metrics.accuracy(confusion_matrix=train_conf_mat)),
-                     str(metrics.f1(confusion_matrix=train_conf_mat)))
+        _LOGGER.info("%s, %s", str(train_acc), str(train_f1))
 
     def batch_train_end(self, batch_num, data, model, batch_loss):
         # super(DetailedMeasurementTrainingHook, self).batch_train_end(
@@ -220,16 +241,22 @@ class DetailedMeasurementTrainingHook(BasicTrainingHook):
         if batch_num % 1024 == 0 and batch_num > 0:
             val_conf_mat = evaluate(model=model, data=self.loaders_dict[VALID],
                                     device=self.device)
+            val_acc = metrics.accuracy(confusion_matrix=val_conf_mat)
+            val_f1 = metrics.f1(confusion_matrix=val_conf_mat)
+            self.metrics_dict['valid_acc'].append(val_acc)
+            self.metrics_dict['valid_f1'].append(val_f1)
             _LOGGER.info("eval metrics, batch: %s acc, f1", str(batch_num))
-            _LOGGER.info("%s, %s", str(metrics.accuracy(confusion_matrix=val_conf_mat)),
-                         str(metrics.f1(confusion_matrix=val_conf_mat)))
+            _LOGGER.info("%s, %s", str(val_acc), str(val_f1))
 
         if batch_num == 4096:
             train_conf_mat = evaluate(model=model, data=self.loaders_dict[TRAIN],
                                       device=self.device)
+            train_acc = metrics.accuracy(confusion_matrix=train_conf_mat)
+            train_f1 = metrics.f1(confusion_matrix=train_conf_mat)
+            self.metrics_dict['train_acc'].append(train_acc)
+            self.metrics_dict['train_f1'].append(train_f1)
             _LOGGER.info("train metrics, batch: %s  acc, f1 ", str(batch_num))
-            _LOGGER.info("%s, %s", str(metrics.accuracy(confusion_matrix=train_conf_mat)),
-                         str(metrics.f1(confusion_matrix=train_conf_mat)))
+            _LOGGER.info("%s, %s", str(train_acc), str(train_f1))
 
     def batch_valid_end(self, batch_num, data, model, batch_loss):
         pass
@@ -239,12 +266,20 @@ class DetailedMeasurementTrainingHook(BasicTrainingHook):
             epoch=epoch, num_epochs=num_epochs, loaders_dict=loaders_dict, model=model,
             train_loss=train_loss, valid_loss=valid_loss)
         _LOGGER.info("epoch end metrics")
+        self.metrics_dict['train_loss'].append(train_loss)
+        self.metrics_dict['valid_loss'].append(valid_loss)
         val_conf_mat = evaluate(model=model, data=loaders_dict[VALID], device=self.device)
+        val_acc = metrics.accuracy(confusion_matrix=val_conf_mat)
+        val_f1 = metrics.f1(confusion_matrix=val_conf_mat)
+        self.metrics_dict['valid_acc'].append(val_acc)
+        self.metrics_dict['valid_f1'].append(val_f1)
         _LOGGER.info("eval metrics acc, f1 ")
-        _LOGGER.info("%s, %s", str(metrics.accuracy(confusion_matrix=val_conf_mat)),
-                     str(metrics.f1(confusion_matrix=val_conf_mat)))
+        _LOGGER.info("%s, %s", str(val_acc), str(val_f1))
         train_conf_mat = evaluate(model=model, data=loaders_dict[TRAIN],
                                   device=self.device)
+        train_acc = metrics.accuracy(confusion_matrix=train_conf_mat)
+        train_f1 = metrics.f1(confusion_matrix=train_conf_mat)
+        self.metrics_dict['train_acc'].append(train_acc)
+        self.metrics_dict['train_f1'].append(train_f1)
         _LOGGER.info("train metrics acc, f1 ")
-        _LOGGER.info("%s, %s", str(metrics.accuracy(confusion_matrix=train_conf_mat)),
-                     str(metrics.f1(confusion_matrix=train_conf_mat)))
+        _LOGGER.info("%s, %s", str(train_acc), str(train_f1))

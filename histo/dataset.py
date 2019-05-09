@@ -1,3 +1,5 @@
+"""Module contains classes and constants for loading datasets.
+Main dataset is PatchCamelyon, available at https://github.com/basveeling/pcam."""
 import h5py
 import torch
 import torch.utils.data as data

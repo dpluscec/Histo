@@ -30,17 +30,13 @@ if __name__ == "__main__":
 
     # experiment
     series_one = [
-        # experiments.get_experiment_alexnet_1(data_dict=data_dict, device=device), done
-        # experiments.get_experiment_alexnet_2(data_dict=data_dict, device=device), done
-        # experiments.get_experiment_alexnet_3(data_dict=data_dict, device=device),
-        # experiments.get_experiment_alexnet_4(data_dict=data_dict, device=device),
-        # experiments.get_experiment_alexnet_5(data_dict=data_dict, device=device),
-        # experiments.get_experiment_alexnet_6(data_dict=data_dict, device=device),
-        # experiments.get_experiment_resnet_1(data_dict=data_dict, device=device),
-        experiments.get_experiment_resnet_2(data_dict=data_dict, device=device),
-        experiments.get_experiment_resnet_3(data_dict=data_dict, device=device),
-        experiments.get_experiment_resnet_4(data_dict=data_dict, device=device),
-        experiments.get_experiment_resnet_5(data_dict=data_dict, device=device),
-        experiments.get_experiment_resnet_6(data_dict=data_dict, device=device)]
+        experiments.get_experiment_alexnet_7(data_dict=data_dict, device=device),
+        experiments.get_experiment_alexnet_8(data_dict=data_dict, device=device),
+        experiments.get_experiment_alexnet_9(data_dict=data_dict, device=device),
+        experiments.get_experiment_alexnet_10(data_dict=data_dict, device=device),
+        experiments.get_experiment_resnet_7(data_dict=data_dict, device=device),
+        experiments.get_experiment_resnet_8(data_dict=data_dict, device=device),
+        experiments.get_experiment_resnet_9(data_dict=data_dict, device=device),
+        experiments.get_experiment_resnet_10(data_dict=data_dict, device=device)]
     for exp in series_one:
         exp.execute()
