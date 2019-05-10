@@ -16,3 +16,4 @@ Binarna klasifikacija, zadatak ovog rada, je vrsta klasifikacije u kojoj se ulaz
 
 Formalno zadatak nadziranog uèenja možemo definirati kao uèenje preslikavanja f:X->Y iz skupa primjera za uèenje D. Skup primjera za uèenje D sastoji se od parova primjera i pripadnih oznaka, D={(x(i), y(i))}i=1,N gdje je N ukupni broj primjera za uèenje. X predstavlja skup svih moguæih primjera, a pojedini primjer x iz X možemo definiratikao vektor znaèajki x=(x1, x2, ..., xn)T pri èemu je n broj znaèajki, odnosno dimenzija vektora. Y predstavlja prostor moguæih oznaka. [Šnajder, Strojno uèenje; A brief introduction to weakly supervised learning, Zhi-Hua Zhoa]
 
+
