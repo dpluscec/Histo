@@ -1,0 +1,351 @@
+----------------------------------------
+Starting experiment resnet_4
+Experiment parameters Experiment[name: resnet_4, model: ResNet(
+  (conv1): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+  (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (relu): ReLU(inplace)
+  (maxpool): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+  (layer1): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace)
+      (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace)
+      (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (layer2): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace)
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (downsample): Sequential(
+        (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace)
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (layer3): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (downsample): Sequential(
+        (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (layer4): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace)
+      (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (downsample): Sequential(
+        (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace)
+      (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (avgpool): AdaptiveAvgPool2d(output_size=(1, 1))
+  (fc): Linear(in_features=512, out_features=1, bias=True)
+), params: Params(lr: 1e-05, weight_decay: 0, batch_size: 32, num_epochs: 10), optimizer: Adam (
+Parameter Group 0
+    amsgrad: False
+    betas: (0.9, 0.999)
+    eps: 1e-08
+    lr: 1e-05
+    weight_decay: 0
+), criterion: BCEWithLogitsLoss()]
+start metrics
+eval metrics acc, f1
+0.507781982421875, 0.5693305919735121
+train metrics acc, f1
+0.5084915161132812, 0.5653438225292816
+Epoch 1/10
+----------
+eval metrics, batch: 1024 acc, f1
+0.568634033203125, 0.6059490953695186
+eval metrics, batch: 2048 acc, f1
+0.6392822265625, 0.6718125277654375
+eval metrics, batch: 3072 acc, f1
+0.694244384765625, 0.7049156186493093
+eval metrics, batch: 4096 acc, f1
+0.72906494140625, 0.7385747938751472
+train metrics, batch: 4096  acc, f1 
+0.7207527160644531, 0.7265350950924027
+eval metrics, batch: 5120 acc, f1
+0.74945068359375, 0.7536901476059042
+eval metrics, batch: 6144 acc, f1
+0.76239013671875, 0.7610483672968328
+eval metrics, batch: 7168 acc, f1
+0.7706298828125, 0.7706858677080791
+Epoch loss - train: tensor(0.5873, device='cuda:0', grad_fn=<DivBackward0>)
+Epoch loss - valid: tensor(0.5044, device='cuda:0')
+epoch end metrics
+eval metrics acc, f1 
+0.77569580078125, 0.7725162488393686
+train metrics acc, f1 
+0.7715950012207031, 0.7690034451761747
+Epoch 2/10
+----------
+eval metrics, batch: 1024 acc, f1
+0.776275634765625, 0.7699356660913228
+eval metrics, batch: 2048 acc, f1
+0.77923583984375, 0.7730296184738956
+eval metrics, batch: 3072 acc, f1
+0.78173828125, 0.7728369965696862
+eval metrics, batch: 4096 acc, f1
+0.782257080078125, 0.7714239948742592
+train metrics, batch: 4096  acc, f1 
+0.786346435546875, 0.7787539305070552
+eval metrics, batch: 5120 acc, f1
+0.783447265625, 0.7762361251261353
+eval metrics, batch: 6144 acc, f1
+0.785247802734375, 0.7770773275889378
+eval metrics, batch: 7168 acc, f1
+0.787200927734375, 0.7801910285912429
+Epoch loss - train: tensor(0.4771, device='cuda:0', grad_fn=<DivBackward0>)
+Epoch loss - valid: tensor(0.4628, device='cuda:0')
+epoch end metrics
+eval metrics acc, f1 
+0.7857229795520935, 0.7734234234234234
+train metrics acc, f1 
+0.7945556640625, 0.7860547892963834
+Epoch 3/10
+----------
+eval metrics, batch: 1024 acc, f1
+0.790130615234375, 0.7801681424415817
+eval metrics, batch: 2048 acc, f1
+0.790557861328125, 0.7811054763499505
+eval metrics, batch: 3072 acc, f1
+0.79315185546875, 0.7850982878883956
+eval metrics, batch: 4096 acc, f1
+0.7915652385589095, 0.7829393497686798
+train metrics, batch: 4096  acc, f1 
+0.7987213134765625, 0.793556767585079
+eval metrics, batch: 5120 acc, f1
+0.7925998052580331, 0.784044103668969
+eval metrics, batch: 6144 acc, f1
+0.7936952288218111, 0.786966631056369
+eval metrics, batch: 7168 acc, f1
+0.7931475170399221, 0.7850910470409712
+Epoch loss - train: tensor(0.4485, device='cuda:0', grad_fn=<DivBackward0>)
+Epoch loss - valid: tensor(0.4473, device='cuda:0')
+epoch end metrics
+eval metrics acc, f1 
+0.7928432327166505, 0.7843249065450167
+train metrics acc, f1 
+0.8026847839355469, 0.7983202779261593
+Epoch 4/10
+----------
+eval metrics, batch: 1024 acc, f1
+0.793243408203125, 0.7842974943487535
+eval metrics, batch: 2048 acc, f1
+0.791534423828125, 0.779510022271715
+eval metrics, batch: 3072 acc, f1
+0.794036865234375, 0.7851799980902059
+eval metrics, batch: 4096 acc, f1
+0.793182373046875, 0.7822930386456359
+train metrics, batch: 4096  acc, f1 
+0.8045463562011719, 0.7988347120741576
+eval metrics, batch: 5120 acc, f1
+0.79345703125, 0.7831742166976357
+eval metrics, batch: 6144 acc, f1
+0.7935791015625, 0.7836073965064944
+eval metrics, batch: 7168 acc, f1
+0.79296875, 0.7817667117030175
+Epoch loss - train: tensor(0.4353, device='cuda:0', grad_fn=<DivBackward0>)
+Epoch loss - valid: tensor(0.4426, device='cuda:0')
+epoch end metrics
+eval metrics acc, f1 
+0.793365478515625, 0.7817707158281497
+train metrics acc, f1 
+0.8071937561035156, 0.8014050914920453
+Epoch 5/10
+----------
+eval metrics, batch: 1024 acc, f1
+0.79779052734375, 0.7893699535889122
+eval metrics, batch: 2048 acc, f1
+0.7972412109375, 0.7860914359304572
+eval metrics, batch: 3072 acc, f1
+0.798675537109375, 0.7885915718634834
+eval metrics, batch: 4096 acc, f1
+0.79827880859375, 0.7886423226961693
+train metrics, batch: 4096  acc, f1 
+0.8096809387207031, 0.8052266454290277
+eval metrics, batch: 5120 acc, f1
+0.79833984375, 0.7871819645732689
+eval metrics, batch: 6144 acc, f1
+0.7962512171372931, 0.7846945337620579
+eval metrics, batch: 7168 acc, f1
+0.7965250730282376, 0.7854048329642823
+Epoch loss - train: tensor(0.4269, device='cuda:0', grad_fn=<DivBackward0>)
+Epoch loss - valid: tensor(0.4367, device='cuda:0')
+epoch end metrics
+eval metrics acc, f1 
+0.798919677734375, 0.7886583058023543
+train metrics acc, f1 
+0.8112678527832031, 0.8065561720213169
+Epoch 6/10
+----------
+eval metrics, batch: 1024 acc, f1
+0.795928955078125, 0.7828261504985223
+eval metrics, batch: 2048 acc, f1
+0.796295166015625, 0.7848093104226442
+eval metrics, batch: 3072 acc, f1
+0.7978515625, 0.7882082107686404
+eval metrics, batch: 4096 acc, f1
+0.797393798828125, 0.7856381776500597
+train metrics, batch: 4096  acc, f1 
+0.8124046325683594, 0.8071195202403505
+eval metrics, batch: 5120 acc, f1
+0.79766845703125, 0.787213556710957
+eval metrics, batch: 6144 acc, f1
+0.797088623046875, 0.7858546168958742
+eval metrics, batch: 7168 acc, f1
+0.7978515625, 0.7876514714368148
+Epoch loss - train: tensor(0.4206, device='cuda:0', grad_fn=<DivBackward0>)
+Epoch loss - valid: tensor(0.4328, device='cuda:0')
+epoch end metrics
+eval metrics acc, f1 
+0.7943567961165049, 0.7828399333589645
+train metrics acc, f1 
+0.8131599426269531, 0.8078327977808903
+Epoch 7/10
+----------
+eval metrics, batch: 1024 acc, f1
+0.7767175572519084, 0.7544596012591815
+eval metrics, batch: 2048 acc, f1
+0.7913228155339805, 0.7793107873965218
+eval metrics, batch: 3072 acc, f1
+0.7917172330097088, 0.7795793867394445
+eval metrics, batch: 4096 acc, f1
+0.7927184466019418, 0.7820733652312599
+train metrics, batch: 4096  acc, f1 
+0.8121490478515625, 0.8079616890511176
+eval metrics, batch: 5120 acc, f1
+0.7926881067961165, 0.7814209398291802
+eval metrics, batch: 6144 acc, f1
+0.792627427184466, 0.7815945039143634
+eval metrics, batch: 7168 acc, f1
+0.7924757281553398, 0.7799227799227799
+Epoch loss - train: tensor(0.4203, device='cuda:0', grad_fn=<DivBackward0>)
+Epoch loss - valid: tensor(0.4368, device='cuda:0')
+epoch end metrics
+eval metrics acc, f1 
+0.7926881067961165, 0.7805927495745433
+train metrics acc, f1 
+0.8127021789550781, 0.8072863720037523
+Epoch 8/10
+----------
+eval metrics, batch: 1024 acc, f1
+0.7927823758519961, 0.7809866855341867
+eval metrics, batch: 2048 acc, f1
+0.7949427945472249, 0.7858391330600312
+eval metrics, batch: 3072 acc, f1
+0.7940603700097371, 0.784855998474156
+eval metrics, batch: 4096 acc, f1
+0.7933300876338851, 0.7819582664526484
+train metrics, batch: 4096  acc, f1 
+0.815032958984375, 0.810666229334083
+eval metrics, batch: 5120 acc, f1
+0.7932692307692307, 0.7837545356165255
+eval metrics, batch: 6144 acc, f1
+0.7934213729308666, 0.7825084094185488
+eval metrics, batch: 7168 acc, f1
+0.7935126582278481, 0.7814914992272025
+Epoch loss - train: tensor(0.4149, device='cuda:0', grad_fn=<DivBackward0>)
+Epoch loss - valid: tensor(0.4334, device='cuda:0')
+epoch end metrics
+eval metrics acc, f1 
+0.793482229795521, 0.7811139420130938
+train metrics acc, f1 
+0.8159637451171875, 0.8109812955954144
+Epoch 9/10
+----------
+eval metrics, batch: 1024 acc, f1
+0.7960990749756572, 0.7896141408433016
+eval metrics, batch: 2048 acc, f1
+0.7909305421103582, 0.7799815351310051
+eval metrics, batch: 3072 acc, f1
+0.7905372700871249, 0.7794061424748312
+eval metrics, batch: 4096 acc, f1
+0.7906885285575992, 0.7796707320956596
+train metrics, batch: 4096  acc, f1 
+0.8159523010253906, 0.8119457902470777
+eval metrics, batch: 5120 acc, f1
+0.7905070183930301, 0.7795217931166226
+eval metrics, batch: 6144 acc, f1
+0.7911725556631172, 0.7808223527544055
+eval metrics, batch: 7168 acc, f1
+0.7907490319457889, 0.7787338856722433
+Epoch loss - train: tensor(0.4121, device='cuda:0', grad_fn=<DivBackward0>)
+Epoch loss - valid: tensor(0.4324, device='cuda:0')
+epoch end metrics
+eval metrics acc, f1 
+0.7905070183930301, 0.7774528392839927
+train metrics acc, f1 
+0.8170166015625, 0.8113798120404231
+Epoch 10/10
+----------
+eval metrics, batch: 1024 acc, f1
+0.7943264563106797, 0.7851278962883134
+eval metrics, batch: 2048 acc, f1
+0.7896356177606177, 0.7760292889716744
+eval metrics, batch: 3072 acc, f1
+0.7897562741312741, 0.7760282776349614
+eval metrics, batch: 4096 acc, f1
+0.7896054536679536, 0.7764494727733086
+train metrics, batch: 4096  acc, f1 
+0.8175315856933594, 0.8121389212902415
+eval metrics, batch: 5120 acc, f1
+0.7898166023166023, 0.7772236076475478
+eval metrics, batch: 6144 acc, f1
+0.7899372586872587, 0.7780327659845732
+eval metrics, batch: 7168 acc, f1
+0.7904500482625483, 0.7793131929222656
+Epoch loss - train: tensor(0.4089, device='cuda:0', grad_fn=<DivBackward0>)
+Epoch loss - valid: tensor(0.4316, device='cuda:0')
+epoch end metrics
+eval metrics acc, f1 
+0.7899372586872587, 0.7772660397876288
+train metrics acc, f1 
+0.8187294006347656, 0.8140018240103961
+Training time 200m 29s
+Experiment end
+########################################

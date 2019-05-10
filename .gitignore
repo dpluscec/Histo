@@ -33,6 +33,7 @@ literature/*
 images/*
 env/*
 bin/
+models
 .eggs
 histo.egg-info
 *.pdf
