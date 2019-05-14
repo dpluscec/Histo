@@ -25,8 +25,8 @@ if __name__ == "__main__":
     train_set = pcam_dataset.train
     valid_set = pcam_dataset.valid
     test_set = pcam_dataset.test
-    data_dict = {experiments.TRAIN: train_set, experiments.VALID: valid_set,
-                 experiments.TEST: test_set}
+    data_dict = {dataset.TRAIN: train_set, dataset.VALID: valid_set,
+                 dataset.TEST: test_set}
 
     # experiment
     series_one = [

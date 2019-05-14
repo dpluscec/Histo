@@ -1,4 +1,6 @@
-Raèunarstvo je promjenilo zdravstvene sustave iz temelja. Raèunala su se poèela koristiti u administraciji u bolnicama, promjenila su naèin na koji ljeènici bilježe pacijentove podatke sustavima kao što je e-karton u hrvatskom zdravstvenom sustavu, poèeli su se koristiti za naruèivanje ljekova, izdavanje recepata, a izmeðu ostalog i u analizi medicinskih slika i u potpomognutoj dijagnostici. 
+Raèunarstvo je promjenilo zdravstvene sustave iz temelja. Raèunala su se poèela koristiti u administraciji u bolnicama, promjenila su naèin na koji ljeènici bilježe pacijentove podatke sustavima kao što je e-karton u hrvatskom zdravstvenom sustavu, poèeli su se koristiti za naruèivanje ljekova, izdavanje recepata, a izmeðu ostalog i u analizi medicinskih slika i u potpomognutoj dijagnostici korištenjem algoritama strojnog uèenja. 
+
+Važnost primjene korištenja algoritama strojnog uèenja u medicini je prepoznata ne samo od akademske zajednice i medicinskih struènjaka veæ su i èlanice Europske unije prepoznale znaèaj i potpisale Deklaraciju o suradnji na podruèju umjetne inteligencije. U deklaraciji se istièe i primjena umjetne inteligencije u zdravstvu s naglaskom na potrebu za stvaranjem pravne i etièke podloge. [16 - seminar biomed]
 
 Analizu medicinskih slika prvenstveno su radili doktori na otisnutim radiološkim nalazima. Napretkom raèunala i omoguæavanjem spremanja i uèitavanja medicinskih slika u raèunalima omoguæena je i njihova analiza korištenjem algoritama. Tako su se i algoritmi strojnog uèenja poèeli koristiti u analizi medicinskih slika veæ od sredine 60 tih godina prošlog stoljeæa. [Lahiner, Litjens]
 
@@ -9,7 +11,7 @@ Razvojem digitalne mikroskopije omoguæeno je skeniranje veæih uzoraka, s razlièi
 
 U okviru ovog rada predstavljen je problem koji se koristi za raèunalno potpomognutu dijagnozu èiji je cilj oznaèavanje jednog ili više WSI uzoraka u jednu od kategorija bolesti [ML for histo, Komura]. 
 
-Važnost primjene umjetne inteligencije u medicini je prepoznata ne samo od akademske zajednice i medicinskih struènjaka veæ su i èlanice Europske unije prepoznale znaèaj i potpisale Deklaraciju o suradnji na podruèju umjetne inteligencije. U deklaraciji se istièe i primjena umjetne inteligencije u zdravstvu s naglaskom na potrebu za stvaranjem pravne i etièke podloge. [16 - seminar biomed]
+
 
 Pristupe strojnom uèenju možemo podijeliti na nadzirano uèenje, slabo nadzirano uèenje, nenadzirano uèenje i podržano uèenje. [Understanding machine learning]. zadatak ovog rada se svrstava u nadzirano uèenje. Kod nadziranog uèenja dostupni su podaci i njihove oznake. Kada su oznake diskretne i konaène govorimo o klasifikacije, a kada su oznake kontinuirane govorimo o regresiji. [Patter recognition and machine learning, bishop]. 
 Binarna klasifikacija, zadatak ovog rada, je vrsta klasifikacije u kojoj se ulazni primjeri svrstavaju u dva razreda.
