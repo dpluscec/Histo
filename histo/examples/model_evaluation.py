@@ -19,9 +19,9 @@ if __name__ == "__main__":
 
     # load model
     model = models.get_alexnet(num_outputs=1, pretrained=False)
-    model = model.load_state_dict(torch.load("models/alexnet_8-1557441804.pth"))
-    model.eval()
+    model.load_state_dict(torch.load("models/resnet_1-1557378617.pth"))
     model.to(device)
+    model.eval()
 
     # load data
     base_data = ds.PCamDatasets(data_transforms=ds.PCAM_DATA_TRANSFORM)
@@ -51,7 +51,7 @@ if __name__ == "__main__":
     # ROC curve
     fpr, tpr, thresholds = metrics.roc_curve(y_true=labels, y_score=predictions)
     plt.plot([0, 1], [0, 1], linestyle='--')
-    plt.plot(fpr, tpr, marker='.')
+    plt.plot(fpr, tpr, marker='.', markersize=1)
     plt.savefig('roc_example.png')
 
     print("AUC:", metrics.roc_auc_score(y_true=labels, y_score=predictions))
