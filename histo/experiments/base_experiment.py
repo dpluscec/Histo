@@ -93,4 +93,5 @@ class Experiment:
     def _save_model(self):
         file_path = os.path.join(
             ".", MODELS_SAVE_PATH, f"{self.name}-{str(int(time.time()))}.pth")
+        _LOGGER.info("Model saved, path %s", str(file_path))
         torch.save(obj=self.model.state_dict(), f=file_path)
