@@ -18,8 +18,8 @@ if __name__ == "__main__":
     matplotlib.use('Agg')
 
     # load model
-    model = models.get_alexnet(num_outputs=1, pretrained=False)
-    model.load_state_dict(torch.load("models/resnet_1-1557378617.pth"))
+    model = models.get_resnet(num_outputs=1, pretrained=False)
+    model.load_state_dict(torch.load("models/resnet_10-1557478548.pth"))
     model.to(device)
     model.eval()
 
