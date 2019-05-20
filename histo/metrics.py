@@ -1,3 +1,15 @@
+from sklearn import metrics
+import matplotlib
+
+
+try:
+    matplotlib.use('Agg')
+except Exception:
+    pass
+finally:
+    import matplotlib.pyplot as plt
+
+
 # Confussion matrix metrics
 def accuracy(confusion_matrix):
     tn, fp, fn, tp = confusion_matrix.ravel()
@@ -29,13 +41,13 @@ def f1(confusion_matrix):
     return 2*tp/(2*tp+fp+fn)
 
 
-def output_metrics(confusion_matrix, metrics):
+def output_metrics(confusion_matrix, conf_metrics):
     print("Evaluation results")
     print(confusion_matrix)
     print("#############################")
-    for name in metrics:
+    for name in conf_metrics:
         print(name)
-        print(metrics[name](confusion_matrix))
+        print(conf_metrics[name](confusion_matrix))
         print("------------------------")
     print("#############################")
 
@@ -47,3 +59,11 @@ confusion_matrix_metrics_dict = {
     "Fall_out": fall_out,
     "F1": f1
     }
+
+
+def plot_roc_curve(experiment_name, y_true, y_score):
+    # ROC curve
+    fpr, tpr, _ = metrics.roc_curve(y_true=y_true, y_score=y_score)
+    plt.plot([0, 1], [0, 1], linestyle='--')
+    plt.plot(fpr, tpr, marker='.', markersize=1)
+    plt.savefig(f'{experiment_name}_roc.png')

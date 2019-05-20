@@ -117,6 +117,28 @@ def evaluate(model, data, device):
     return result_mat
 
 
+def predict_data(model, data, device, return_labels=True):
+    predictions = []
+    labels = []
+
+    with torch.no_grad():
+        prob_output = nn.Sigmoid()
+        for batch_x, batch_y in data:
+            batch_x = batch_x.to(device)
+            if return_labels:
+                labels.extend(list(batch_y.numpy()))
+            logits = model(batch_x)
+            probs = prob_output(logits)
+            predictions.extend(list(probs.cpu().numpy()))
+
+    predictions = np.array(predictions)
+
+    if return_labels:
+        labels = np.array(labels)
+        return (predictions, labels)
+    return predictions
+
+
 class TrainingHook:
     def __init__(self):
         pass
