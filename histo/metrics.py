@@ -1,6 +1,6 @@
+import logging
 from sklearn import metrics
 import matplotlib
-
 
 try:
     matplotlib.use('Agg')
@@ -8,6 +8,9 @@ except Exception:
     pass
 finally:
     import matplotlib.pyplot as plt
+
+
+_LOGGER = logging.getLogger(__name__)
 
 
 # Confussion matrix metrics
@@ -42,14 +45,14 @@ def f1(confusion_matrix):
 
 
 def output_metrics(confusion_matrix, conf_metrics):
-    print("Evaluation results")
-    print(confusion_matrix)
-    print("#############################")
+    _LOGGER.info("Evaluation results")
+    _LOGGER.info(confusion_matrix)
+    _LOGGER.info("#############################")
     for name in conf_metrics:
-        print(name)
-        print(conf_metrics[name](confusion_matrix))
-        print("------------------------")
-    print("#############################")
+        _LOGGER.info(name)
+        _LOGGER.info(conf_metrics[name](confusion_matrix))
+        _LOGGER.info("------------------------")
+    _LOGGER.info("#############################")
 
 confusion_matrix_metrics_dict = {
     "Accuracy": accuracy,

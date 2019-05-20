@@ -1,6 +1,7 @@
 import os
 import time
 import logging
+from sklearn import metrics as smetrics
 import torch
 from torch.utils.data import DataLoader
 import histo.train as train
@@ -28,7 +29,7 @@ class ExperimentParameters:
 
 class Experiment:
     def __init__(self, name, params, data_dict, model, optimizer, criterion, device):
-        self.name = name
+        self.name = f"{name}-{str(int(time.time()))}"
         self.device = device
         self.params = params
         self.model = model
@@ -72,26 +73,34 @@ class Experiment:
 
     def _validate_experiment(self):
         # validation
-        print("train set")
+        _LOGGER.info("experiment validation")
+        _LOGGER.info("train set")
         train_cmat = train.evaluate(model=self.model, data=self.loaders[TRAIN],
                                     device=self.device)
         metrics.output_metrics(confusion_matrix=train_cmat,
-                               metrics=metrics.confusion_matrix_metrics_dict)
+                               conf_metrics=metrics.confusion_matrix_metrics_dict)
 
-        print("valid set")
+        _LOGGER.info("valid set")
         valid_cmat = train.evaluate(model=self.model, data=self.loaders[VALID],
                                     device=self.device)
         metrics.output_metrics(confusion_matrix=valid_cmat,
-                               metrics=metrics.confusion_matrix_metrics_dict)
+                               conf_metrics=metrics.confusion_matrix_metrics_dict)
 
-        print("test set")
+        _LOGGER.info("test set")
         test_cmat = train.evaluate(model=self.model, data=self.loaders[TEST],
                                    device=self.device)
         metrics.output_metrics(confusion_matrix=test_cmat,
-                               metrics=metrics.confusion_matrix_metrics_dict)
+                               conf_metrics=metrics.confusion_matrix_metrics_dict)
+        test_pred, test_label = train.predict_data(
+            model=self.model, data=self.loaders[TEST], device=self.device,
+            return_labels=True)
+        _LOGGER.info(
+            "AUC: %s", str(smetrics.roc_auc_score(y_true=test_label, y_score=test_pred)))
+        metrics.plot_roc_curve(experiment_name=self.name,
+                               y_true=test_label, y_score=test_pred)
 
     def _save_model(self):
         file_path = os.path.join(
-            ".", MODELS_SAVE_PATH, f"{self.name}-{str(int(time.time()))}.pth")
+            ".", MODELS_SAVE_PATH, f"{self.name}.pth")
         _LOGGER.info("Model saved, path %s", str(file_path))
         torch.save(obj=self.model.state_dict(), f=file_path)
