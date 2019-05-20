@@ -14,12 +14,13 @@ import histo.models as models
 
 
 if __name__ == "__main__":
+    model_name = input("Input model name: ")
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     matplotlib.use('Agg')
 
     # load model
     model = models.get_resnet(num_outputs=1, pretrained=False)
-    model.load_state_dict(torch.load("models/resnet_10-1557478548.pth"))
+    model.load_state_dict(torch.load(f"models/{model_name}.pth"))
     model.to(device)
     model.eval()
 
@@ -52,6 +53,7 @@ if __name__ == "__main__":
     fpr, tpr, thresholds = metrics.roc_curve(y_true=labels, y_score=predictions)
     plt.plot([0, 1], [0, 1], linestyle='--')
     plt.plot(fpr, tpr, marker='.', markersize=1)
-    plt.savefig('roc_example.png')
+    plt.savefig(f'{model_name}_roc.png')
 
+    print(model_name)
     print("AUC:", metrics.roc_auc_score(y_true=labels, y_score=predictions))
