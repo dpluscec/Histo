@@ -231,7 +231,7 @@ class DetailedMeasurementTrainingHook(BasicTrainingHook):
             }
 
     def training_end(self, best_model):
-        super(DetailedMeasurementTrainingHook, self).training_end()
+        super(DetailedMeasurementTrainingHook, self).training_end(best_model=best_model)
         for metric_key in self.metrics_dict:
             values_str = "\t".join([str(i) for i in self.metrics_dict[metric_key]])
             _LOGGER.info("%s", metric_key)
