@@ -38,6 +38,16 @@ def get_dummy_model(input_size, hidden_size, output_size):
     return model
 
 
+def get_densenet(num_outputs, pretrained=True, fixed_weights=False):
+    dense = models.densenet121(pretrained=pretrained)
+    if fixed_weights:
+        for param in dense.parameters():
+            param.requires_grad = False
+    num_features = dense.classifier.in_features
+    dense.classifier = nn.Linear(in_features=num_features, out_features=num_outputs)
+    return dense
+
+
 class DummyModel(nn.Module):
     def __init__(self, input_size, hidden_size, output_size):
         super(DummyModel, self).__init__()

@@ -30,16 +30,18 @@ if __name__ == "__main__":
 
     # experiment
     series_one = [
-        experiments.get_experiment_inception_1(data_dict=data_dict, device=device),
-        experiments.get_experiment_inception_2(data_dict=data_dict, device=device),
-        experiments.get_experiment_inception_3(data_dict=data_dict, device=device),
-        experiments.get_experiment_inception_4(data_dict=data_dict, device=device),
-        experiments.get_experiment_inception_5(data_dict=data_dict, device=device),
-        experiments.get_experiment_inception_6(data_dict=data_dict, device=device),
-        experiments.get_experiment_inception_7(data_dict=data_dict, device=device),
-        experiments.get_experiment_inception_8(data_dict=data_dict, device=device),
-        experiments.get_experiment_inception_9(data_dict=data_dict, device=device),
-        experiments.get_experiment_inception_10(data_dict=data_dict, device=device),
+        experiments.get_experiment_densenet_1(data_dict=data_dict, device=device),
+        experiments.get_experiment_densenet_2(data_dict=data_dict, device=device),
+        experiments.get_experiment_densenet_3(data_dict=data_dict, device=device),
+        experiments.get_experiment_densenet_4(data_dict=data_dict, device=device),
+        experiments.get_experiment_densenet_5(data_dict=data_dict, device=device),
+        experiments.get_experiment_densenet_6(data_dict=data_dict, device=device),
+        experiments.get_experiment_densenet_7(data_dict=data_dict, device=device),
+        experiments.get_experiment_densenet_8(data_dict=data_dict, device=device),
+        experiments.get_experiment_densenet_9(data_dict=data_dict, device=device),
+        experiments.get_experiment_densenet_10(data_dict=data_dict, device=device),
+        experiments.get_experiment_densenet_11(data_dict=data_dict, device=device),
+        experiments.get_experiment_densenet_12(data_dict=data_dict, device=device),
     ]
     for exp in series_one:
         exp.execute()
