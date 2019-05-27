@@ -10,7 +10,7 @@ def get_experiment_densenet_1(data_dict, device):
     learn_rate = 1e-5
     batch_size = 32
     validation_batch_size = 1024
-    num_epochs = 1
+    num_epochs = 10
     weight_decay = 0
 
     params = ExperimentParameters(lr=learn_rate, batch_size=batch_size,
