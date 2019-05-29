@@ -70,3 +70,4 @@ def plot_roc_curve(experiment_name, y_true, y_score):
     plt.plot([0, 1], [0, 1], linestyle='--')
     plt.plot(fpr, tpr, marker='.', markersize=1)
     plt.savefig(f'{experiment_name}_roc.png')
+    plt.clf()

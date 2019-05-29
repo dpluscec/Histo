@@ -1,0 +1,858 @@
+----------------------------------------
+Starting experiment densenet_3-1558897740
+Experiment parameters Experiment[name: densenet_3-1558897740, model: DenseNet(
+  (features): Sequential(
+    (conv0): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+    (norm0): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (relu0): ReLU(inplace)
+    (pool0): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+    (denseblock1): _DenseBlock(
+      (denselayer1): _DenseLayer(
+        (norm1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(64, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer2): _DenseLayer(
+        (norm1): BatchNorm2d(96, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(96, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer3): _DenseLayer(
+        (norm1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer4): _DenseLayer(
+        (norm1): BatchNorm2d(160, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(160, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer5): _DenseLayer(
+        (norm1): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(192, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer6): _DenseLayer(
+        (norm1): BatchNorm2d(224, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(224, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+    )
+    (transition1): _Transition(
+      (norm): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace)
+      (conv): Conv2d(256, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (pool): AvgPool2d(kernel_size=2, stride=2, padding=0)
+    )
+    (denseblock2): _DenseBlock(
+      (denselayer1): _DenseLayer(
+        (norm1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer2): _DenseLayer(
+        (norm1): BatchNorm2d(160, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(160, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer3): _DenseLayer(
+        (norm1): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(192, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer4): _DenseLayer(
+        (norm1): BatchNorm2d(224, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(224, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer5): _DenseLayer(
+        (norm1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(256, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer6): _DenseLayer(
+        (norm1): BatchNorm2d(288, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(288, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer7): _DenseLayer(
+        (norm1): BatchNorm2d(320, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(320, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer8): _DenseLayer(
+        (norm1): BatchNorm2d(352, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(352, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer9): _DenseLayer(
+        (norm1): BatchNorm2d(384, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(384, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer10): _DenseLayer(
+        (norm1): BatchNorm2d(416, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(416, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer11): _DenseLayer(
+        (norm1): BatchNorm2d(448, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(448, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer12): _DenseLayer(
+        (norm1): BatchNorm2d(480, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(480, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+    )
+    (transition2): _Transition(
+      (norm): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace)
+      (conv): Conv2d(512, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (pool): AvgPool2d(kernel_size=2, stride=2, padding=0)
+    )
+    (denseblock3): _DenseBlock(
+      (denselayer1): _DenseLayer(
+        (norm1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(256, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer2): _DenseLayer(
+        (norm1): BatchNorm2d(288, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(288, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer3): _DenseLayer(
+        (norm1): BatchNorm2d(320, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(320, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer4): _DenseLayer(
+        (norm1): BatchNorm2d(352, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(352, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer5): _DenseLayer(
+        (norm1): BatchNorm2d(384, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(384, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer6): _DenseLayer(
+        (norm1): BatchNorm2d(416, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(416, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer7): _DenseLayer(
+        (norm1): BatchNorm2d(448, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(448, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer8): _DenseLayer(
+        (norm1): BatchNorm2d(480, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(480, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer9): _DenseLayer(
+        (norm1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer10): _DenseLayer(
+        (norm1): BatchNorm2d(544, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(544, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer11): _DenseLayer(
+        (norm1): BatchNorm2d(576, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(576, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer12): _DenseLayer(
+        (norm1): BatchNorm2d(608, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(608, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer13): _DenseLayer(
+        (norm1): BatchNorm2d(640, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(640, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer14): _DenseLayer(
+        (norm1): BatchNorm2d(672, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(672, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer15): _DenseLayer(
+        (norm1): BatchNorm2d(704, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(704, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer16): _DenseLayer(
+        (norm1): BatchNorm2d(736, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(736, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer17): _DenseLayer(
+        (norm1): BatchNorm2d(768, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(768, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer18): _DenseLayer(
+        (norm1): BatchNorm2d(800, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(800, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer19): _DenseLayer(
+        (norm1): BatchNorm2d(832, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(832, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer20): _DenseLayer(
+        (norm1): BatchNorm2d(864, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(864, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer21): _DenseLayer(
+        (norm1): BatchNorm2d(896, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(896, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer22): _DenseLayer(
+        (norm1): BatchNorm2d(928, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(928, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer23): _DenseLayer(
+        (norm1): BatchNorm2d(960, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(960, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer24): _DenseLayer(
+        (norm1): BatchNorm2d(992, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(992, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+    )
+    (transition3): _Transition(
+      (norm): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace)
+      (conv): Conv2d(1024, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+      (pool): AvgPool2d(kernel_size=2, stride=2, padding=0)
+    )
+    (denseblock4): _DenseBlock(
+      (denselayer1): _DenseLayer(
+        (norm1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer2): _DenseLayer(
+        (norm1): BatchNorm2d(544, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(544, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer3): _DenseLayer(
+        (norm1): BatchNorm2d(576, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(576, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer4): _DenseLayer(
+        (norm1): BatchNorm2d(608, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(608, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer5): _DenseLayer(
+        (norm1): BatchNorm2d(640, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(640, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer6): _DenseLayer(
+        (norm1): BatchNorm2d(672, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(672, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer7): _DenseLayer(
+        (norm1): BatchNorm2d(704, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(704, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer8): _DenseLayer(
+        (norm1): BatchNorm2d(736, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(736, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer9): _DenseLayer(
+        (norm1): BatchNorm2d(768, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(768, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer10): _DenseLayer(
+        (norm1): BatchNorm2d(800, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(800, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer11): _DenseLayer(
+        (norm1): BatchNorm2d(832, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(832, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer12): _DenseLayer(
+        (norm1): BatchNorm2d(864, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(864, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer13): _DenseLayer(
+        (norm1): BatchNorm2d(896, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(896, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer14): _DenseLayer(
+        (norm1): BatchNorm2d(928, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(928, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer15): _DenseLayer(
+        (norm1): BatchNorm2d(960, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(960, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+      (denselayer16): _DenseLayer(
+        (norm1): BatchNorm2d(992, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu1): ReLU(inplace)
+        (conv1): Conv2d(992, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (norm2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu2): ReLU(inplace)
+        (conv2): Conv2d(128, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      )
+    )
+    (norm5): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  )
+  (classifier): Linear(in_features=1024, out_features=1, bias=True)
+), params: Params(lr: 0.0001, weight_decay: 0, batch_size: 32, num_epochs: 10), optimizer: Adam (
+Parameter Group 0
+    amsgrad: False
+    betas: (0.9, 0.999)
+    eps: 1e-08
+    lr: 0.0001
+    weight_decay: 0
+), criterion: BCEWithLogitsLoss()]
+start metrics
+eval metrics acc, f1
+0.53106689453125, 0.5336570561456753
+train metrics acc, f1
+0.5134620666503906, 0.5157066969421967
+Epoch 1/10
+----------
+eval metrics, batch: 1024 acc, f1
+0.86865234375, 0.8559957173447538
+eval metrics, batch: 2048 acc, f1
+0.89056396484375, 0.8917531997102149
+eval metrics, batch: 3072 acc, f1
+0.859954833984375, 0.8436083563371162
+eval metrics, batch: 4096 acc, f1
+0.891357421875, 0.8872490023437005
+train metrics, batch: 4096  acc, f1 
+0.9479904174804688, 0.9489294436703076
+eval metrics, batch: 5120 acc, f1
+0.88104248046875, 0.8716834551320034
+eval metrics, batch: 6144 acc, f1
+0.893157958984375, 0.888804192472606
+eval metrics, batch: 7168 acc, f1
+0.8795166015625, 0.8678980124472997
+Epoch loss - train: tensor(0.1771, device='cuda:0', grad_fn=<DivBackward0>)
+Epoch loss - valid: tensor(0.5003, device='cuda:0')
+epoch end metrics
+eval metrics acc, f1 
+0.8372802734375, 0.8098430813124109
+train metrics acc, f1 
+0.9525337219238281, 0.9509130573713258
+Epoch 2/10
+----------
+eval metrics, batch: 1024 acc, f1
+0.8701171875, 0.8551099611901681
+eval metrics, batch: 2048 acc, f1
+0.88525390625, 0.8762750904902928
+eval metrics, batch: 3072 acc, f1
+0.86676025390625, 0.8528777463269982
+eval metrics, batch: 4096 acc, f1
+0.903411865234375, 0.8993032356590627
+train metrics, batch: 4096  acc, f1 
+0.964569091796875, 0.9649374476213486
+eval metrics, batch: 5120 acc, f1
+0.88818359375, 0.8800261951538966
+eval metrics, batch: 6144 acc, f1
+0.8818359375, 0.8735714752171357
+eval metrics, batch: 7168 acc, f1
+0.882354736328125, 0.8775685203417284
+Epoch loss - train: tensor(0.1227, device='cuda:0', grad_fn=<DivBackward0>)
+Epoch loss - valid: tensor(0.4928, device='cuda:0')
+epoch end metrics
+eval metrics acc, f1 
+0.81732177734375, 0.7833827893175074
+train metrics acc, f1 
+0.9647979736328125, 0.9642014772515672
+Epoch 3/10
+----------
+eval metrics, batch: 1024 acc, f1
+0.872833251953125, 0.8613080379430854
+eval metrics, batch: 2048 acc, f1
+0.838348388671875, 0.8100821053386397
+eval metrics, batch: 3072 acc, f1
+0.844879150390625, 0.8197453810418809
+eval metrics, batch: 4096 acc, f1
+0.8167724609375, 0.7827471414097554
+train metrics, batch: 4096  acc, f1 
+0.9636344909667969, 0.9631351196668123
+eval metrics, batch: 5120 acc, f1
+0.851837158203125, 0.8285724374139332
+eval metrics, batch: 6144 acc, f1
+0.89349365234375, 0.8856862102849656
+eval metrics, batch: 7168 acc, f1
+0.88812255859375, 0.8781493053247358
+Epoch loss - train: tensor(0.1008, device='cuda:0', grad_fn=<DivBackward0>)
+Epoch loss - valid: tensor(0.3519, device='cuda:0')
+epoch end metrics
+eval metrics acc, f1 
+0.88018798828125, 0.8690984262469992
+train metrics acc, f1 
+0.977447509765625, 0.9774959270368622
+Epoch 4/10
+----------
+eval metrics, batch: 1024 acc, f1
+0.87908935546875, 0.8683020874883659
+eval metrics, batch: 2048 acc, f1
+0.841796875, 0.8150816865235072
+eval metrics, batch: 3072 acc, f1
+0.86669921875, 0.851175468483816
+eval metrics, batch: 4096 acc, f1
+0.8804931640625, 0.868440502586844
+train metrics, batch: 4096  acc, f1 
+0.9787635803222656, 0.9786625680808576
+eval metrics, batch: 5120 acc, f1
+0.8896484375, 0.8820074397963845
+eval metrics, batch: 6144 acc, f1
+0.87982177734375, 0.8677991137370753
+eval metrics, batch: 7168 acc, f1
+0.85894775390625, 0.8390332242111862
+Epoch loss - train: tensor(0.0849, device='cuda:0', grad_fn=<DivBackward0>)
+Epoch loss - valid: tensor(0.2890, device='cuda:0')
+epoch end metrics
+eval metrics acc, f1 
+0.901153564453125, 0.8947522339561332
+train metrics acc, f1 
+0.97894287109375, 0.9789914367269268
+Epoch 5/10
+----------
+eval metrics, batch: 1024 acc, f1
+0.861053466796875, 0.8425493654251824
+eval metrics, batch: 2048 acc, f1
+0.849761962890625, 0.8271600603868975
+eval metrics, batch: 3072 acc, f1
+0.869049072265625, 0.8541022066573731
+eval metrics, batch: 4096 acc, f1
+0.839691162109375, 0.8116326603793882
+train metrics, batch: 4096  acc, f1 
+0.9749183654785156, 0.9743857448391658
+eval metrics, batch: 5120 acc, f1
+0.87115478515625, 0.8553416021380114
+eval metrics, batch: 6144 acc, f1
+0.856292724609375, 0.8351248205595042
+eval metrics, batch: 7168 acc, f1
+0.899658203125, 0.8988058599039763
+Epoch loss - train: tensor(0.0735, device='cuda:0', grad_fn=<DivBackward0>)
+Epoch loss - valid: tensor(0.4760, device='cuda:0')
+epoch end metrics
+eval metrics acc, f1 
+0.85498046875, 0.8342402678945166
+train metrics acc, f1 
+0.9837379455566406, 0.9836269573333026
+Epoch 6/10
+----------
+eval metrics, batch: 1024 acc, f1
+0.8641357421875, 0.848807987502547
+eval metrics, batch: 2048 acc, f1
+0.8756103515625, 0.8641061545642462
+eval metrics, batch: 3072 acc, f1
+0.894866943359375, 0.890115147842174
+eval metrics, batch: 4096 acc, f1
+0.898284912109375, 0.8927640680801776
+train metrics, batch: 4096  acc, f1 
+0.9803428649902344, 0.9804449875338218
+eval metrics, batch: 5120 acc, f1
+0.9013671875, 0.8969781971184496
+eval metrics, batch: 6144 acc, f1
+0.885711669921875, 0.8783498457040767
+eval metrics, batch: 7168 acc, f1
+0.85626220703125, 0.8351879067814403
+Epoch loss - train: tensor(0.0644, device='cuda:0', grad_fn=<DivBackward0>)
+Epoch loss - valid: tensor(0.6796, device='cuda:0')
+epoch end metrics
+eval metrics acc, f1 
+0.811431884765625, 0.7708680980457596
+train metrics acc, f1 
+0.9784355163574219, 0.9780460051341201
+Epoch 7/10
+----------
+eval metrics, batch: 1024 acc, f1
+0.863189697265625, 0.8491537400316296
+eval metrics, batch: 2048 acc, f1
+0.80718994140625, 0.7633353311357507
+eval metrics, batch: 3072 acc, f1
+0.898193359375, 0.8937647283612509
+eval metrics, batch: 4096 acc, f1
+0.8695068359375, 0.8554526401189912
+train metrics, batch: 4096  acc, f1 
+0.9856300354003906, 0.985646735175215
+eval metrics, batch: 5120 acc, f1
+0.897125244140625, 0.8912826136033799
+eval metrics, batch: 6144 acc, f1
+0.84088134765625, 0.8139982876712328
+eval metrics, batch: 7168 acc, f1
+0.8861083984375, 0.8778635947113497
+Epoch loss - train: tensor(0.0568, device='cuda:0', grad_fn=<DivBackward0>)
+Epoch loss - valid: tensor(0.4885, device='cuda:0')
+epoch end metrics
+eval metrics acc, f1 
+0.881683349609375, 0.870960226327176
+train metrics acc, f1 
+0.9867362976074219, 0.9867470660207275
+Epoch 8/10
+----------
+eval metrics, batch: 1024 acc, f1
+0.864837646484375, 0.8482231589047668
+eval metrics, batch: 2048 acc, f1
+0.858001708984375, 0.8397120121258053
+eval metrics, batch: 3072 acc, f1
+0.81829833984375, 0.7820005858230814
+eval metrics, batch: 4096 acc, f1
+0.884796142578125, 0.8731220381138036
+train metrics, batch: 4096  acc, f1 
+0.9878387451171875, 0.9877753236394871
+eval metrics, batch: 5120 acc, f1
+0.888092041015625, 0.8804408072772326
+eval metrics, batch: 6144 acc, f1
+0.879638671875, 0.8716229412147647
+eval metrics, batch: 7168 acc, f1
+0.889892578125, 0.8811515910139008
+Epoch loss - train: tensor(0.0503, device='cuda:0', grad_fn=<DivBackward0>)
+Epoch loss - valid: tensor(0.5230, device='cuda:0')
+epoch end metrics
+eval metrics acc, f1 
+0.87310791015625, 0.8589169381107492
+train metrics acc, f1 
+0.9911651611328125, 0.9911544308051913
+Epoch 9/10
+----------
+eval metrics, batch: 1024 acc, f1
+0.8914794921875, 0.8823840709135411
+eval metrics, batch: 2048 acc, f1
+0.87994384765625, 0.8682606657290202
+eval metrics, batch: 3072 acc, f1
+0.8466796875, 0.8242865137101287
+eval metrics, batch: 4096 acc, f1
+0.87469482421875, 0.8609172820269629
+train metrics, batch: 4096  acc, f1 
+0.9885520935058594, 0.9885134023065058
+eval metrics, batch: 5120 acc, f1
+0.899078369140625, 0.8934154123827635
+eval metrics, batch: 6144 acc, f1
+0.88275146484375, 0.8706919763058697
+eval metrics, batch: 7168 acc, f1
+0.89373779296875, 0.8887042127469156
+Epoch loss - train: tensor(0.0444, device='cuda:0', grad_fn=<DivBackward0>)
+Epoch loss - valid: tensor(0.5060, device='cuda:0')
+epoch end metrics
+eval metrics acc, f1 
+0.8841552734375, 0.8737948001861826
+train metrics acc, f1 
+0.9907341003417969, 0.9907455032442174
+Epoch 10/10
+----------
+eval metrics, batch: 1024 acc, f1
+0.875518798828125, 0.8632905452961088
+eval metrics, batch: 2048 acc, f1
+0.876495361328125, 0.864689558326925
+eval metrics, batch: 3072 acc, f1
+0.8392333984375, 0.8133503401360545
+eval metrics, batch: 4096 acc, f1
+0.887176513671875, 0.8791790581391549
+train metrics, batch: 4096  acc, f1 
+0.9898223876953125, 0.9898836697859948
+eval metrics, batch: 5120 acc, f1
+0.8448486328125, 0.8198823779494083
+eval metrics, batch: 6144 acc, f1
+0.852447509765625, 0.8309499667843782
+eval metrics, batch: 7168 acc, f1
+0.8658447265625, 0.8494417425851085
+Epoch loss - train: tensor(0.0396, device='cuda:0', grad_fn=<DivBackward0>)
+Epoch loss - valid: tensor(0.5310, device='cuda:0')
+epoch end metrics
+eval metrics acc, f1 
+0.87603759765625, 0.8626124602584049
+train metrics acc, f1 
+0.9901199340820312, 0.9901204617062993
+Training time 238m 50s
+train_acc
+0.5134620666503906	0.9479904174804688	0.9525337219238281	0.964569091796875	0.9647979736328125	0.9636344909667969	0.977447509765625	0.9787635803222656	0.97894287109375	0.9749183654785156	0.9837379455566406	0.9803428649902344	0.9784355163574219	0.9856300354003906	0.9867362976074219	0.9878387451171875	0.9911651611328125	0.9885520935058594	0.9907341003417969	0.9898223876953125	0.9901199340820312
+train_f1
+0.5157066969421967	0.9489294436703076	0.9509130573713258	0.9649374476213486	0.9642014772515672	0.9631351196668123	0.9774959270368622	0.9786625680808576	0.9789914367269268	0.9743857448391658	0.9836269573333026	0.9804449875338218	0.9780460051341201	0.985646735175215	0.9867470660207275	0.9877753236394871	0.9911544308051913	0.9885134023065058	0.9907455032442174	0.9898836697859948	0.9901204617062993
+train_loss
+tensor(0.1771, device='cuda:0', grad_fn=<DivBackward0>)	tensor(0.1227, device='cuda:0', grad_fn=<DivBackward0>)	tensor(0.1008, device='cuda:0', grad_fn=<DivBackward0>)	tensor(0.0849, device='cuda:0', grad_fn=<DivBackward0>)	tensor(0.0735, device='cuda:0', grad_fn=<DivBackward0>)	tensor(0.0644, device='cuda:0', grad_fn=<DivBackward0>)	tensor(0.0568, device='cuda:0', grad_fn=<DivBackward0>)	tensor(0.0503, device='cuda:0', grad_fn=<DivBackward0>)	tensor(0.0444, device='cuda:0', grad_fn=<DivBackward0>)	tensor(0.0396, device='cuda:0', grad_fn=<DivBackward0>)
+valid_acc
+0.53106689453125	0.86865234375	0.89056396484375	0.859954833984375	0.891357421875	0.88104248046875	0.893157958984375	0.8795166015625	0.8372802734375	0.8701171875	0.88525390625	0.86676025390625	0.903411865234375	0.88818359375	0.8818359375	0.882354736328125	0.81732177734375	0.872833251953125	0.838348388671875	0.844879150390625	0.8167724609375	0.851837158203125	0.89349365234375	0.88812255859375	0.88018798828125	0.87908935546875	0.841796875	0.86669921875	0.8804931640625	0.8896484375	0.87982177734375	0.85894775390625	0.901153564453125	0.861053466796875	0.849761962890625	0.869049072265625	0.839691162109375	0.87115478515625	0.856292724609375	0.899658203125	0.85498046875	0.8641357421875	0.8756103515625	0.894866943359375	0.898284912109375	0.9013671875	0.885711669921875	0.85626220703125	0.811431884765625	0.863189697265625	0.80718994140625	0.898193359375	0.8695068359375	0.897125244140625	0.84088134765625	0.8861083984375	0.881683349609375	0.864837646484375	0.858001708984375	0.81829833984375	0.884796142578125	0.888092041015625	0.879638671875	0.889892578125	0.87310791015625	0.8914794921875	0.87994384765625	0.8466796875	0.87469482421875	0.899078369140625	0.88275146484375	0.89373779296875	0.8841552734375	0.875518798828125	0.876495361328125	0.8392333984375	0.887176513671875	0.8448486328125	0.852447509765625	0.8658447265625	0.87603759765625
+valid_f1
+0.5336570561456753	0.8559957173447538	0.8917531997102149	0.8436083563371162	0.8872490023437005	0.8716834551320034	0.888804192472606	0.8678980124472997	0.8098430813124109	0.8551099611901681	0.8762750904902928	0.8528777463269982	0.8993032356590627	0.8800261951538966	0.8735714752171357	0.8775685203417284	0.7833827893175074	0.8613080379430854	0.8100821053386397	0.8197453810418809	0.7827471414097554	0.8285724374139332	0.8856862102849656	0.8781493053247358	0.8690984262469992	0.8683020874883659	0.8150816865235072	0.851175468483816	0.868440502586844	0.8820074397963845	0.8677991137370753	0.8390332242111862	0.8947522339561332	0.8425493654251824	0.8271600603868975	0.8541022066573731	0.8116326603793882	0.8553416021380114	0.8351248205595042	0.8988058599039763	0.8342402678945166	0.848807987502547	0.8641061545642462	0.890115147842174	0.8927640680801776	0.8969781971184496	0.8783498457040767	0.8351879067814403	0.7708680980457596	0.8491537400316296	0.7633353311357507	0.8937647283612509	0.8554526401189912	0.8912826136033799	0.8139982876712328	0.8778635947113497	0.870960226327176	0.8482231589047668	0.8397120121258053	0.7820005858230814	0.8731220381138036	0.8804408072772326	0.8716229412147647	0.8811515910139008	0.8589169381107492	0.8823840709135411	0.8682606657290202	0.8242865137101287	0.8609172820269629	0.8934154123827635	0.8706919763058697	0.8887042127469156	0.8737948001861826	0.8632905452961088	0.864689558326925	0.8133503401360545	0.8791790581391549	0.8198823779494083	0.8309499667843782	0.8494417425851085	0.8626124602584049
+valid_loss
+tensor(0.5003, device='cuda:0')	tensor(0.4928, device='cuda:0')	tensor(0.3519, device='cuda:0')	tensor(0.2890, device='cuda:0')	tensor(0.4760, device='cuda:0')	tensor(0.6796, device='cuda:0')	tensor(0.4885, device='cuda:0')	tensor(0.5230, device='cuda:0')	tensor(0.5060, device='cuda:0')	tensor(0.5310, device='cuda:0')
+Best model metrics: train, valid, test: acc, f1
+0.97894287109375, 0.9789914367269268
+0.901153564453125, 0.8947522339561332
+0.86700439453125, 0.8522210918955578
+Model saved, path ./models/densenet_3-1558897740.pth
+experiment validation
+train set
+Evaluation results
+[[128009.   3063.]
+ [  2457. 128615.]]
+#############################
+Accuracy
+0.97894287109375
+------------------------
+Recall
+0.9812545776367188
+------------------------
+Specificity
+0.9766311645507812
+------------------------
+Precision
+0.9767387110982853
+------------------------
+Fall_out
+0.02336883544921875
+------------------------
+F1
+0.9789914367269268
+------------------------
+#############################
+valid set
+Evaluation results
+[[15761.   638.]
+ [ 2601. 13768.]]
+#############################
+Accuracy
+0.901153564453125
+------------------------
+Recall
+0.8411020832060603
+------------------------
+Specificity
+0.9610951887310202
+------------------------
+Precision
+0.9557128974038595
+------------------------
+Fall_out
+0.038904811268979815
+------------------------
+F1
+0.8947522339561332
+------------------------
+#############################
+test set
+Evaluation results
+[[15844.   547.]
+ [ 3811. 12566.]]
+#############################
+Accuracy
+0.86700439453125
+------------------------
+Recall
+0.7672955974842768
+------------------------
+Specificity
+0.9666280275761089
+------------------------
+Precision
+0.9582856707084573
+------------------------
+Fall_out
+0.03337197242389116
+------------------------
+F1
+0.8522210918955578
+------------------------
+#############################
+AUC: 0.9409463130174925
+Experiment end
+########################################
