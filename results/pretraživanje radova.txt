@@ -1,0 +1,9 @@
+("deep learning" OR "deep neural network" OR "deep convolution" OR "convolutional neural network" OR "shift-invariant artificial neural network" OR "MTTANN") AND (radiography OR x-ray OR mammography OR CT OR MRI or PET OR ultrasound OR therapy OR radiology OR MR or mmamogram OR SPECT OR histopathology)
+
+2013 26
+2014 28
+2015 48
+2016 183
+2017 561
+2018 1179
+2019 727, linearno (727/151)*365 1757 --> diff 1030
