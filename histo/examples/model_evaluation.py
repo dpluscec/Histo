@@ -13,7 +13,7 @@ if __name__ == "__main__":
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     # load model
     model = models.get_resnet(num_outputs=1, pretrained=False)
-    model.load_state_dict(torch.load(f"models/{model_name}.pth"))
+    model.load_state_dict(torch.load(f=f"models/{model_name}.pth"))
     model.to(device)
     model.eval()
 
@@ -25,6 +25,8 @@ if __name__ == "__main__":
     predictions, labels = train.predict_data(
         model=model, data=test_iter, device=device, return_labels=True)
 
+    print(model_name)
+
     # Accuracy and F1 metric
     confusion_matrix = train.evaluate(model, test_iter, device)
     print("Accuracy:", hmetrics.accuracy(confusion_matrix=confusion_matrix))
@@ -33,5 +35,4 @@ if __name__ == "__main__":
     hmetrics.plot_roc_curve(
         experiment_name=model_name, y_true=labels, y_score=predictions)
 
-    print(model_name)
     print("AUC:", metrics.roc_auc_score(y_true=labels, y_score=predictions))

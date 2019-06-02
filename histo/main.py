@@ -7,11 +7,14 @@ import histo.dataset as dataset
 import histo.experiments as experiments
 
 
-if __name__ == "__main__":
-    # set random seed
+def set_random_seed():
     random.seed(42)
     np.random.seed(42)
     torch.manual_seed(42)
+
+
+if __name__ == "__main__":
+    set_random_seed()
 
     # constants
     num_classes = 1
@@ -30,7 +33,15 @@ if __name__ == "__main__":
 
     # experiment
     series_one = [
-        experiments.get_experiment_alexnet_sgd(data_dict=data_dict, device=device),
+        experiments.get_experiment_resnet_11(data_dict=data_dict, device=device),
+        experiments.get_experiment_resnet_12(data_dict=data_dict, device=device),
+        experiments.get_experiment_resnet_13(data_dict=data_dict, device=device),
+        experiments.get_experiment_resnet_14(data_dict=data_dict, device=device),
+        experiments.get_experiment_alexnet_11(data_dict=data_dict, device=device),
+        experiments.get_experiment_alexnet_12(data_dict=data_dict, device=device),
+        experiments.get_experiment_alexnet_13(data_dict=data_dict, device=device),
+        experiments.get_experiment_alexnet_14(data_dict=data_dict, device=device)
     ]
     for exp in series_one:
+        set_random_seed()
         exp.execute()
