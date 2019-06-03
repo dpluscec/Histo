@@ -86,8 +86,15 @@ def run_epoch(model, data, optimizer, criterion, phase, device, hook=None):
 
         model.zero_grad()
         with torch.set_grad_enabled(phase == TRAIN):
-            logits = model(batch_x)
-            loss = criterion(input=logits, target=batch_y)
+            loss = None
+            if model.__class__.__name__ == "Inception3":
+                outputs, aux_outputs = model(batch_x)
+                loss_main = criterion(input=outputs, target=batch_y)
+                loss_aux = criterion(input=aux_outputs, target=batch_y)
+                loss = loss_main + 0.4*loss_aux
+            else:
+                logits = model(batch_x)
+                loss = criterion(input=logits, target=batch_y)
             running_loss += loss
             if phase == TRAIN:
                 loss.backward()

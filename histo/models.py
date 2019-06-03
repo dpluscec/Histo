@@ -28,14 +28,12 @@ def get_inception(num_outputs, pretrained=True, fixed_weights=False):
     if fixed_weights:
         for param in inception.parameters():
             param.requires_grad = False
-    num_features = inception.fc.in_features
-    inception.fc = nn.Linear(in_features=num_features, out_features=num_outputs)
+    num_features_main = inception.fc.in_features
+    inception.fc = nn.Linear(in_features=num_features_main, out_features=num_outputs)
+    num_features_aux = inception.AuxLogits.fc.in_features
+    inception.AuxLogits.fc = nn.Linear(in_features=num_features_aux,
+                                       out_features=num_outputs)
     return inception
-
-
-def get_dummy_model(input_size, hidden_size, output_size):
-    model = DummyModel(input_size, hidden_size, output_size)
-    return model
 
 
 def get_densenet(num_outputs, pretrained=True, fixed_weights=False):
@@ -46,19 +44,3 @@ def get_densenet(num_outputs, pretrained=True, fixed_weights=False):
     num_features = dense.classifier.in_features
     dense.classifier = nn.Linear(in_features=num_features, out_features=num_outputs)
     return dense
-
-
-class DummyModel(nn.Module):
-    def __init__(self, input_size, hidden_size, output_size):
-        super(DummyModel, self).__init__()
-        self.input_size = input_size
-        self.model = nn.Sequential(
-            nn.Linear(input_size, hidden_size),
-            nn.ReLU(inplace=True),
-            nn.Linear(hidden_size, output_size)
-        )
-
-    def forward(self, x):
-        x = x.view(x.size(0), self.input_size)
-        x = self.model(x)
-        return x
