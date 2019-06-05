@@ -1,3 +1,4 @@
+"""Module contains basic experiment logic and class for experiment parameters."""
 import os
 import time
 import logging
@@ -14,8 +15,24 @@ NUM_CLASSES = 1
 
 
 class ExperimentParameters:
+    """Class is a holder for experiment parameters"""
     def __init__(self, lr=1e-5, batch_size=32, validation_batch_size=32,
                  num_epochs=5, weight_decay=0):
+        """Constructor that initializes experiment parameters.
+
+        Parameters
+        ----------
+        lr : float
+            model learning rate
+        batch_size : int
+            batch size used when iterating over training set
+        validation_batch_size : int
+            batch size used when iterating over validation set
+        num_epochs : int
+            number of epochs for training a model
+        weight_decay : float
+            L2 weight decay coefficient
+        """
         self.learn_rate = lr
         self.batch_size = batch_size
         self.validation_batch_size = validation_batch_size
@@ -28,7 +45,29 @@ class ExperimentParameters:
 
 
 class Experiment:
+    """Class defines basic experiment for training and validating a deep learning model
+    defined in PyTorch."""
     def __init__(self, name, params, data_dict, model, optimizer, criterion, device):
+        """Constructor that initializes experiment. Experiment is started by using
+        execute method.
+
+        Parameters
+        ----------
+        name : str
+            experiment name
+        params : ExperimentParameters
+            parameters for model training
+        data_dict : dict(str, torch.utils.data.DataLoader)
+            dictionary that maps dataset subset names (TRAIN, VALID, TEST) to dataloaders
+        model : nn.Module
+            PyTorch model used in experiment
+        optimizer : torch.optim.Optimizer
+            model optimizer, None if validation phase
+        criterion : loss
+            pytorch loss function
+        device : torch.device
+            device on which to perform operations
+        """
         self.name = f"{name}-{str(int(time.time()))}"
         self.device = device
         self.params = params

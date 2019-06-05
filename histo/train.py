@@ -145,7 +145,7 @@ def predict_data(model, data, device, return_labels=True):
     -------
     predictions or (predictions, labels)
         return type is defined with return_labels flag
-    """ 
+    """
     predictions = []
     labels = []
     model.eval()

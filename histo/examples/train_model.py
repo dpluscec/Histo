@@ -1,3 +1,4 @@
+"""Module contains example for training model on PCam Dataset."""
 # pylint: disable=C0103
 import random
 import numpy as np
@@ -61,14 +62,14 @@ if __name__ == "__main__":
     print("train set")
     train_cmat = train.evaluate(model=model, data=train_iter, device=device)
     metrics.output_metrics(confusion_matrix=train_cmat,
-                           metrics=metrics.confusion_matrix_metrics_dict)
+                           conf_metrics=metrics.confusion_matrix_metrics_dict)
 
     print("valid set")
     valid_cmat = train.evaluate(model=model, data=valid_iter, device=device)
     metrics.output_metrics(confusion_matrix=valid_cmat,
-                           metrics=metrics.confusion_matrix_metrics_dict)
+                           conf_metrics=metrics.confusion_matrix_metrics_dict)
 
     print("test set")
     test_cmat = train.evaluate(model=model, data=test_iter, device=device)
     metrics.output_metrics(confusion_matrix=test_cmat,
-                           metrics=metrics.confusion_matrix_metrics_dict)
+                           conf_metrics=metrics.confusion_matrix_metrics_dict)
