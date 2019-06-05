@@ -87,7 +87,7 @@ def run_epoch(model, data, optimizer, criterion, phase, device, hook=None):
         model.zero_grad()
         with torch.set_grad_enabled(phase == TRAIN):
             loss = None
-            if model.__class__.__name__ == "Inception3":
+            if model.__class__.__name__ == "Inception3" and phase == TRAIN:
                 outputs, aux_outputs = model(batch_x)
                 loss_main = criterion(input=outputs, target=batch_y)
                 loss_aux = criterion(input=aux_outputs, target=batch_y)
@@ -127,7 +127,7 @@ def evaluate(model, data, device):
 def predict_data(model, data, device, return_labels=True):
     predictions = []
     labels = []
-
+    model.eval()
     with torch.no_grad():
         prob_output = nn.Sigmoid()
         for batch_x, batch_y in data:
