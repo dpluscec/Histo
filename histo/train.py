@@ -1,3 +1,5 @@
+"""Model contains functions for training PyTorch model."""
+
 import time
 import logging
 import copy
@@ -125,6 +127,25 @@ def evaluate(model, data, device):
 
 
 def predict_data(model, data, device, return_labels=True):
+    """Function calculates model predictions for given data.
+
+    Parameters
+    ----------
+    model : nn.Module
+        PyTorch model instance
+    data : torch.utils.data.DataLoader
+        dataloader used for iterating over data
+    device : torch.device
+        device on which to perform operations
+    return_labels : bool
+        if true function will return target labels from data, otherwise returns only
+        predictions
+
+    Returns
+    -------
+    predictions or (predictions, labels)
+        return type is defined with return_labels flag
+    """ 
     predictions = []
     labels = []
     model.eval()
