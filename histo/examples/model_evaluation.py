@@ -1,3 +1,4 @@
+"""Module contains example on evaluating saved model on test set."""
 # pylint: disable=C0103
 from sklearn import metrics
 import torch

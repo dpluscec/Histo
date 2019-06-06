@@ -1,3 +1,4 @@
+"""Module contains ResNet experiment definitions."""
 import torch
 import torch.nn as nn
 import histo.models as models

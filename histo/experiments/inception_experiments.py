@@ -1,3 +1,7 @@
+"""Module contains Inception experiment definitions.
+Important note: before using inception experiments, images should be resized to 299x299,
+this can be performed in dataset transformations.
+"""
 import torch
 import torch.nn as nn
 import histo.models as models
