@@ -33,6 +33,7 @@ PCAM_DATA_TRANSFORM = {
 
 
 class PCamDatasets:
+    """Class is a holder for PCam dataset splits."""
     train_x_path = "data/pcam/"\
                    "camelyonpatch_level_2_split_train_x.h5"
     train_y_path = "data/pcam/"\
@@ -74,6 +75,7 @@ class PCamDatasets:
 
 
 class PCamDataset(data.Dataset):
+    """Class models one of PCam dataset splits as PyTorch Dataset module."""
     def __init__(self, files, transform=None, target_transform=None):
         super(PCamDataset, self).__init__()
         self.transform = transform

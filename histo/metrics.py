@@ -1,10 +1,11 @@
+"""Module contains functions for calculating different model metrics."""
 import logging
 from sklearn import metrics
 import matplotlib
 
 try:
     matplotlib.use('Agg')
-except Exception:
+except ImportError:
     pass
 finally:
     import matplotlib.pyplot as plt
@@ -15,31 +16,103 @@ _LOGGER = logging.getLogger(__name__)
 
 # Confussion matrix metrics
 def accuracy(confusion_matrix):
+    """Function calculates model accuracy based on given confussion matrix.
+
+    Parameters
+    ----------
+    confusion_matrix : array like
+        2D array containing confusion matrix in form [[tp, fp],[fn, tp]]
+
+    Returns
+    -------
+    accuracy : float
+        model accuracy
+    """
     tn, fp, fn, tp = confusion_matrix.ravel()
     return (tp+tn)/(tn+fp+fn+tp)
 
 
 def recall(confusion_matrix):
+    """Function calculates model recall based on given confussion matrix.
+
+    Parameters
+    ----------
+    confusion_matrix : array like
+        2D array containing confusion matrix in form [[tp, fp],[fn, tp]]
+
+    Returns
+    -------
+    recall : float
+        model recall
+    """
     _, _, fn, tp = confusion_matrix.ravel()
     return tp/(tp+fn)
 
 
 def specificity(confusion_matrix):
+    """Function calculates model specificity based on given confussion matrix.
+
+    Parameters
+    ----------
+    confusion_matrix : array like
+        2D array containing confusion matrix in form [[tp, fp],[fn, tp]]
+
+    Returns
+    -------
+    specificity : float
+        model specificity
+    """
     tn, fp, _, _ = confusion_matrix.ravel()
     return tn/(tn+fp)
 
 
 def precision(confusion_matrix):
+    """Function calculates model precision based on given confussion matrix.
+
+    Parameters
+    ----------
+    confusion_matrix : array like
+        2D array containing confusion matrix in form [[tp, fp],[fn, tp]]
+
+    Returns
+    -------
+    precision : float
+        model precision
+    """
     _, fp, _, tp = confusion_matrix.ravel()
     return tp/(tp+fp)
 
 
 def fall_out(confusion_matrix):
+    """Function calculates model fall_out based on given confussion matrix.
+
+    Parameters
+    ----------
+    confusion_matrix : array like
+        2D array containing confusion matrix in form [[tp, fp],[fn, tp]]
+
+    Returns
+    -------
+    fall_out : float
+        model fall_out
+    """
     tn, fp, _, _ = confusion_matrix.ravel()
     return fp/(fp+tn)
 
 
 def f1(confusion_matrix):
+    """Function calculates model f1 based on given confussion matrix.
+
+    Parameters
+    ----------
+    confusion_matrix : array like
+        2D array containing confusion matrix in form [[tp, fp],[fn, tp]]
+
+    Returns
+    -------
+    f1 : float
+        model f1
+    """
     _, fp, fn, tp = confusion_matrix.ravel()
     return 2*tp/(2*tp+fp+fn)
 

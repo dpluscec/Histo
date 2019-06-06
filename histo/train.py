@@ -287,6 +287,7 @@ class TrainingHook(ABC):
 
 
 class BasicTrainingHook(TrainingHook):
+    """Class defines basic training hook that keeps track on current epoch and loss."""
     def __init__(self):
         super(BasicTrainingHook, self).__init__()
         self.train_start_time = None
