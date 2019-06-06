@@ -92,6 +92,7 @@ class Experiment:
                f"criterion: {str(self.criterion)}]"
 
     def execute(self):
+        """Method executes the experiment."""
         _LOGGER.info("-"*40)
         _LOGGER.info("Starting experiment %s", self.name)
         _LOGGER.info("Experiment parameters %s", str(self))

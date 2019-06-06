@@ -12,12 +12,14 @@ VALID = 'valid'
 TEST = 'test'
 
 PCAM_TRAIN_TRANSFORM = transforms.Compose([
+    transforms.Resize(299),
     transforms.ToTensor(),
     # transforms.Normalize(mean=[178.69278045, 137.28123996, 176.36324185],
     #                      std=[59.91942025, 70.73932419, 54.28812066])
 ])
 PCAM_VALID_TRANSFORM = PCAM_TRAIN_TRANSFORM
 PCAM_TEST_TRANSFORM = transforms.Compose([
+    transforms.Resize(299),
     transforms.ToTensor(),
     #  transforms.Normalize(mean=[178.69278045, 137.28123996, 176.36324185],
     #                       std=[59.91942025, 70.73932419, 54.28812066])

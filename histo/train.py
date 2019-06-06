@@ -3,6 +3,7 @@
 import time
 import logging
 import copy
+from abc import ABC
 import torch
 import torch.nn as nn
 from sklearn.metrics import confusion_matrix
@@ -88,14 +89,14 @@ def run_epoch(model, data, optimizer, criterion, phase, device, hook=None):
 
         model.zero_grad()
         with torch.set_grad_enabled(phase == TRAIN):
+            logits = model(batch_x)
             loss = None
-            if model.__class__.__name__ == "Inception3" and phase == TRAIN:
-                outputs, aux_outputs = model(batch_x)
+            if model.__class__.__name__ == "Inception3" and len(logits) == 2:
+                outputs, aux_outputs = logits
                 loss_main = criterion(input=outputs, target=batch_y)
                 loss_aux = criterion(input=aux_outputs, target=batch_y)
                 loss = loss_main + 0.4*loss_aux
             else:
-                logits = model(batch_x)
                 loss = criterion(input=logits, target=batch_y)
             running_loss += loss
             if phase == TRAIN:
@@ -109,6 +110,23 @@ def run_epoch(model, data, optimizer, criterion, phase, device, hook=None):
 
 
 def evaluate(model, data, device):
+    """
+    Function evaluates model on given data using given device.
+
+    Parameters
+    ----------
+    model : nn.Module
+        model that needs to be evaluated
+    data : torch.utils.data.DataLoader
+        dataloader used for iterating over data
+    device : torch.device
+        device on which to perform operations
+
+    Returns
+    -------
+    confussion_matrix : array like
+        evaluation result as confussion matrix on given data
+    """
     result_mat = np.zeros((2, 2))
     model.eval()
     prob_output = nn.Sigmoid()
@@ -167,23 +185,77 @@ def predict_data(model, data, device, return_labels=True):
     return predictions
 
 
-class TrainingHook:
+class TrainingHook(ABC):
+    """Class defines interface for a hook that monitors training progress."""
     def __init__(self):
         pass
 
     def training_start(self, model, loaders_dict, criterion):
-        pass
+        """Method called on training start.
+
+        Parameters
+        ----------
+        model : nn.Module
+            PyTorch model
+        loaders_dict : dict(str, torch.utils.data.DataLoader)
+            dictionary with training and validation dataloaders
+        criterion : loss
+            pytorch loss function
+        """
 
     def training_end(self, best_model):
-        pass
+        """Method called on training end.
+
+        Parameters
+        ----------
+        best_model : nn.Module
+            PyTorch model with best parameters occured while training.
+        """
 
     def epoch_start(self, epoch, num_epochs, loaders_dict):
-        pass
+        """Method called on epoch start.
+
+        Parameters
+        ----------
+        epoch : int
+            current epoch number
+        num_epochs : int
+            total number of epochs
+        loaders_dict : dict(str, torch.utils.data.DataLoader)
+            dictionary with training and validation dataloaders
+        """
 
     def epoch_end(self, epoch, num_epochs, loaders_dict, model, train_loss, valid_loss):
-        pass
+        """Method called on epoch end.
+
+        Parameters
+        ----------
+        epoch : int
+            current epoch number
+        num_epochs : int
+            total number of epochs
+        loaders_dict : dict(str, torch.utils.data.DataLoader)
+            dictionary with training and validation dataloaders
+        model : nn.Module
+            current PyTorch model
+        train_loss : float
+            average loss on training set
+        valid_loss : float
+            loss on validation set
+        """
 
     def batch_start(self, phase, batch_num, data, model):
+        """Method called on batch start.
+
+        phase : str
+            TRAIN, VALID pahse indicator
+        batch_num : int
+            current batch_number
+        data : torch.utils.data.DataLoader
+            dataloader for current phase
+        model : nn.Module
+            current PyTorch model
+        """
         if phase == TRAIN:
             self.batch_train_start(batch_num=batch_num, data=data, model=model)
         elif phase == VALID:

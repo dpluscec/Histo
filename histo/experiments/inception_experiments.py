@@ -31,7 +31,7 @@ def get_experiment_inception_2(data_dict, device):
     experiment_name = "inception_2"
     learn_rate = 1e-4
     batch_size = 32
-    validation_batch_size = 1024
+    validation_batch_size = 64
     num_epochs = 10
     weight_decay = 0
 

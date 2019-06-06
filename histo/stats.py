@@ -3,9 +3,9 @@ import matplotlib.pyplot as plt
 from histo.dataset import PCamDatasets
 
 
-from matplotlib import pyplot as plt
 def save_img(fname, img):
     plt.imsave(fname=fname, arr=img)
+
 
 def stats(dataset):
     data = dataset.data
@@ -63,7 +63,7 @@ def white_dataset_histogram(dataset):
     for ex in dataset:
         img = ex[0].numpy()
         img_sum = np.sum(img, axis=(0))
-        hist, bin_edges = np.histogram(img_sum, [i*0.2 for i in range(16)])
+        hist, _ = np.histogram(img_sum, [i*0.2 for i in range(16)])
         white_bin = hist[-1]
         freqs[white_bin] = freqs.get(white_bin, 0) + 1
     return freqs

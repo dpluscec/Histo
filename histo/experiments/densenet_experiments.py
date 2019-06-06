@@ -186,7 +186,7 @@ def get_experiment_densenet_9(data_dict, device):
     learn_rate = 1e-3
     batch_size = 32
     validation_batch_size = 1024
-    num_epochs = 15
+    num_epochs = 20
     weight_decay = 0
 
     params = ExperimentParameters(lr=learn_rate, batch_size=batch_size,
@@ -208,7 +208,7 @@ def get_experiment_densenet_10(data_dict, device):
     learn_rate = 1e-4
     batch_size = 32
     validation_batch_size = 1024
-    num_epochs = 15
+    num_epochs = 20
     weight_decay = 0
 
     params = ExperimentParameters(lr=learn_rate, batch_size=batch_size,
@@ -230,7 +230,7 @@ def get_experiment_densenet_11(data_dict, device):
     learn_rate = 1e-5
     batch_size = 32
     validation_batch_size = 1024
-    num_epochs = 15
+    num_epochs = 20
     weight_decay = 0
 
     params = ExperimentParameters(lr=learn_rate, batch_size=batch_size,
@@ -252,7 +252,7 @@ def get_experiment_densenet_12(data_dict, device):
     learn_rate = 1e-6
     batch_size = 32
     validation_batch_size = 1024
-    num_epochs = 15
+    num_epochs = 20
     weight_decay = 0
 
     params = ExperimentParameters(lr=learn_rate, batch_size=batch_size,
