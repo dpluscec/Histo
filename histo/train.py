@@ -15,6 +15,30 @@ _LOGGER = logging.getLogger(__name__)
 
 
 def train(model, loaders_dict, num_epochs, optimizer, criterion, device, hook=None):
+    """Method trains given model.
+
+    Parameters
+    ----------
+    model : nn.Module
+        PyTorch model that needs to be trained
+    loaders_dict : dict(str, torch.utils.data.DataLoader)
+            dictionary with training and validation dataloaders
+    num_epochs : int
+        total number of epochs
+    optimizer : torch.optim.Optimizer
+        model optimizer, None if validation phase
+    criterion : loss
+        pytorch loss function
+    device : torch.device
+        device on which to perform operations
+    hook : TrainingHook
+        used for adding functionalities to epoch run
+
+    Returns
+    -------
+    model : nn.Module
+        trained model
+    """
     hook_flag = hook is not None
 
     if hook_flag:
@@ -71,6 +95,11 @@ def run_epoch(model, data, optimizer, criterion, phase, device, hook=None):
         device on which to perform operations
     hook : TrainingHook
         used for adding functionalities to epoch run
+
+    Returns
+    -------
+    loss : float
+        epoch run average loss
     '''
     hook_flag = hook is not None
     if phase == TRAIN:
@@ -247,6 +276,8 @@ class TrainingHook(ABC):
     def batch_start(self, phase, batch_num, data, model):
         """Method called on batch start.
 
+        Parameters
+        ----------
         phase : str
             TRAIN, VALID pahse indicator
         batch_num : int
@@ -255,6 +286,11 @@ class TrainingHook(ABC):
             dataloader for current phase
         model : nn.Module
             current PyTorch model
+
+        Raises
+        ------
+        ValueError
+            if invalid phase is given
         """
         if phase == TRAIN:
             self.batch_train_start(batch_num=batch_num, data=data, model=model)
@@ -264,12 +300,53 @@ class TrainingHook(ABC):
             raise ValueError("Invalid phase.")
 
     def batch_train_start(self, batch_num, data, model):
-        pass
+        """Method called on training batch start.
+
+        Parameters
+        ----------
+        batch_num : int
+            current batch_number
+        data : torch.utils.data.DataLoader
+            dataloader for current phase
+        model : nn.Module
+            current PyTorch model
+        """
 
     def batch_valid_start(self, batch_num, data, model):
-        pass
+        """Method called on validation batch start.
+
+        Parameters
+        ----------
+        batch_num : int
+            current batch_number
+        data : torch.utils.data.DataLoader
+            dataloader for current phase
+        model : nn.Module
+            current PyTorch model
+        """
 
     def batch_end(self, phase, batch_num, data, model, batch_loss):
+        """Method called on batch end.
+
+        Parameters
+        ----------
+        phase : str
+            TRAIN, VALID pahse indicator
+        batch_num : int
+            current batch_number
+        data : torch.utils.data.DataLoader
+            dataloader for current phase
+        model : nn.Module
+            current PyTorch model
+        batch_loss : float
+            average batch loss
+
+        Raises
+        ------
+        ValueError
+            if invalid phase is given
+
+        """
         if phase == TRAIN:
             self.batch_train_end(batch_num=batch_num, data=data,
                                  model=model, batch_loss=batch_loss)
@@ -280,10 +357,34 @@ class TrainingHook(ABC):
             raise ValueError("Invalid phase.")
 
     def batch_train_end(self, batch_num, data, model, batch_loss):
-        pass
+        """Method called on training batch end.
+
+        Parameters
+        ----------
+        batch_num : int
+            current batch_number
+        data : torch.utils.data.DataLoader
+            dataloader for current phase
+        model : nn.Module
+            current PyTorch model
+        batch_loss : float
+            average batch loss
+        """
 
     def batch_valid_end(self, batch_num, data, model, batch_loss):
-        pass
+        """Method called on validation batch end.
+
+        Parameters
+        ----------
+        batch_num : int
+            current batch_number
+        data : torch.utils.data.DataLoader
+            dataloader for current phase
+        model : nn.Module
+            current PyTorch model
+        batch_loss : float
+            average batch loss
+        """
 
 
 class BasicTrainingHook(TrainingHook):
@@ -318,6 +419,8 @@ class BasicTrainingHook(TrainingHook):
 
 
 class DetailedMeasurementTrainingHook(BasicTrainingHook):
+    """Class defines training hook that keeps track on loss, accuracy and f1 score of the
+       model on training and validation set."""
     def __init__(self, device):
         super(DetailedMeasurementTrainingHook, self).__init__()
         self.device = device
