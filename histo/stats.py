@@ -8,6 +8,14 @@ def save_img(fname, img):
 
 
 def stats(dataset):
+    """Function outputs dataset statistics such as shape, average value and standard
+        deviation.
+
+        Parameters
+        ----------
+        dataset : torch.utils.data.Dataset
+        dataset instance
+    """
     data = dataset.data
     target = dataset.target
     print("Data shape:", data.shape)
@@ -31,6 +39,13 @@ def pcam_stas_fun(fun):
 
 
 def label_stats(dataset):
+    """Function calculates and outputs label frequencies.
+
+    Parameters
+    ----------
+    dataset : torch.utils.data.Dataset
+        dataset instance
+    """
     target = dataset.target
     unique, counts = np.unique(target, return_counts=True)
     freqs = dict(zip(unique, counts))
