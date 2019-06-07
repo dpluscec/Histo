@@ -61,12 +61,23 @@ def pcam_label_stats():
 
 
 def show_multiple_images(images, shape, title):
+    """Function plots multiple images on a figure with given title.
+
+    Parameters
+    ----------
+    images : array like
+        images that needs to be ploted
+    shape : tuple(int,int)
+        tuple containing number of rows and columns for ploting images
+    title : str
+        plot title
+    """
     fig = plt.figure()
     fig.suptitle(title, fontsize=16)
     rows = shape[0]
     cols = shape[1]
 
-    for i in range(1, cols*rows+1):
+    for i in range(1, min(cols*rows, len(images))+1):
         img = images[i-1]
         fig.add_subplot(rows, cols, i)
         plt.imshow(img)
@@ -74,6 +85,13 @@ def show_multiple_images(images, shape, title):
 
 
 def white_dataset_histogram(dataset):
+    """Function calculates frequency of number of white pixels in dataset images.
+
+    Parameters
+    ----------
+    dataset : torch.utils.data.Dataset
+    dataset instance
+    """
     freqs = {}
     for ex in dataset:
         img = ex[0].numpy()
@@ -85,6 +103,7 @@ def white_dataset_histogram(dataset):
 
 
 def visualize_examples():
+    """Function visualizes first 9 positive and 9 negative images from PCam dataset"""
     ds = PCamDatasets()
     train_dataset = ds.train
     pos_examples = []
