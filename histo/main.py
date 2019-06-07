@@ -1,3 +1,4 @@
+"""Main module containing code for running experiments."""
 # pylint: disable=C0103
 import random
 import numpy as np
@@ -8,6 +9,7 @@ import histo.experiments as experiments
 
 
 def set_random_seed():
+    """Function initializes random seed in python, numpy and pytorch."""
     random.seed(42)
     np.random.seed(42)
     torch.manual_seed(42)
@@ -34,14 +36,14 @@ if __name__ == "__main__":
     # experiment
     series_one = [
         experiments.get_experiment_inception_4(data_dict=data_dict, device=device),
-        #experiments.get_experiment_inception_5(data_dict=data_dict, device=device),
-        #experiments.get_experiment_inception_6(data_dict=data_dict, device=device),
-        #experiments.get_experiment_inception_7(data_dict=data_dict, device=device),
-        #experiments.get_experiment_inception_8(data_dict=data_dict, device=device),
-        #experiments.get_experiment_inception_9(data_dict=data_dict, device=device),
-        #experiments.get_experiment_inception_10(data_dict=data_dict, device=device),
-        #experiments.get_experiment_inception_11(data_dict=data_dict, device=device),
-        #experiments.get_experiment_inception_12(data_dict=data_dict, device=device)
+        # experiments.get_experiment_inception_5(data_dict=data_dict, device=device),
+        # experiments.get_experiment_inception_6(data_dict=data_dict, device=device),
+        # experiments.get_experiment_inception_7(data_dict=data_dict, device=device),
+        # experiments.get_experiment_inception_8(data_dict=data_dict, device=device),
+        # experiments.get_experiment_inception_9(data_dict=data_dict, device=device),
+        # experiments.get_experiment_inception_10(data_dict=data_dict, device=device),
+        # experiments.get_experiment_inception_11(data_dict=data_dict, device=device),
+        # experiments.get_experiment_inception_12(data_dict=data_dict, device=device)
     ]
     for exp in series_one:
         exp.execute()
