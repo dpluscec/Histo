@@ -35,7 +35,7 @@ if __name__ == "__main__":
 
     # experiment
     series_one = [
-        experiments.get_experiment_densenet_rotation(device)
+        experiments.get_experiment_densenet_verticalflip(device)
         # experiments.get_experiment_inception_7(data_dict=data_dict, device=device),
         # experiments.get_experiment_inception_8(data_dict=data_dict, device=device),
         # experiments.get_experiment_inception_9(data_dict=data_dict, device=device),
