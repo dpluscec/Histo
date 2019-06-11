@@ -43,15 +43,15 @@ def pcam_stas_fun(fun):
     fun : callable
         callable that accepts PyTorch dataset  instance and calculates statistics
     """
-    ds = PCamDatasets()
+    pcam_ds = PCamDatasets()
     print("Train")
-    train = ds.train
+    train = pcam_ds.train
     fun(train)
     print("Valid")
-    valid = ds.valid
+    valid = pcam_ds.valid
     fun(valid)
     print("Test")
-    test = ds.test
+    test = pcam_ds.test
     fun(test)
 
 
@@ -122,9 +122,10 @@ def white_dataset_histogram(dataset):
 
 
 def visualize_examples():
-    """Function visualizes first 9 positive and 9 negative images from PCam dataset"""
-    ds = PCamDatasets()
-    train_dataset = ds.train
+    """Function visualizes first 9 positive and 9 negative images from PCam train
+    dataset."""
+    pcam_ds = PCamDatasets()
+    train_dataset = pcam_ds.train
     pos_examples = []
     neg_examples = []
 

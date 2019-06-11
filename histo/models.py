@@ -1,8 +1,25 @@
+"""Module contains functions for obtaining PyTorch models."""
 import torch.nn as nn
 import torchvision.models as models
 
 
 def get_alexnet(num_outputs, pretrained=True, fixed_weights=False):
+    """Function obtains alexnet with given parameters.
+
+    Parameters
+    ----------
+    num_outputs : int
+        number of model outputs
+    pretrained : bool
+        if true model weights are downloaded from pretrained model on imagenet
+    fixed_weigths : bool
+        if true, all but last fully connected layer will be fixed
+
+    Returns
+    -------
+    model : nn.Module
+        PyTorch alexnet model
+    """
     alexnet = models.alexnet(pretrained=pretrained)
     if fixed_weights:
         for param in alexnet.features.parameters():
@@ -14,6 +31,22 @@ def get_alexnet(num_outputs, pretrained=True, fixed_weights=False):
 
 
 def get_resnet(num_outputs, pretrained=True, fixed_weights=False):
+    """Function obtains resnet with given parameters.
+
+    Parameters
+    ----------
+    num_outputs : int
+        number of model outputs
+    pretrained : bool
+        if true model weights are downloaded from pretrained model on imagenet
+    fixed_weigths : bool
+        if true, all but last fully connected layer will be fixed
+
+    Returns
+    -------
+    model : nn.Module
+        PyTorch resnet model
+    """
     resnet = models.resnet18(pretrained=pretrained)
     if fixed_weights:
         for param in resnet.parameters():
@@ -24,6 +57,22 @@ def get_resnet(num_outputs, pretrained=True, fixed_weights=False):
 
 
 def get_inception(num_outputs, pretrained=True, fixed_weights=False):
+    """Function obtains inception v3 with given parameters.
+
+    Parameters
+    ----------
+    num_outputs : int
+        number of model outputs
+    pretrained : bool
+        if true model weights are downloaded from pretrained model on imagenet
+    fixed_weigths : bool
+        if true, all but last fully connected layer will be fixed
+
+    Returns
+    -------
+    model : nn.Module
+        PyTorch inception v3 model
+    """
     inception = models.inception_v3(pretrained=pretrained)
     if fixed_weights:
         for param in inception.parameters():
@@ -37,6 +86,22 @@ def get_inception(num_outputs, pretrained=True, fixed_weights=False):
 
 
 def get_densenet(num_outputs, pretrained=True, fixed_weights=False):
+    """Function obtains densenet with given parameters.
+
+    Parameters
+    ----------
+    num_outputs : int
+        number of model outputs
+    pretrained : bool
+        if true model weights are downloaded from pretrained model on imagenet
+    fixed_weigths : bool
+        if true, all but last fully connected layer will be fixed
+
+    Returns
+    -------
+    model : nn.Module
+        PyTorch densenet model
+    """
     dense = models.densenet121(pretrained=pretrained)
     if fixed_weights:
         for param in dense.parameters():
