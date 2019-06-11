@@ -93,14 +93,14 @@ class Experiment:
 
     def execute(self):
         """Method executes the experiment."""
-        _LOGGER.info("-"*40)
+        _LOGGER.info("-" * 40)
         _LOGGER.info("Starting experiment %s", self.name)
         _LOGGER.info("Experiment parameters %s", str(self))
         self._train_model()
         self._save_model()
         self._validate_experiment()
         _LOGGER.info("Experiment end")
-        _LOGGER.info("#"*40)
+        _LOGGER.info("#" * 40)
 
     def _train_model(self):
         self.model.to(self.device)

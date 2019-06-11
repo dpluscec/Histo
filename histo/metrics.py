@@ -1,4 +1,5 @@
 """Module contains functions for calculating different model metrics."""
+# pylint: disable=C0103
 import logging
 from sklearn import metrics
 import matplotlib
@@ -29,7 +30,7 @@ def accuracy(confusion_matrix):
         model accuracy
     """
     tn, fp, fn, tp = confusion_matrix.ravel()
-    return (tp+tn)/(tn+fp+fn+tp)
+    return (tp + tn) / (tn + fp + fn + tp)
 
 
 def recall(confusion_matrix):
@@ -46,7 +47,7 @@ def recall(confusion_matrix):
         model recall
     """
     _, _, fn, tp = confusion_matrix.ravel()
-    return tp/(tp+fn)
+    return tp / (tp + fn)
 
 
 def specificity(confusion_matrix):
@@ -63,7 +64,7 @@ def specificity(confusion_matrix):
         model specificity
     """
     tn, fp, _, _ = confusion_matrix.ravel()
-    return tn/(tn+fp)
+    return tn / (tn + fp)
 
 
 def precision(confusion_matrix):
@@ -80,7 +81,7 @@ def precision(confusion_matrix):
         model precision
     """
     _, fp, _, tp = confusion_matrix.ravel()
-    return tp/(tp+fp)
+    return tp / (tp + fp)
 
 
 def fall_out(confusion_matrix):
@@ -97,7 +98,7 @@ def fall_out(confusion_matrix):
         model fall_out
     """
     tn, fp, _, _ = confusion_matrix.ravel()
-    return fp/(fp+tn)
+    return fp / (fp + tn)
 
 
 def f1(confusion_matrix):
@@ -114,10 +115,20 @@ def f1(confusion_matrix):
         model f1
     """
     _, fp, fn, tp = confusion_matrix.ravel()
-    return 2*tp/(2*tp+fp+fn)
+    return 2 * tp / (2 * tp + fp + fn)
 
 
 def output_metrics(confusion_matrix, conf_metrics):
+    """Method logs given metrics by using confusion matrix.
+
+    Parameters
+    ----------
+    confusion_matrix : array like
+        2D array containing confusion matrix in form [[tp, fp],[fn, tp]]
+    conf_metrics : dict(str, callable)
+        dictionary that maps metrics name to function that can calculate metric based on
+        confusion matrix
+    """
     _LOGGER.info("Evaluation results")
     _LOGGER.info(confusion_matrix)
     _LOGGER.info("#############################")
@@ -127,6 +138,7 @@ def output_metrics(confusion_matrix, conf_metrics):
         _LOGGER.info("------------------------")
     _LOGGER.info("#############################")
 
+
 confusion_matrix_metrics_dict = {
     "Accuracy": accuracy,
     "Recall": recall,
@@ -134,11 +146,21 @@ confusion_matrix_metrics_dict = {
     "Precision": precision,
     "Fall_out": fall_out,
     "F1": f1
-    }
+}
 
 
 def plot_roc_curve(experiment_name, y_true, y_score):
-    # ROC curve
+    """Method plots roc curve and saves it to experiment_name_roc.png file.
+
+    Parameters
+    ----------
+    experiment_name : str
+        experiment name used in file name
+    y_true : array like
+        array containing true predictions
+    y_score : array like
+        array containing model predictions
+    """
     fpr, tpr, _ = metrics.roc_curve(y_true=y_true, y_score=y_score)
     plt.plot([0, 1], [0, 1], linestyle='--')
     plt.plot(fpr, tpr, marker='.', markersize=1)

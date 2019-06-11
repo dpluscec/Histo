@@ -124,7 +124,7 @@ def run_epoch(model, data, optimizer, criterion, phase, device, hook=None):
                 outputs, aux_outputs = logits
                 loss_main = criterion(input=outputs, target=batch_y)
                 loss_aux = criterion(input=aux_outputs, target=batch_y)
-                loss = loss_main + 0.4*loss_aux
+                loss = loss_main + 0.4 * loss_aux
             else:
                 loss = criterion(input=logits, target=batch_y)
             running_loss += loss
@@ -135,7 +135,7 @@ def run_epoch(model, data, optimizer, criterion, phase, device, hook=None):
         if hook_flag:
             hook.batch_end(phase=phase, batch_num=batch_num, data=data,
                            model=model, batch_loss=loss)
-    return running_loss/(batch_n+1)
+    return running_loss / (batch_n + 1)
 
 
 def evaluate(model, data, device):
@@ -397,12 +397,12 @@ class BasicTrainingHook(TrainingHook):
         self.train_start_time = time.time()
 
     def training_end(self, best_model):
-        time_elapsed = time.time()-self.train_start_time
+        time_elapsed = time.time() - self.train_start_time
         _LOGGER.info('Training time {:.0f}m {:.0f}s'.format(
             time_elapsed // 60, time_elapsed % 60))
 
     def epoch_start(self, epoch, num_epochs, loaders_dict):
-        _LOGGER.info('Epoch %s/%s', str(epoch+1), str(num_epochs))
+        _LOGGER.info('Epoch %s/%s', str(epoch + 1), str(num_epochs))
         _LOGGER.info('-' * 10)
 
     def epoch_end(self, epoch, num_epochs, loaders_dict, model, train_loss, valid_loss):
@@ -432,7 +432,7 @@ class DetailedMeasurementTrainingHook(BasicTrainingHook):
             'valid_acc': [],
             'valid_f1': [],
             'valid_loss': []
-            }
+        }
 
     def training_end(self, best_model):
         super(DetailedMeasurementTrainingHook, self).training_end(best_model=best_model)

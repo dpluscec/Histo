@@ -77,6 +77,18 @@ class PCamDatasets:
 class PCamDataset(data.Dataset):
     """Class models one of PCam dataset splits as PyTorch Dataset module."""
     def __init__(self, files, transform=None, target_transform=None):
+        """Method constructs a PCamDataset.
+
+        Parameters
+        ----------
+        files : list(str, str, str)
+            list containing path to file containing x, file containing y and file
+            containing meta data
+        transform : torchvision.transforms
+            transform for x
+        target_transform : torchvision.transforms
+            transform for y
+        """
         super(PCamDataset, self).__init__()
         self.transform = transform
         self.target_transform = target_transform

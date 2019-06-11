@@ -1,19 +1,29 @@
+"""Module contains functions for calculating statistics on PCam dataset."""
 import numpy as np
 import matplotlib.pyplot as plt
 from histo.dataset import PCamDatasets
 
 
 def save_img(fname, img):
+    """Method saves given image on given path.
+
+    Parameters
+    ----------
+    fname : str
+        file name
+    img : array like
+        array containing image
+    """
     plt.imsave(fname=fname, arr=img)
 
 
 def stats(dataset):
     """Function outputs dataset statistics such as shape, average value and standard
-        deviation.
+    deviation.
 
-        Parameters
-        ----------
-        dataset : torch.utils.data.Dataset
+    Parameters
+    ----------
+    dataset : torch.utils.data.Dataset
         dataset instance
     """
     data = dataset.data
@@ -26,6 +36,13 @@ def stats(dataset):
 
 
 def pcam_stas_fun(fun):
+    """Method runs given function on all PCam dataset splits.
+
+    Parameters
+    ----------
+    fun : callable
+        callable that accepts PyTorch dataset  instance and calculates statistics
+    """
     ds = PCamDatasets()
     print("Train")
     train = ds.train
@@ -53,10 +70,12 @@ def label_stats(dataset):
 
 
 def pcam_stats():
+    """Function that calls statistics on PCam x data."""
     pcam_stas_fun(stats)
 
 
 def pcam_label_stats():
+    """Function that calls statistics on PCam target y data."""
     pcam_stas_fun(label_stats)
 
 
@@ -77,8 +96,8 @@ def show_multiple_images(images, shape, title):
     rows = shape[0]
     cols = shape[1]
 
-    for i in range(1, min(cols*rows, len(images))+1):
-        img = images[i-1]
+    for i in range(1, min(cols * rows, len(images)) + 1):
+        img = images[i - 1]
         fig.add_subplot(rows, cols, i)
         plt.imshow(img)
     plt.show()
@@ -96,7 +115,7 @@ def white_dataset_histogram(dataset):
     for ex in dataset:
         img = ex[0].numpy()
         img_sum = np.sum(img, axis=(0))
-        hist, _ = np.histogram(img_sum, [i*0.2 for i in range(16)])
+        hist, _ = np.histogram(img_sum, [i * 0.2 for i in range(16)])
         white_bin = hist[-1]
         freqs[white_bin] = freqs.get(white_bin, 0) + 1
     return freqs
