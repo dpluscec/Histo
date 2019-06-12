@@ -103,6 +103,7 @@ class Experiment:
         _LOGGER.info("#" * 40)
 
     def _train_model(self):
+        """Method starts model training."""
         self.model.to(self.device)
         self.criterion.to(self.device)
         self.model = train.train(
@@ -112,6 +113,7 @@ class Experiment:
             hook=train.DetailedMeasurementTrainingHook(device=self.device))
 
     def _validate_experiment(self):
+        """Method starts model validation on train, validation and test set"""
         # validation
         _LOGGER.info("experiment validation")
         _LOGGER.info("train set")
@@ -140,6 +142,7 @@ class Experiment:
                                y_true=test_label, y_score=test_pred)
 
     def _save_model(self):
+        """Method saves trained model to experiment_name.pth file."""
         file_path = os.path.join(
             ".", MODELS_SAVE_PATH, f"{self.name}.pth")
         _LOGGER.info("Model saved, path %s", str(file_path))

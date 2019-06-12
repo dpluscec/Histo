@@ -1,3 +1,19 @@
+"""
+Classification of Histopathologic Scans of Lymph Node Sections Using Machine Learning
+
+When analyzing histopathological images, there is a need for an automated system that
+could help doctors in image analysis and diagnostics. Such a system could increase the
+accuracy and speed of analysis and diagnostics.
+Within this paper, an overview of the histopathological image analysis area is provided
+and a program implementation for the classification of lymph nodes based on
+machine learning has been developed. 
+PatchCamelyon dataset has been used for training and testing of chosen
+machine learning models. 
+The results of the following deep learning models have been studied: AlexNet, ResNet,
+DenseNet and Inceptionv3. Also, the influence of different data augmentation methods on
+the model performance was investigated.
+"""
+
 import logging
 import os
 import time
