@@ -1,7 +1,7 @@
-#Classification of Histopathologic Scans of Lymph Node 
+# EN: Classification of Histopathologic Scans of Lymph Node 
 Sections Using Machine Learning
 
-# Klasifikacija histopatoloških snimaka dijelova limfnih čvorova pomoću strojnog učenja
+# HR: Klasifikacija histopatoloških snimaka dijelova limfnih čvorova pomoću strojnog učenja
 
 Analiza i generiranje slike spadaju pod tipične probleme računalnog vida i strojnog učenja. S nedavnim razvojem dubokih modela pomaknute su granice izvedivoga i računala često uspijevaju dosenguti ljudsku točnost u analizi slika. Jedan od problema koji su uključeni u ovo područje jest klasifikacija slika.
 Tema ovog rada je napraviti prototipno programsko rješenje na temelju slika histopatoloških skenova područja limfnih čvorova obavlja  binarnu klasifikaciju slika na temelju prisutnosti tkiva s metastazama.
