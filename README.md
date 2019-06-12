@@ -77,10 +77,9 @@ For usage examples see examples in [histo/examples](https://github.com/domi385/F
 ## Code style standards
 In this repository we use [numpydoc](https://numpydoc.readthedocs.io/en/latest/) as a standard for documentation and Flake8 for code sytle. Code style references are [Flake8](http://flake8.pycqa.org/en/latest/) and [PEP8](https://www.python.org/dev/peps/pep-0008/).
 
-Commands to check flake8 compliance for written code and tests.
+Commands to check flake8 compliance for written code 
 ```
-flake8 takepod
-flake8 test
+flake8 histo
 ```
 
 ## Author
