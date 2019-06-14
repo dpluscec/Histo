@@ -4,7 +4,7 @@ import random
 import numpy as np
 import torch
 
-import histo.dataset as dataset
+# import histo.dataset as dataset
 import histo.experiments as experiments
 
 
@@ -26,22 +26,16 @@ if __name__ == "__main__":
     print(device)
 
     # development dataset
-    pcam_dataset = dataset.PCamDatasets(data_transforms=dataset.PCAM_DATA_TRANSFORM)
-    train_set = pcam_dataset.train
-    valid_set = pcam_dataset.valid
-    test_set = pcam_dataset.test
-    data_dict = {dataset.TRAIN: train_set, dataset.VALID: valid_set,
-                 dataset.TEST: test_set}
+    # pcam_dataset = dataset.PCamDatasets(data_transforms=dataset.PCAM_DATA_TRANSFORM)
+    # train_set = pcam_dataset.train
+    # valid_set = pcam_dataset.valid
+    # test_set = pcam_dataset.test
+    # data_dict = {dataset.TRAIN: train_set, dataset.VALID: valid_set,
+    #              dataset.TEST: test_set}
 
     # experiment
     series_one = [
-        # experiments.get_experiment_densenet_small_rotation(device)
-        # experiments.get_experiment_inception_7(data_dict=data_dict, device=device),
-        experiments.get_experiment_inception_8(data_dict=data_dict, device=device),
-        # experiments.get_experiment_inception_9(data_dict=data_dict, device=device),
-        # experiments.get_experiment_inception_10(data_dict=data_dict, device=device),
-        # experiments.get_experiment_inception_11(data_dict=data_dict, device=device),
-        # experiments.get_experiment_inception_12(data_dict=data_dict, device=device)
+        experiments.get_experiment_densenet_transformation_composition(device)
     ]
     for exp in series_one:
         exp.execute()
