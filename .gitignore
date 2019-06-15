@@ -30,6 +30,7 @@ $RECYCLE.BIN/
 #Folders
 data/*
 literature/*
+logs/*
 images/*
 env/*
 bin/
