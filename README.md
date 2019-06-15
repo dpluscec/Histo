@@ -24,6 +24,13 @@ For building this project system needs to have installed the following:
 
 Guide for setting up the project. 
 
+Clone repository to local machine.
+
+```
+git clone https://github.com/domi385/Histo.git
+cd Histo
+```
+
 It is recommended to work in a virtual environment and keep a list of required dependencies in a ```requirements.txt``` file. 
 
 Commands to setup virtual environment with requirements.
@@ -31,6 +38,13 @@ Commands to setup virtual environment with requirements.
 virtualenv -p python3.6 env
 source env/bin/activate
 pip install -r requirements.txt
+```
+
+In requirements pytorch and torchvision are not listed because of their dependence on system configuration.
+Please find more details on installation of torch at https://pytorch.org/
+
+
+```
 python setup.py
 ```
 
