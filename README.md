@@ -102,4 +102,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## List of References
 
-Detailed list of references can be found in [histo/doc](https://github.com/domi385/FER/tree/master/docs/Diplomski_rad[2019]Pluscec_Domagoj.docx)
+Detailed list of references can be found in [histo/doc](https://github.com/domi385/FER/blob/master/doc/Diplomski_rad%5B2019%5DPluscec_Domagoj.pdf)
