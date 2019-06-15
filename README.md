@@ -20,7 +20,7 @@ For building this project system needs to have installed the following:
 - [```pip```](https://pypi.org/project/pip/)
 
 
-### Building and running example
+### Building
 
 Guide for setting up the project. 
 
@@ -69,8 +69,8 @@ virtualenv -p python3 env
 
 Note: To create a virtualenv under a path with spaces in it on Windows, you’ll need the win32api library installed.
 
-3. Install requirements and run tests
-Install pytorch.  
+3. Install requirements
+Install pytorch. Detailed instructions are available at https://pytorch.org/
 ```
 pip3 install http://download.pytorch.org/whl/cu90/torch-0.4.1-cp36-cp36m-win_amd64.whl
 ```
@@ -84,6 +84,12 @@ python setup.py install
 ```
 .\env\Scripts\deactivate.bat
 ```
+
+### Data
+In this project PatchCamelyon dataset was used available at 
+https://github.com/basveeling/pcam
+Code for downloading the dataset is available in [histo/dataset](https://github.com/domi385/FER/tree/master/histo/dataset)
+Current code expects a "data/pcam" directory in project root folder with all data unziped.
 
 ## Usage examples
 For usage examples see examples in [histo/examples](https://github.com/domi385/FER/tree/master/histo/examples)
