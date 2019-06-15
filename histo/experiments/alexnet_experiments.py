@@ -1,9 +1,11 @@
 """Module contains AlexNet experiment definitions."""
+import functools
 import torch
 import torch.nn as nn
 import histo.models as models
 from histo.experiments.base_experiment import (ExperimentParameters, Experiment,
-                                               NUM_CLASSES)
+                                               NUM_CLASSES,
+                                               base_experiment_initialization)
 
 
 def base_alexnet_experiment(experiment_name, learn_rate, batch_size,
@@ -39,18 +41,13 @@ def base_alexnet_experiment(experiment_name, learn_rate, batch_size,
     experiment : Experiment
         experiment instance
     """
-    params = ExperimentParameters(lr=learn_rate, batch_size=batch_size,
-                                  validation_batch_size=validation_batch_size,
-                                  num_epochs=num_epochs, weight_decay=weight_decay)
-    model = models.get_alexnet(
-        num_outputs=NUM_CLASSES, pretrained=pretrained, fixed_weights=fixed_weights)
-    criterion = nn.BCEWithLogitsLoss()
-    optimizer = torch.optim.Adam(
-        params=model.parameters(), lr=params.learn_rate, weight_decay=params.weight_decay)
-    experiment = Experiment(name=experiment_name, params=params, data_dict=data_dict,
-                            optimizer=optimizer, criterion=criterion,
-                            device=device, model=model)
-    return experiment
+    model = functools.partial(models.get_alexnet, num_outputs=NUM_CLASSES,
+                              pretrained=pretrained, fixed_weights=fixed_weights)
+    return base_experiment_initialization(
+        model_method=model, experiment_name=experiment_name, learn_rate=learn_rate,
+        batch_size=batch_size, validation_batch_size=validation_batch_size,
+        num_epochs=num_epochs, weight_decay=weight_decay, data_dict=data_dict,
+        device=device)
 
 
 def get_experiment_alexnet_1(data_dict, device):
@@ -192,12 +189,11 @@ def get_experiment_alexnet_sgd(data_dict, device):
     params = ExperimentParameters(lr=learn_rate, batch_size=batch_size,
                                   validation_batch_size=validation_batch_size,
                                   num_epochs=num_epochs, weight_decay=weight_decay)
-    model = models.get_alexnet(
-        num_outputs=NUM_CLASSES, pretrained=pretrained, fixed_weights=fixed_weights)
+    model_method = functools.partial(models.get_alexnet, num_outputs=NUM_CLASSES,
+                                     pretrained=pretrained, fixed_weights=fixed_weights)
     criterion = nn.BCEWithLogitsLoss()
-    optimizer = torch.optim.SGD(
-        params=model.parameters(), lr=params.learn_rate, weight_decay=params.weight_decay)
+    optimizer = torch.optim.SGD
     experiment = Experiment(name=experiment_name, params=params, data_dict=data_dict,
                             optimizer=optimizer, criterion=criterion,
-                            device=device, model=model)
+                            device=device, model_method=model_method)
     return experiment

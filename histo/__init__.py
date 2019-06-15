@@ -6,9 +6,9 @@ could help doctors in image analysis and diagnostics. Such a system could increa
 accuracy and speed of analysis and diagnostics.
 Within this paper, an overview of the histopathological image analysis area is provided
 and a program implementation for the classification of lymph nodes based on
-machine learning has been developed. 
+machine learning has been developed.
 PatchCamelyon dataset has been used for training and testing of chosen
-machine learning models. 
+machine learning models.
 The results of the following deep learning models have been studied: AlexNet, ResNet,
 DenseNet and Inceptionv3. Also, the influence of different data augmentation methods on
 the model performance was investigated.
@@ -17,7 +17,6 @@ the model performance was investigated.
 import logging
 import os
 import time
-__name__ = "histo"
 __version__ = "0.1.0"
 
 

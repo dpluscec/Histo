@@ -4,6 +4,7 @@ import time
 import logging
 from sklearn import metrics as smetrics
 import torch
+import torch.nn as nn
 from torch.utils.data import DataLoader
 import histo.train as train
 import histo.metrics as metrics
@@ -47,7 +48,8 @@ class ExperimentParameters:
 class Experiment:
     """Class defines basic experiment for training and validating a deep learning model
     defined in PyTorch."""
-    def __init__(self, name, params, data_dict, model, optimizer, criterion, device):
+    def __init__(self, name, params, data_dict, model_method, optimizer, criterion,
+                 device):
         """Constructor that initializes experiment. Experiment is started by using
         execute method.
 
@@ -59,8 +61,8 @@ class Experiment:
             parameters for model training
         data_dict : dict(str, torch.utils.data.DataLoader)
             dictionary that maps dataset subset names (TRAIN, VALID, TEST) to dataloaders
-        model : nn.Module
-            PyTorch model used in experiment
+        model_method : callable
+            function that retuns PyTorch model used in experiment
         optimizer : torch.optim.Optimizer
             model optimizer, None if validation phase
         criterion : loss
@@ -71,30 +73,42 @@ class Experiment:
         self.name = f"{name}-{str(int(time.time()))}"
         self.device = device
         self.params = params
-        self.model = model
+        self.model_method = model_method
+        self.model = None
         self.optimizer = optimizer
         self.criterion = criterion
         self.data_dict = data_dict
-        train_iter = DataLoader(dataset=self.data_dict[TRAIN],
-                                batch_size=params.batch_size,
-                                shuffle=True)
-        valid_iter = DataLoader(dataset=self.data_dict[VALID],
-                                batch_size=params.validation_batch_size,
-                                shuffle=False)
-        test_iter = DataLoader(dataset=self.data_dict[TEST],
-                               batch_size=params.validation_batch_size,
-                               shuffle=False)
-        self.loaders = {TRAIN: train_iter, VALID: valid_iter, TEST: test_iter}
+        self.loaders = None
 
     def __str__(self):
         return f"Experiment[name: {self.name}, model: {str(self.model)}, "\
                f"params: {str(self.params)}, optimizer: {str(self.optimizer)}, "\
                f"criterion: {str(self.criterion)}]"
 
+    def _init_experiment(self):
+        """Method initializes experiment dataloaders and fetches model.
+        This method enables lazy model loading."""
+        train_iter = DataLoader(dataset=self.data_dict[TRAIN],
+                                batch_size=self.params.batch_size,
+                                shuffle=True)
+        valid_iter = DataLoader(dataset=self.data_dict[VALID],
+                                batch_size=self.params.validation_batch_size,
+                                shuffle=False)
+        test_iter = DataLoader(dataset=self.data_dict[TEST],
+                               batch_size=self.params.validation_batch_size,
+                               shuffle=False)
+        self.loaders = {TRAIN: train_iter, VALID: valid_iter, TEST: test_iter}
+        self.model = self.model_method()
+        self.optimizer = self.optimizer(params=self.model.parameters(),
+                                        lr=self.params.learn_rate,
+                                        weight_decay=self.params.weight_decay)
+
     def execute(self):
         """Method executes the experiment."""
         _LOGGER.info("-" * 40)
         _LOGGER.info("Starting experiment %s", self.name)
+        self._init_experiment()
+        _LOGGER.info("Experiment initialized")
         _LOGGER.info("Experiment parameters %s", str(self))
         self._train_model()
         self._save_model()
@@ -114,7 +128,6 @@ class Experiment:
 
     def _validate_experiment(self):
         """Method starts model validation on train, validation and test set"""
-        # validation
         _LOGGER.info("experiment validation")
         _LOGGER.info("train set")
         train_cmat = train.evaluate(model=self.model, data=self.loaders[TRAIN],
@@ -147,3 +160,44 @@ class Experiment:
             ".", MODELS_SAVE_PATH, f"{self.name}.pth")
         _LOGGER.info("Model saved, path %s", str(file_path))
         torch.save(obj=self.model.state_dict(), f=file_path)
+
+
+def base_experiment_initialization(
+        model_method, experiment_name, learn_rate, batch_size, validation_batch_size,
+        num_epochs, weight_decay, data_dict, device):
+    """Base experiment setup.
+
+    Parameters
+    ----------
+    model_method : callable
+        method which is called to obtain model
+    experiment_name : str
+        current experiment name
+    learn_rate : float
+        learning rate
+    batch_size : int
+        training batch size
+    validation_batch_size : int
+        validation batch size
+    num_epochs : int
+        total number of epochs used in training
+    weight_decay : float
+        L2 weight decay constant
+        dictionary with training, validation and test dataloaders
+    device : torch.device
+        device on which to perform operations
+
+    Returns
+    -------
+    experiment : Experiment
+        experiment instance
+    """
+    params = ExperimentParameters(lr=learn_rate, batch_size=batch_size,
+                                  validation_batch_size=validation_batch_size,
+                                  num_epochs=num_epochs, weight_decay=weight_decay)
+    criterion = nn.BCEWithLogitsLoss()
+    optimizer = torch.optim.Adam
+    experiment = Experiment(name=experiment_name, params=params, data_dict=data_dict,
+                            optimizer=optimizer, criterion=criterion,
+                            device=device, model_method=model_method)
+    return experiment

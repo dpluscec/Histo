@@ -2,12 +2,11 @@
 Important note: before using inception experiments, images should be resized to 299x299,
 this can be performed in dataset transformations.
 """
-import torch
-import torch.nn as nn
+import functools
 import torchvision.transforms as transforms
 import histo.models as models
-from histo.experiments.base_experiment import (ExperimentParameters, Experiment,
-                                               NUM_CLASSES)
+from histo.experiments.base_experiment import (NUM_CLASSES,
+                                               base_experiment_initialization)
 import histo.dataset as dataset
 
 
@@ -44,18 +43,13 @@ def base_inception_experiment(experiment_name, learn_rate, batch_size,
     experiment : Experiment
         experiment instance
     """
-    params = ExperimentParameters(lr=learn_rate, batch_size=batch_size,
-                                  validation_batch_size=validation_batch_size,
-                                  num_epochs=num_epochs, weight_decay=weight_decay)
-    model = models.get_inception(
-        num_outputs=NUM_CLASSES, pretrained=pretrained, fixed_weights=fixed_weights)
-    criterion = nn.BCEWithLogitsLoss()
-    optimizer = torch.optim.Adam(
-        params=model.parameters(), lr=params.learn_rate, weight_decay=params.weight_decay)
-    experiment = Experiment(name=experiment_name, params=params, data_dict=data_dict,
-                            optimizer=optimizer, criterion=criterion,
-                            device=device, model=model)
-    return experiment
+    model = functools.partial(models.get_inception, num_outputs=NUM_CLASSES,
+                              pretrained=pretrained, fixed_weights=fixed_weights)
+    return base_experiment_initialization(
+        model_method=model, experiment_name=experiment_name, learn_rate=learn_rate,
+        batch_size=batch_size, validation_batch_size=validation_batch_size,
+        num_epochs=num_epochs, weight_decay=weight_decay, data_dict=data_dict,
+        device=device)
 
 
 def get_experiment_inception_1(data_dict, device):
@@ -107,138 +101,25 @@ def get_experiment_inception_6(data_dict, device):
 
 
 def get_experiment_inception_7(data_dict, device):
-    experiment_name = "inception_7"
-    learn_rate = 1e-5
-    batch_size = 32
-    validation_batch_size = 128
-    num_epochs = 10
-    weight_decay = 0
-
-    params = ExperimentParameters(lr=learn_rate, batch_size=batch_size,
-                                  validation_batch_size=validation_batch_size,
-                                  num_epochs=num_epochs, weight_decay=weight_decay)
-    model = models.get_inception(
-        num_outputs=NUM_CLASSES, pretrained=True, fixed_weights=False)
-    criterion = nn.BCEWithLogitsLoss()
-    optimizer = torch.optim.Adam(
-        params=model.parameters(), lr=params.learn_rate, weight_decay=params.weight_decay)
-    experiment = Experiment(name=experiment_name, params=params, data_dict=data_dict,
-                            optimizer=optimizer, criterion=criterion,
-                            device=device, model=model)
-    return experiment
+    """See base_inception_experiment"""
+    return base_inception_experiment(
+        experiment_name="inception_7", learn_rate=1e-5, batch_size=32,
+        validation_batch_size=128, num_epochs=10, weight_decay=0, pretrained=True,
+        fixed_weights=False, data_dict=data_dict, device=device)
 
 
 def get_experiment_inception_8(data_dict, device):
-    experiment_name = "inception_8"
-    learn_rate = 1e-6
-    batch_size = 32
-    validation_batch_size = 128
-    num_epochs = 10
-    weight_decay = 0
-
-    params = ExperimentParameters(lr=learn_rate, batch_size=batch_size,
-                                  validation_batch_size=validation_batch_size,
-                                  num_epochs=num_epochs, weight_decay=weight_decay)
-    model = models.get_inception(
-        num_outputs=NUM_CLASSES, pretrained=True, fixed_weights=False)
-    criterion = nn.BCEWithLogitsLoss()
-    optimizer = torch.optim.Adam(
-        params=model.parameters(), lr=params.learn_rate, weight_decay=params.weight_decay)
-    experiment = Experiment(name=experiment_name, params=params, data_dict=data_dict,
-                            optimizer=optimizer, criterion=criterion,
-                            device=device, model=model)
-    return experiment
-
-
-def get_experiment_inception_9(data_dict, device):
-    experiment_name = "inception_9"
-    learn_rate = 1e-3
-    batch_size = 32
-    validation_batch_size = 128
-    num_epochs = 20
-    weight_decay = 0
-
-    params = ExperimentParameters(lr=learn_rate, batch_size=batch_size,
-                                  validation_batch_size=validation_batch_size,
-                                  num_epochs=num_epochs, weight_decay=weight_decay)
-    model = models.get_inception(
-        num_outputs=NUM_CLASSES, pretrained=False, fixed_weights=False)
-    criterion = nn.BCEWithLogitsLoss()
-    optimizer = torch.optim.Adam(
-        params=model.parameters(), lr=params.learn_rate, weight_decay=params.weight_decay)
-    experiment = Experiment(name=experiment_name, params=params, data_dict=data_dict,
-                            optimizer=optimizer, criterion=criterion,
-                            device=device, model=model)
-    return experiment
-
-
-def get_experiment_inception_10(data_dict, device):
-    experiment_name = "inception_10"
-    learn_rate = 1e-4
-    batch_size = 32
-    validation_batch_size = 128
-    num_epochs = 20
-    weight_decay = 0
-
-    params = ExperimentParameters(lr=learn_rate, batch_size=batch_size,
-                                  validation_batch_size=validation_batch_size,
-                                  num_epochs=num_epochs, weight_decay=weight_decay)
-    model = models.get_inception(
-        num_outputs=NUM_CLASSES, pretrained=False, fixed_weights=False)
-    criterion = nn.BCEWithLogitsLoss()
-    optimizer = torch.optim.Adam(
-        params=model.parameters(), lr=params.learn_rate, weight_decay=params.weight_decay)
-    experiment = Experiment(name=experiment_name, params=params, data_dict=data_dict,
-                            optimizer=optimizer, criterion=criterion,
-                            device=device, model=model)
-    return experiment
-
-
-def get_experiment_inception_11(data_dict, device):
-    experiment_name = "inception_11"
-    learn_rate = 1e-5
-    batch_size = 32
-    validation_batch_size = 1024
-    num_epochs = 20
-    weight_decay = 0
-
-    params = ExperimentParameters(lr=learn_rate, batch_size=batch_size,
-                                  validation_batch_size=validation_batch_size,
-                                  num_epochs=num_epochs, weight_decay=weight_decay)
-    model = models.get_inception(
-        num_outputs=NUM_CLASSES, pretrained=False, fixed_weights=False)
-    criterion = nn.BCEWithLogitsLoss()
-    optimizer = torch.optim.Adam(
-        params=model.parameters(), lr=params.learn_rate, weight_decay=params.weight_decay)
-    experiment = Experiment(name=experiment_name, params=params, data_dict=data_dict,
-                            optimizer=optimizer, criterion=criterion,
-                            device=device, model=model)
-    return experiment
-
-
-def get_experiment_inception_12(data_dict, device):
-    experiment_name = "inception_12"
-    learn_rate = 1e-6
-    batch_size = 32
-    validation_batch_size = 1024
-    num_epochs = 20
-    weight_decay = 0
-
-    params = ExperimentParameters(lr=learn_rate, batch_size=batch_size,
-                                  validation_batch_size=validation_batch_size,
-                                  num_epochs=num_epochs, weight_decay=weight_decay)
-    model = models.get_inception(
-        num_outputs=NUM_CLASSES, pretrained=False, fixed_weights=False)
-    criterion = nn.BCEWithLogitsLoss()
-    optimizer = torch.optim.Adam(
-        params=model.parameters(), lr=params.learn_rate, weight_decay=params.weight_decay)
-    experiment = Experiment(name=experiment_name, params=params, data_dict=data_dict,
-                            optimizer=optimizer, criterion=criterion,
-                            device=device, model=model)
-    return experiment
+    """See base_inception_experiment"""
+    return base_inception_experiment(
+        experiment_name="inception_8", learn_rate=1e-6, batch_size=32,
+        validation_batch_size=128, num_epochs=10, weight_decay=0, pretrained=True,
+        fixed_weights=False, data_dict=data_dict, device=device)
 
 
 def get_experiment_inception_transformations_composition(device):
+    """See base_inception_experiment.
+    Note: this experiment uses data agumentation methods: horizontal flip, vertical flip,
+    brightness, contrast and hue transformations and random rotation"""
     pcam_train_transform = transforms.Compose(
         transforms=[
             transforms.RandomApply(
@@ -268,22 +149,7 @@ def get_experiment_inception_transformations_composition(device):
     data_dict = {dataset.TRAIN: train_set, dataset.VALID: valid_set,
                  dataset.TEST: test_set}
 
-    experiment_name = "inception_transformation_composition"
-    learn_rate = 1e-3
-    batch_size = 32
-    validation_batch_size = 128
-    num_epochs = 25
-    weight_decay = 0
-
-    params = ExperimentParameters(lr=learn_rate, batch_size=batch_size,
-                                  validation_batch_size=validation_batch_size,
-                                  num_epochs=num_epochs, weight_decay=weight_decay)
-    model = models.get_inception(
-        num_outputs=NUM_CLASSES, pretrained=True, fixed_weights=False)
-    criterion = nn.BCEWithLogitsLoss()
-    optimizer = torch.optim.Adam(
-        params=model.parameters(), lr=params.learn_rate, weight_decay=params.weight_decay)
-    experiment = Experiment(name=experiment_name, params=params, data_dict=data_dict,
-                            optimizer=optimizer, criterion=criterion,
-                            device=device, model=model)
-    return experiment
+    return base_inception_experiment(
+        experiment_name="inception_transformation_composition", learn_rate=1e-3,
+        batch_size=32, validation_batch_size=128, num_epochs=25, weight_decay=0,
+        pretrained=True, fixed_weights=False, data_dict=data_dict, device=device)

@@ -1,9 +1,8 @@
 """Module contains ResNet experiment definitions."""
-import torch
-import torch.nn as nn
+import functools
 import histo.models as models
-from histo.experiments.base_experiment import (ExperimentParameters, Experiment,
-                                               NUM_CLASSES)
+from histo.experiments.base_experiment import (NUM_CLASSES,
+                                               base_experiment_initialization)
 
 
 def base_resnet_experiment(experiment_name, learn_rate, batch_size,
@@ -39,18 +38,13 @@ def base_resnet_experiment(experiment_name, learn_rate, batch_size,
     experiment : Experiment
         experiment instance
     """
-    params = ExperimentParameters(lr=learn_rate, batch_size=batch_size,
-                                  validation_batch_size=validation_batch_size,
-                                  num_epochs=num_epochs, weight_decay=weight_decay)
-    model = models.get_resnet(
-        num_outputs=NUM_CLASSES, pretrained=pretrained, fixed_weights=fixed_weights)
-    criterion = nn.BCEWithLogitsLoss()
-    optimizer = torch.optim.Adam(
-        params=model.parameters(), lr=params.learn_rate, weight_decay=params.weight_decay)
-    experiment = Experiment(name=experiment_name, params=params, data_dict=data_dict,
-                            optimizer=optimizer, criterion=criterion,
-                            device=device, model=model)
-    return experiment
+    model = functools.partial(models.get_resnet, num_outputs=NUM_CLASSES,
+                              pretrained=pretrained, fixed_weights=fixed_weights)
+    return base_experiment_initialization(
+        model_method=model, experiment_name=experiment_name, learn_rate=learn_rate,
+        batch_size=batch_size, validation_batch_size=validation_batch_size,
+        num_epochs=num_epochs, weight_decay=weight_decay, data_dict=data_dict,
+        device=device)
 
 
 def get_experiment_resnet_1(data_dict, device):

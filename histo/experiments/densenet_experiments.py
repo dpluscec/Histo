@@ -1,10 +1,9 @@
 """Module contains DenseNet experiment definitions."""
-import torch
-import torch.nn as nn
+import functools
 import torchvision.transforms as transforms
 import histo.models as models
-from histo.experiments.base_experiment import (ExperimentParameters, Experiment,
-                                               NUM_CLASSES)
+from histo.experiments.base_experiment import (NUM_CLASSES,
+                                               base_experiment_initialization)
 import histo.dataset as dataset
 
 
@@ -41,18 +40,54 @@ def base_densenet_experiment(experiment_name, learn_rate, batch_size,
     experiment : Experiment
         experiment instance
     """
-    params = ExperimentParameters(lr=learn_rate, batch_size=batch_size,
-                                  validation_batch_size=validation_batch_size,
-                                  num_epochs=num_epochs, weight_decay=weight_decay)
-    model = models.get_densenet(
-        num_outputs=NUM_CLASSES, pretrained=pretrained, fixed_weights=fixed_weights)
-    criterion = nn.BCEWithLogitsLoss()
-    optimizer = torch.optim.Adam(
-        params=model.parameters(), lr=params.learn_rate, weight_decay=params.weight_decay)
-    experiment = Experiment(name=experiment_name, params=params, data_dict=data_dict,
-                            optimizer=optimizer, criterion=criterion,
-                            device=device, model=model)
-    return experiment
+    model = functools.partial(models.get_densenet, num_outputs=NUM_CLASSES,
+                              pretrained=pretrained, fixed_weights=fixed_weights)
+    return base_experiment_initialization(
+        model_method=model, experiment_name=experiment_name, learn_rate=learn_rate,
+        batch_size=batch_size, validation_batch_size=validation_batch_size,
+        num_epochs=num_epochs, weight_decay=weight_decay, data_dict=data_dict,
+        device=device)
+
+
+def transformations_densenet_experiment_base(
+        train_transformations, experiment_name, learn_rate, batch_size,
+        validation_batch_size, num_epochs, weight_decay, pretrained, fixed_weights,
+        device):
+    """Function uses base_densenet_experiment with additional transformations for train
+    set.
+
+    Parameters
+    ----------
+    train_transformations : torchvision.transforms
+        transforms object
+
+    Returns
+    -------
+    experiment : Experiment
+        experiment instance
+    """
+    valid_transform = transforms.Compose([
+        transforms.ToTensor()])
+    test_transform = transforms.Compose([
+        transforms.ToTensor()
+    ])
+
+    data_transform = {
+        'train': train_transformations,
+        'valid': valid_transform,
+        'test': test_transform
+    }
+    pcam_dataset = dataset.PCamDatasets(data_transforms=data_transform)
+    train_set = pcam_dataset.train
+    valid_set = pcam_dataset.valid
+    test_set = pcam_dataset.test
+    data_dict = {dataset.TRAIN: train_set, dataset.VALID: valid_set,
+                 dataset.TEST: test_set}
+    return base_densenet_experiment(
+        experiment_name=experiment_name, learn_rate=learn_rate, batch_size=batch_size,
+        validation_batch_size=validation_batch_size, num_epochs=num_epochs,
+        weight_decay=weight_decay, pretrained=pretrained, fixed_weights=fixed_weights,
+        data_dict=data_dict, device=device)
 
 
 def get_experiment_densenet_1(data_dict, device):
@@ -152,359 +187,105 @@ def get_experiment_densenet_12(data_dict, device):
 
 
 def get_experiment_densenet_rotation(device):
-    pcam_train_transform = transforms.Compose([
+    """See transformations_densenet_experiment_base"""
+    train_transform = transforms.Compose([
         transforms.RandomRotation(degrees=180),
         transforms.ToTensor(),
     ])
-    pcam_valid_transform = transforms.Compose([
-        transforms.ToTensor()])
-    pcam_test_transform = transforms.Compose([
-        transforms.ToTensor()
-    ])
 
-    pcam_data_transform = {
-        'train': pcam_train_transform,
-        'valid': pcam_valid_transform,
-        'test': pcam_test_transform
-    }
-    pcam_dataset = dataset.PCamDatasets(data_transforms=pcam_data_transform)
-    train_set = pcam_dataset.train
-    valid_set = pcam_dataset.valid
-    test_set = pcam_dataset.test
-    data_dict = {dataset.TRAIN: train_set, dataset.VALID: valid_set,
-                 dataset.TEST: test_set}
-
-    experiment_name = "densenet_rotation"
-    learn_rate = 1e-4
-    batch_size = 32
-    validation_batch_size = 1024
-    num_epochs = 20
-    weight_decay = 0
-
-    params = ExperimentParameters(lr=learn_rate, batch_size=batch_size,
-                                  validation_batch_size=validation_batch_size,
-                                  num_epochs=num_epochs, weight_decay=weight_decay)
-    model = models.get_densenet(
-        num_outputs=NUM_CLASSES, pretrained=True, fixed_weights=False)
-    criterion = nn.BCEWithLogitsLoss()
-    optimizer = torch.optim.Adam(
-        params=model.parameters(), lr=params.learn_rate, weight_decay=params.weight_decay)
-    experiment = Experiment(name=experiment_name, params=params, data_dict=data_dict,
-                            optimizer=optimizer, criterion=criterion,
-                            device=device, model=model)
-    return experiment
+    return transformations_densenet_experiment_base(
+        train_transformations=train_transform, experiment_name="densenet_rotation",
+        learn_rate=1e-4, batch_size=32, validation_batch_size=1024, num_epochs=20,
+        weight_decay=0, pretrained=True, fixed_weights=False, device=device)
 
 
 def get_experiment_densenet_horizontalflip(device):
-    pcam_train_transform = transforms.Compose([
+    """See transformations_densenet_experiment_base"""
+    train_transform = transforms.Compose([
         transforms.RandomHorizontalFlip(p=0.5),
         transforms.ToTensor(),
     ])
-    pcam_valid_transform = transforms.Compose([
-        transforms.ToTensor()])
-    pcam_test_transform = transforms.Compose([
-        transforms.ToTensor()
-    ])
-
-    pcam_data_transform = {
-        'train': pcam_train_transform,
-        'valid': pcam_valid_transform,
-        'test': pcam_test_transform
-    }
-    pcam_dataset = dataset.PCamDatasets(data_transforms=pcam_data_transform)
-    train_set = pcam_dataset.train
-    valid_set = pcam_dataset.valid
-    test_set = pcam_dataset.test
-    data_dict = {dataset.TRAIN: train_set, dataset.VALID: valid_set,
-                 dataset.TEST: test_set}
-
-    experiment_name = "horizontalflip"
-    learn_rate = 1e-4
-    batch_size = 32
-    validation_batch_size = 1024
-    num_epochs = 20
-    weight_decay = 0
-
-    params = ExperimentParameters(lr=learn_rate, batch_size=batch_size,
-                                  validation_batch_size=validation_batch_size,
-                                  num_epochs=num_epochs, weight_decay=weight_decay)
-    model = models.get_densenet(
-        num_outputs=NUM_CLASSES, pretrained=True, fixed_weights=False)
-    criterion = nn.BCEWithLogitsLoss()
-    optimizer = torch.optim.Adam(
-        params=model.parameters(), lr=params.learn_rate, weight_decay=params.weight_decay)
-    experiment = Experiment(name=experiment_name, params=params, data_dict=data_dict,
-                            optimizer=optimizer, criterion=criterion,
-                            device=device, model=model)
-    return experiment
+    return transformations_densenet_experiment_base(
+        train_transformations=train_transform, experiment_name="horizontal_flip",
+        learn_rate=1e-4, batch_size=32, validation_batch_size=1024, num_epochs=20,
+        weight_decay=0, pretrained=True, fixed_weights=False, device=device)
 
 
 def get_experiment_densenet_verticalflip(device):
-    pcam_train_transform = transforms.Compose([
+    """See transformations_densenet_experiment_base"""
+    train_transform = transforms.Compose([
         transforms.RandomVerticalFlip(p=0.5),
         transforms.ToTensor(),
     ])
-    pcam_valid_transform = transforms.Compose([
-        transforms.ToTensor()])
-    pcam_test_transform = transforms.Compose([
-        transforms.ToTensor()
-    ])
-
-    pcam_data_transform = {
-        'train': pcam_train_transform,
-        'valid': pcam_valid_transform,
-        'test': pcam_test_transform
-    }
-    pcam_dataset = dataset.PCamDatasets(data_transforms=pcam_data_transform)
-    train_set = pcam_dataset.train
-    valid_set = pcam_dataset.valid
-    test_set = pcam_dataset.test
-    data_dict = {dataset.TRAIN: train_set, dataset.VALID: valid_set,
-                 dataset.TEST: test_set}
-
-    experiment_name = "verticalflip"
-    learn_rate = 1e-4
-    batch_size = 32
-    validation_batch_size = 1024
-    num_epochs = 20
-    weight_decay = 0
-
-    params = ExperimentParameters(lr=learn_rate, batch_size=batch_size,
-                                  validation_batch_size=validation_batch_size,
-                                  num_epochs=num_epochs, weight_decay=weight_decay)
-    model = models.get_densenet(
-        num_outputs=NUM_CLASSES, pretrained=True, fixed_weights=False)
-    criterion = nn.BCEWithLogitsLoss()
-    optimizer = torch.optim.Adam(
-        params=model.parameters(), lr=params.learn_rate, weight_decay=params.weight_decay)
-    experiment = Experiment(name=experiment_name, params=params, data_dict=data_dict,
-                            optimizer=optimizer, criterion=criterion,
-                            device=device, model=model)
-    return experiment
+    return transformations_densenet_experiment_base(
+        train_transformations=train_transform, experiment_name="verticalflip",
+        learn_rate=1e-4, batch_size=32, validation_batch_size=1024, num_epochs=20,
+        weight_decay=0, pretrained=True, fixed_weights=False, device=device)
 
 
 def get_experiment_densenet_brightness(device):
-    pcam_train_transform = transforms.Compose([
+    """See transformations_densenet_experiment_base"""
+    train_transform = transforms.Compose([
         transforms.ColorJitter(brightness=0.05),
         transforms.ToTensor(),
     ])
-    pcam_valid_transform = transforms.Compose([
-        transforms.ToTensor()])
-    pcam_test_transform = transforms.Compose([
-        transforms.ToTensor()
-    ])
-
-    pcam_data_transform = {
-        'train': pcam_train_transform,
-        'valid': pcam_valid_transform,
-        'test': pcam_test_transform
-    }
-    pcam_dataset = dataset.PCamDatasets(data_transforms=pcam_data_transform)
-    train_set = pcam_dataset.train
-    valid_set = pcam_dataset.valid
-    test_set = pcam_dataset.test
-    data_dict = {dataset.TRAIN: train_set, dataset.VALID: valid_set,
-                 dataset.TEST: test_set}
-
-    experiment_name = "densenet_brightness"
-    learn_rate = 1e-4
-    batch_size = 32
-    validation_batch_size = 1024
-    num_epochs = 20
-    weight_decay = 0
-
-    params = ExperimentParameters(lr=learn_rate, batch_size=batch_size,
-                                  validation_batch_size=validation_batch_size,
-                                  num_epochs=num_epochs, weight_decay=weight_decay)
-    model = models.get_densenet(
-        num_outputs=NUM_CLASSES, pretrained=True, fixed_weights=False)
-    criterion = nn.BCEWithLogitsLoss()
-    optimizer = torch.optim.Adam(
-        params=model.parameters(), lr=params.learn_rate, weight_decay=params.weight_decay)
-    experiment = Experiment(name=experiment_name, params=params, data_dict=data_dict,
-                            optimizer=optimizer, criterion=criterion,
-                            device=device, model=model)
-    return experiment
+    return transformations_densenet_experiment_base(
+        train_transformations=train_transform, experiment_name="densenet_brightness",
+        learn_rate=1e-4, batch_size=32, validation_batch_size=1024, num_epochs=20,
+        weight_decay=0, pretrained=True, fixed_weights=False, device=device)
 
 
 def get_experiment_densenet_contrast(device):
-    pcam_train_transform = transforms.Compose([
+    """See transformations_densenet_experiment_base"""
+    train_transform = transforms.Compose([
         transforms.ColorJitter(contrast=0.05),
         transforms.ToTensor(),
     ])
-    pcam_valid_transform = transforms.Compose([
-        transforms.ToTensor()])
-    pcam_test_transform = transforms.Compose([
-        transforms.ToTensor()
-    ])
-
-    pcam_data_transform = {
-        'train': pcam_train_transform,
-        'valid': pcam_valid_transform,
-        'test': pcam_test_transform
-    }
-    pcam_dataset = dataset.PCamDatasets(data_transforms=pcam_data_transform)
-    train_set = pcam_dataset.train
-    valid_set = pcam_dataset.valid
-    test_set = pcam_dataset.test
-    data_dict = {dataset.TRAIN: train_set, dataset.VALID: valid_set,
-                 dataset.TEST: test_set}
-
-    experiment_name = "densenet_contrast"
-    learn_rate = 1e-4
-    batch_size = 32
-    validation_batch_size = 1024
-    num_epochs = 20
-    weight_decay = 0
-
-    params = ExperimentParameters(lr=learn_rate, batch_size=batch_size,
-                                  validation_batch_size=validation_batch_size,
-                                  num_epochs=num_epochs, weight_decay=weight_decay)
-    model = models.get_densenet(
-        num_outputs=NUM_CLASSES, pretrained=True, fixed_weights=False)
-    criterion = nn.BCEWithLogitsLoss()
-    optimizer = torch.optim.Adam(
-        params=model.parameters(), lr=params.learn_rate, weight_decay=params.weight_decay)
-    experiment = Experiment(name=experiment_name, params=params, data_dict=data_dict,
-                            optimizer=optimizer, criterion=criterion,
-                            device=device, model=model)
-    return experiment
+    return transformations_densenet_experiment_base(
+        train_transformations=train_transform, experiment_name="densenet_contrast",
+        learn_rate=1e-4, batch_size=32, validation_batch_size=1024, num_epochs=20,
+        weight_decay=0, pretrained=True, fixed_weights=False, device=device)
 
 
 def get_experiment_densenet_hue(device):
-    pcam_train_transform = transforms.Compose([
+    """See transformations_densenet_experiment_base"""
+    train_transform = transforms.Compose([
         transforms.ColorJitter(hue=0.025),
         transforms.ToTensor(),
     ])
-    pcam_valid_transform = transforms.Compose([
-        transforms.ToTensor()])
-    pcam_test_transform = transforms.Compose([
-        transforms.ToTensor()
-    ])
-
-    pcam_data_transform = {
-        'train': pcam_train_transform,
-        'valid': pcam_valid_transform,
-        'test': pcam_test_transform
-    }
-    pcam_dataset = dataset.PCamDatasets(data_transforms=pcam_data_transform)
-    train_set = pcam_dataset.train
-    valid_set = pcam_dataset.valid
-    test_set = pcam_dataset.test
-    data_dict = {dataset.TRAIN: train_set, dataset.VALID: valid_set,
-                 dataset.TEST: test_set}
-
-    experiment_name = "densenet_hue"
-    learn_rate = 1e-4
-    batch_size = 32
-    validation_batch_size = 1024
-    num_epochs = 20
-    weight_decay = 0
-
-    params = ExperimentParameters(lr=learn_rate, batch_size=batch_size,
-                                  validation_batch_size=validation_batch_size,
-                                  num_epochs=num_epochs, weight_decay=weight_decay)
-    model = models.get_densenet(
-        num_outputs=NUM_CLASSES, pretrained=True, fixed_weights=False)
-    criterion = nn.BCEWithLogitsLoss()
-    optimizer = torch.optim.Adam(
-        params=model.parameters(), lr=params.learn_rate, weight_decay=params.weight_decay)
-    experiment = Experiment(name=experiment_name, params=params, data_dict=data_dict,
-                            optimizer=optimizer, criterion=criterion,
-                            device=device, model=model)
-    return experiment
+    return transformations_densenet_experiment_base(
+        train_transformations=train_transform, experiment_name="densenet_hue",
+        learn_rate=1e-4, batch_size=32, validation_batch_size=1024, num_epochs=20,
+        weight_decay=0, pretrained=True, fixed_weights=False, device=device)
 
 
 def get_experiment_densenet_saturation(device):
-    pcam_train_transform = transforms.Compose([
+    """See transformations_densenet_experiment_base"""
+    train_transform = transforms.Compose([
         transforms.ColorJitter(saturation=0.05),
         transforms.ToTensor(),
     ])
-    pcam_valid_transform = transforms.Compose([
-        transforms.ToTensor()])
-    pcam_test_transform = transforms.Compose([
-        transforms.ToTensor()
-    ])
-
-    pcam_data_transform = {
-        'train': pcam_train_transform,
-        'valid': pcam_valid_transform,
-        'test': pcam_test_transform
-    }
-    pcam_dataset = dataset.PCamDatasets(data_transforms=pcam_data_transform)
-    train_set = pcam_dataset.train
-    valid_set = pcam_dataset.valid
-    test_set = pcam_dataset.test
-    data_dict = {dataset.TRAIN: train_set, dataset.VALID: valid_set,
-                 dataset.TEST: test_set}
-
-    experiment_name = "densenet_saturation"
-    learn_rate = 1e-4
-    batch_size = 32
-    validation_batch_size = 1024
-    num_epochs = 20
-    weight_decay = 0
-
-    params = ExperimentParameters(lr=learn_rate, batch_size=batch_size,
-                                  validation_batch_size=validation_batch_size,
-                                  num_epochs=num_epochs, weight_decay=weight_decay)
-    model = models.get_densenet(
-        num_outputs=NUM_CLASSES, pretrained=True, fixed_weights=False)
-    criterion = nn.BCEWithLogitsLoss()
-    optimizer = torch.optim.Adam(
-        params=model.parameters(), lr=params.learn_rate, weight_decay=params.weight_decay)
-    experiment = Experiment(name=experiment_name, params=params, data_dict=data_dict,
-                            optimizer=optimizer, criterion=criterion,
-                            device=device, model=model)
-    return experiment
+    return transformations_densenet_experiment_base(
+        train_transformations=train_transform, experiment_name="densenet_saturation",
+        learn_rate=1e-4, batch_size=32, validation_batch_size=1024, num_epochs=20,
+        weight_decay=0, pretrained=True, fixed_weights=False, device=device)
 
 
 def get_experiment_densenet_small_rotation(device):
-    pcam_train_transform = transforms.Compose([
+    """See transformations_densenet_experiment_base"""
+    train_transform = transforms.Compose([
         transforms.RandomRotation(degrees=5),
         transforms.ToTensor(),
     ])
-    pcam_valid_transform = transforms.Compose([
-        transforms.ToTensor()])
-    pcam_test_transform = transforms.Compose([
-        transforms.ToTensor()
-    ])
-
-    pcam_data_transform = {
-        'train': pcam_train_transform,
-        'valid': pcam_valid_transform,
-        'test': pcam_test_transform
-    }
-    pcam_dataset = dataset.PCamDatasets(data_transforms=pcam_data_transform)
-    train_set = pcam_dataset.train
-    valid_set = pcam_dataset.valid
-    test_set = pcam_dataset.test
-    data_dict = {dataset.TRAIN: train_set, dataset.VALID: valid_set,
-                 dataset.TEST: test_set}
-
-    experiment_name = "densenet_smallrotation"
-    learn_rate = 1e-4
-    batch_size = 32
-    validation_batch_size = 1024
-    num_epochs = 20
-    weight_decay = 0
-
-    params = ExperimentParameters(lr=learn_rate, batch_size=batch_size,
-                                  validation_batch_size=validation_batch_size,
-                                  num_epochs=num_epochs, weight_decay=weight_decay)
-    model = models.get_densenet(
-        num_outputs=NUM_CLASSES, pretrained=True, fixed_weights=False)
-    criterion = nn.BCEWithLogitsLoss()
-    optimizer = torch.optim.Adam(
-        params=model.parameters(), lr=params.learn_rate, weight_decay=params.weight_decay)
-    experiment = Experiment(name=experiment_name, params=params, data_dict=data_dict,
-                            optimizer=optimizer, criterion=criterion,
-                            device=device, model=model)
-    return experiment
+    return transformations_densenet_experiment_base(
+        train_transformations=train_transform, experiment_name="densenet_smallrotation",
+        learn_rate=1e-4, batch_size=32, validation_batch_size=1024, num_epochs=20,
+        weight_decay=0, pretrained=True, fixed_weights=False, device=device)
 
 
 def get_experiment_densenet_transformation_composition(device):
-    pcam_train_transform = transforms.Compose(
+    """See transformations_densenet_experiment_base"""
+    train_transform = transforms.Compose(
         transforms=[
             transforms.RandomApply(
                 [transforms.RandomOrder(transforms=[
@@ -515,39 +296,8 @@ def get_experiment_densenet_transformation_composition(device):
                     transforms.ColorJitter(hue=0.025),
                     transforms.RandomRotation(degrees=5)])], p=0.5),
             transforms.ToTensor()])
-    pcam_valid_transform = transforms.Compose([
-        transforms.ToTensor()])
-    pcam_test_transform = transforms.Compose([
-        transforms.ToTensor()])
-
-    pcam_data_transform = {
-        'train': pcam_train_transform,
-        'valid': pcam_valid_transform,
-        'test': pcam_test_transform
-    }
-    pcam_dataset = dataset.PCamDatasets(data_transforms=pcam_data_transform)
-    train_set = pcam_dataset.train
-    valid_set = pcam_dataset.valid
-    test_set = pcam_dataset.test
-    data_dict = {dataset.TRAIN: train_set, dataset.VALID: valid_set,
-                 dataset.TEST: test_set}
-
-    experiment_name = "densenet_transformation_composition"
-    learn_rate = 1e-4
-    batch_size = 32
-    validation_batch_size = 1024
-    num_epochs = 25
-    weight_decay = 0
-
-    params = ExperimentParameters(lr=learn_rate, batch_size=batch_size,
-                                  validation_batch_size=validation_batch_size,
-                                  num_epochs=num_epochs, weight_decay=weight_decay)
-    model = models.get_densenet(
-        num_outputs=NUM_CLASSES, pretrained=True, fixed_weights=False)
-    criterion = nn.BCEWithLogitsLoss()
-    optimizer = torch.optim.Adam(
-        params=model.parameters(), lr=params.learn_rate, weight_decay=params.weight_decay)
-    experiment = Experiment(name=experiment_name, params=params, data_dict=data_dict,
-                            optimizer=optimizer, criterion=criterion,
-                            device=device, model=model)
-    return experiment
+    return transformations_densenet_experiment_base(
+        train_transformations=train_transform,
+        experiment_name="densenet_transformation_composition", learn_rate=1e-4,
+        batch_size=32, validation_batch_size=1024, num_epochs=20, weight_decay=0,
+        pretrained=True, fixed_weights=False, device=device)
