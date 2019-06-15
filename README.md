@@ -89,7 +89,7 @@ python setup.py install
 ### Data
 In this project PatchCamelyon dataset was used available at 
 https://github.com/basveeling/pcam  
-Code for downloading the dataset is available in [histo/dataset](https://github.com/domi385/FER/tree/master/histo/dataset)  
+Code for downloading the dataset is available in [download_dataset](https://github.com/domi385/FER/tree/master/download_data.sh)  
 Current code expects a "data/pcam" directory in project root folder with all data unziped.
 
 ## Usage examples
