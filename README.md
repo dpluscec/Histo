@@ -70,9 +70,10 @@ virtualenv -p python3 env
 Note: To create a virtualenv under a path with spaces in it on Windows, you’ll need the win32api library installed.
 
 3. Install requirements
-Install pytorch. Detailed instructions are available at https://pytorch.org/
+Install pytorch and torchvision. Detailed instructions are available at https://pytorch.org/
 ```
-pip3 install http://download.pytorch.org/whl/cu90/torch-0.4.1-cp36-cp36m-win_amd64.whl
+pip3 install https://download.pytorch.org/whl/cu90/torch-1.1.0-cp36-cp36m-win_amd64.whl
+pip3 install https://download.pytorch.org/whl/cu90/torchvision-0.3.0-cp36-cp36m-win_amd64.whl
 ```
 Install other requirements.  
 ```
