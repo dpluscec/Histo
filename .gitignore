@@ -37,6 +37,6 @@ bin/
 models
 .eggs
 histo.egg-info
-*.pdf
+literature/*.pdf
 __pycache__
 exclude-list.txt
