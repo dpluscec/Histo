@@ -1,12 +1,10 @@
-# EN: Classification of Histopathologic Scans of Lymph Node 
-Sections Using Machine Learning
+# Classification of Histopathologic Scans of Lymph Node  Sections Using Machine Learning
 
-# HR: Klasifikacija histopatoloških snimaka dijelova limfnih čvorova pomoću strojnog učenja
+When analyzing histopathological images, there is a need for an automated system that could help doctors in image analysis and diagnostics. Such a system could increase the accuracy and speed of analysis and diagnostics.
+Within this paper, an overview of the histopathological image analysis area is provided and a program implementation for the classification of lymph nodes based on machine learning has been developed. 
+PatchCamelyon dataset has been used for training and testing of chosen machine learning models. 
+The results of the following deep learning models have been studied: AlexNet, ResNet, DenseNet, Inception-v3. Also, the influence of different data augmentation methods on the model performance was investigated. Finally, the Inception-v3 model proved to be the best, which reached the 89% accuracy on the test set.
 
-Analiza i generiranje slike spadaju pod tipične probleme računalnog vida i strojnog učenja. S nedavnim razvojem dubokih modela pomaknute su granice izvedivoga i računala često uspijevaju dosenguti ljudsku točnost u analizi slika. Jedan od problema koji su uključeni u ovo područje jest klasifikacija slika.
-Tema ovog rada je napraviti prototipno programsko rješenje na temelju slika histopatoloških skenova područja limfnih čvorova obavlja  binarnu klasifikaciju slika na temelju prisutnosti tkiva s metastazama.
-U okviru rada potrebno je proučiti i opisati postojeće pristupe ovome problemu, ostvatiri prototipnu implementaciju sustava koji izvodi ovu zadaću te prikazati i ocijeniti dobivene rezultate. 
-Radu priložiti izvorni kod razvijenih postupaka uz potrebna objašnjenja i dokumentaciju. Predložiti pravce budućeg razvoja. Citirati korištenu literaturu i navesti dobivenu pomoć.
 
 ## Getting Started 
 
@@ -82,6 +80,15 @@ Commands to check flake8 compliance for written code
 flake8 histo
 ```
 
+## HR: Klasifikacija histopatoloških snimaka dijelova limfnih čvorova pomoću strojnog učenja
+
+Analiza i generiranje slike spadaju pod tipične probleme računalnog vida i strojnog učenja. S nedavnim razvojem dubokih modela pomaknute su granice izvedivoga i računala često uspijevaju dosenguti ljudsku točnost u analizi slika. Jedan od problema koji su uključeni u ovo područje jest klasifikacija slika.
+Tema ovog rada je napraviti prototipno programsko rješenje na temelju slika histopatoloških skenova područja limfnih čvorova obavlja  binarnu klasifikaciju slika na temelju prisutnosti tkiva s metastazama.
+U okviru rada potrebno je proučiti i opisati postojeće pristupe ovome problemu, ostvatiri prototipnu implementaciju sustava koji izvodi ovu zadaću te prikazati i ocijeniti dobivene rezultate. 
+Radu priložiti izvorni kod razvijenih postupaka uz potrebna objašnjenja i dokumentaciju. Predložiti pravce budućeg razvoja. Citirati korištenu literaturu i navesti dobivenu pomoć.
+
+
+
 ## Author
 
 * Author: Domagoj Pluščec
@@ -94,3 +101,5 @@ flake8 histo
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## List of References
+
+Detailed list of references can be found in [histo/doc](https://github.com/domi385/FER/tree/master/docs/Diplomski_rad[2019]Pluscec_Domagoj.docx)
