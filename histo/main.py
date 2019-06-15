@@ -35,7 +35,7 @@ if __name__ == "__main__":
 
     # experiment
     series_one = [
-        experiments.get_experiment_densenet_transformation_composition(device)
+        experiments.get_experiment_inception_transformations_composition(device)
     ]
     for exp in series_one:
         exp.execute()

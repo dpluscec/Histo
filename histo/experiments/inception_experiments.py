@@ -4,9 +4,11 @@ this can be performed in dataset transformations.
 """
 import torch
 import torch.nn as nn
+import torchvision.transforms as transforms
 import histo.models as models
 from histo.experiments.base_experiment import (ExperimentParameters, Experiment,
                                                NUM_CLASSES)
+import histo.dataset as dataset
 
 
 def base_inception_experiment(experiment_name, learn_rate, batch_size,
@@ -227,6 +229,57 @@ def get_experiment_inception_12(data_dict, device):
                                   num_epochs=num_epochs, weight_decay=weight_decay)
     model = models.get_inception(
         num_outputs=NUM_CLASSES, pretrained=False, fixed_weights=False)
+    criterion = nn.BCEWithLogitsLoss()
+    optimizer = torch.optim.Adam(
+        params=model.parameters(), lr=params.learn_rate, weight_decay=params.weight_decay)
+    experiment = Experiment(name=experiment_name, params=params, data_dict=data_dict,
+                            optimizer=optimizer, criterion=criterion,
+                            device=device, model=model)
+    return experiment
+
+
+def get_experiment_inception_transformations_composition(device):
+    pcam_train_transform = transforms.Compose(
+        transforms=[
+            transforms.RandomApply(
+                [transforms.RandomOrder(transforms=[
+                    transforms.RandomHorizontalFlip(p=0.5),
+                    transforms.RandomVerticalFlip(p=0.5),
+                    transforms.ColorJitter(brightness=0.05),
+                    transforms.ColorJitter(contrast=0.05),
+                    transforms.ColorJitter(hue=0.025),
+                    transforms.RandomRotation(degrees=5)])], p=0.5),
+            transforms.Resize(299),
+            transforms.ToTensor()])
+    pcam_valid_transform = transforms.Compose([
+        transforms.ToTensor()])
+    pcam_test_transform = transforms.Compose([
+        transforms.ToTensor()])
+
+    pcam_data_transform = {
+        'train': pcam_train_transform,
+        'valid': pcam_valid_transform,
+        'test': pcam_test_transform
+    }
+    pcam_dataset = dataset.PCamDatasets(data_transforms=pcam_data_transform)
+    train_set = pcam_dataset.train
+    valid_set = pcam_dataset.valid
+    test_set = pcam_dataset.test
+    data_dict = {dataset.TRAIN: train_set, dataset.VALID: valid_set,
+                 dataset.TEST: test_set}
+
+    experiment_name = "inception_transformation_composition"
+    learn_rate = 1e-3
+    batch_size = 32
+    validation_batch_size = 128
+    num_epochs = 25
+    weight_decay = 0
+
+    params = ExperimentParameters(lr=learn_rate, batch_size=batch_size,
+                                  validation_batch_size=validation_batch_size,
+                                  num_epochs=num_epochs, weight_decay=weight_decay)
+    model = models.get_inception(
+        num_outputs=NUM_CLASSES, pretrained=True, fixed_weights=False)
     criterion = nn.BCEWithLogitsLoss()
     optimizer = torch.optim.Adam(
         params=model.parameters(), lr=params.learn_rate, weight_decay=params.weight_decay)
