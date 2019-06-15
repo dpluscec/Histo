@@ -6,6 +6,8 @@ PatchCamelyon dataset has been used for training and testing of chosen machine l
 The results of the following deep learning models have been studied: AlexNet, ResNet, DenseNet, Inception-v3. Also, the influence of different data augmentation methods on the model performance was investigated. Finally, the Inception-v3 model proved to be the best, which reached the 89% accuracy on the test set.
 
 
+This repository represent Master Thesis at Faculty of Electrical Engineering and Computing, University of Zagreb. Original task statement can be found near the end of this readme.
+
 ## Getting Started 
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
@@ -86,8 +88,6 @@ Analiza i generiranje slike spadaju pod tipične probleme računalnog vida i str
 Tema ovog rada je napraviti prototipno programsko rješenje na temelju slika histopatoloških skenova područja limfnih čvorova obavlja  binarnu klasifikaciju slika na temelju prisutnosti tkiva s metastazama.
 U okviru rada potrebno je proučiti i opisati postojeće pristupe ovome problemu, ostvatiri prototipnu implementaciju sustava koji izvodi ovu zadaću te prikazati i ocijeniti dobivene rezultate. 
 Radu priložiti izvorni kod razvijenih postupaka uz potrebna objašnjenja i dokumentaciju. Predložiti pravce budućeg razvoja. Citirati korištenu literaturu i navesti dobivenu pomoć.
-
-
 
 ## Author
 
