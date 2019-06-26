@@ -1,7 +1,71 @@
 """Module contains functions for calculating statistics on PCam dataset."""
 import numpy as np
-import matplotlib.pyplot as plt
+import matplotlib
+import torchvision.transforms as transforms
 from histo.dataset import PCamDatasets
+try:
+    matplotlib.use('Agg')
+except ImportError:
+    pass
+finally:
+    import matplotlib.pyplot as plt
+
+def visualize_transformations():
+    """Function creates visualization of choosen transformations for one image from PCam
+    dataset."""
+    pcam_ds = PCamDatasets()
+    train = pcam_ds.train
+    transformations = {
+        "Bez transformacije": transforms.Compose([
+            transforms.ToTensor(), ]),
+        "Rotacija 360° uniformno": transforms.Compose([
+            transforms.RandomRotation(degrees=180),
+            transforms.ToTensor(), ]),
+        "Rotacija 5° uniformno": transforms.Compose([
+            transforms.RandomRotation(degrees=5),
+            transforms.ToTensor(), ]),
+        "Vertikalno zrcaljenje": transforms.Compose([
+            transforms.RandomVerticalFlip(p=0.5),
+            transforms.ToTensor(), ]),
+        "Horizontalno zrcaljenje": transforms.Compose([
+            transforms.RandomHorizontalFlip(p=0.5),
+            transforms.ToTensor(), ]),
+        "Promjena nijanse boje": transforms.Compose([
+            transforms.ColorJitter(hue=0.025),
+            transforms.ToTensor(), ]),
+        "Promjena zasićenja boje": transforms.Compose([
+            transforms.ColorJitter(saturation=0.05),
+            transforms.ToTensor(), ]),
+        "Promjena svjetline boje": transforms.Compose([
+            transforms.ColorJitter(brightness=0.05),
+            transforms.ToTensor(), ]),
+        "Promjena kontrasta boje": transforms.Compose([
+            transforms.ColorJitter(contrast=0.05),
+            transforms.ToTensor(), ]),
+        "Kombinacija transformacija": transforms.Compose(
+            transforms=[
+                transforms.RandomApply(
+                    [transforms.RandomOrder(transforms=[
+                        transforms.RandomHorizontalFlip(p=0.5),
+                        transforms.RandomVerticalFlip(p=0.5),
+                        transforms.ColorJitter(brightness=0.05),
+                        transforms.ColorJitter(contrast=0.05),
+                        transforms.ColorJitter(hue=0.025),
+                        transforms.RandomRotation(degrees=5)])], p=0.5),
+                transforms.ToTensor()])
+    }
+    example = train[0][0]
+
+    labels = []
+    images = []
+    for label in transformations:
+        trans = transformations[label]
+        tmp_img = example.copy()
+        transformed = trans(tmp_img).permute(1, 2, 0).numpy()
+        images.append(transformed)
+        labels.append(label)
+    show_multiple_images(images=images, shape=(2, 5), title="Vizualizacija "
+                         "transformacija", subtitles=labels, save=True)
 
 
 def save_img(fname, img):
@@ -79,7 +143,7 @@ def pcam_label_stats():
     pcam_stas_fun(label_stats)
 
 
-def show_multiple_images(images, shape, title):
+def show_multiple_images(images, shape, title, subtitles=None, save=False):
     """Function plots multiple images on a figure with given title.
 
     Parameters
@@ -90,16 +154,26 @@ def show_multiple_images(images, shape, title):
         tuple containing number of rows and columns for ploting images
     title : str
         plot title
+    subtitles : list(str), optional
+        title for every subplot
+    save : bool, optional
+        if true image is saved to title.png image, otherwise it is plotted
     """
-    fig = plt.figure()
+    fig = plt.figure(figsize=(12, 12), dpi=300)
     fig.suptitle(title, fontsize=16)
     rows = shape[0]
     cols = shape[1]
 
     for i in range(1, min(cols * rows, len(images)) + 1):
         img = images[i - 1]
-        fig.add_subplot(rows, cols, i)
+        curr_ax = fig.add_subplot(rows, cols, i)
+        if subtitles:
+            curr_ax.title.set_text(subtitles[i-1])
         plt.imshow(img)
+    plt.tight_layout()
+    if save:
+        plt.savefig(fname=f"{title}.png")
+        return
     plt.show()
 
 
@@ -144,4 +218,4 @@ def visualize_examples():
 
 
 if __name__ == "__main__":
-    visualize_examples()
+    visualize_transformations()
