@@ -25,10 +25,10 @@ def visualize_transformations():
             transforms.RandomRotation(degrees=5),
             transforms.ToTensor(), ]),
         "Vertikalno zrcaljenje": transforms.Compose([
-            transforms.RandomVerticalFlip(p=0.5),
+            transforms.RandomVerticalFlip(p=1),
             transforms.ToTensor(), ]),
         "Horizontalno zrcaljenje": transforms.Compose([
-            transforms.RandomHorizontalFlip(p=0.5),
+            transforms.RandomHorizontalFlip(p=1),
             transforms.ToTensor(), ]),
         "Promjena nijanse boje": transforms.Compose([
             transforms.ColorJitter(hue=0.025),
