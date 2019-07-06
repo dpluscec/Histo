@@ -1,0 +1,73 @@
+1. Uvodni slajd
+Dobar dan, ja sam Domagoj Pluščec i okviru ove prezentacije ću vam predstaviti svoj diplomski rad na temu klasifikacije histopatoloških slika dijelova limfnih čvorova korištenjem strojnog učenja.
+
+2. Sadržaj
+Kroz ovu prezentaciju prvo ću objasniti što su histopatološke slike, opisat ću korišteni skup podataka, zadatak klasifikacije i odabrani pristup rješavanju te provedene eksperimente i njihove rezultate.
+
+3. Histopatološke slike
+Patološka histologija je grana histologije koja proučava građu bolesnih tkiva. Histopatološke slike su slike bolesnih tkiva. Takve slike je moguće dobiti tehnikom snimanja čitavog preparata pri čemu se sam preparat boji bojilima koje ističu pojedine strukture unutar tkiva poput jezgara stanica i citoplazme što će biti vidljivo na kasnijim slikama. Prvo natjecanje koje je omogućilo pristup takvim slikama je bio Camelyon 16 čije slike možemo vidjeti na idućem slajdu.
+
+4. Primjer
+Slika prikazuje snimak snimljen metodom snimanja čitavog preparata s označenim tumorskim tkivom unutar područja s plavom granicom. Jedan od problema obrade ovakvih slika je taj što je njihova osnovna veličina izrazito velika te je zato odabran skup podataka PatchCamelyon.
+
+5. Skup podataka - PatchCamelyon
+Skup podataka PatchCamelyon nastao je uzorkovanjem slika iz skupa podataka Camelyon16. Slike unutar ovog skupa podataka imaju dimenziju 96x96 slikovna elementa. Svaka slika je označena binarnom oznakom 1 ako sadrži tumorsko tkivo ili 0 inače. Za kasnije razmatranje bitno je napomenuti kako su autori skupa podataka dali pozitivnu oznaku ako je barem jedan slikovni element u središnjem kvadratu dimenzija 32x32 pripadao tumoru. Što znači da slika može izvan kvadrata imati slikovne elemente koji pripadaju tumoru, a imaju negativnu oznaku. Motivacija iza takve odlike je bila želja da se omogući korištenje konvolucijskih modela bez nadopune koji se mogu zatim koristiti na cjelokupnim slikama iz Camelyon 16 skupa podataka.
+Skup podataka je podijeljen u tri dijela: skup za treniranje, skup za validaciju i testiranje. Skup za treniranje je sadržavao oko 250 000 slika, a skupovi za validaciju i testiranje po 32 000 slika. Unutar svakog skupa nalazio se jednak broj pozitivnih i negativnh oznaka.
+
+6. PCam - negativni primjerice
+Ova slika predstavlja negativne primjere iz skupa za učenje što znači da ne sadrže tumorsko tkivo. Na ovim slikama se može vidjeti kako su jezgre stanica obojane tamno plavom bojom, a citoplazma i spojno tkivo ružičastom bojom. Neke slike u skupu podataka sadrže više praznog prostora kao što je na slici u donjem lijevom kutu međutim analizom skupa podataka se pokazalo kako je zapravo malo slika koje većinski imaju praznine.
+ 
+7. PCam - pozitivni primjeri
+Na ovom slici je moguće vidjeti pzitivne primjere koji sadrže tumorsko tkivo te se može vidjeti kako ima više nepravilnosti u odnosu na negativne slike.
+
+8. Zadatak klasifikacije
+Zadatak ovog rada je klasifikacija slika. Cilj zadatka je naučiti funkciju koja preslikava ulazne podatke u jedan razred. Kako klasificiramo slike u dva razreda govorimo o binarnoj klasifikaciji. 
+Za rješavanje ovog zadatka odabrani pristup su metode dubokog učenja. Takav odabir je napravljen zbog velike uspješnosti takvih modela na natjecanjima camelyon16 i camelyon 17 te na ostalim zadacima analize medicinskih slika. Također prednost dubokih modela je što nije potrebno ručno modelirati značajke iz ulaznih podataka već sam model uči izdvajati značajke iz ulaznih slika. Jedna od mana ovog pristupa su zahjtev za veliku količinu podataka čija je dostupnost ograničena u medicinskim sustavima te zahtjeva da doktori označe veliku količinu podataka.
+
+9. Korišteni modeli
+U okviru ovog rada korištena su četrii modela dubokog učenja: AlexNet, ResNet18, DenseNet121 i Inception-v3. Najstariji od ovih modela je AlexNet čija je osnovna verzija pobjedila na natjecanju na skupu podataka ImageNet 2012 godine. U usporedbi s ostalim modelima možemo vidjeti kako Alexnet ima i najviše parametara, no najmanje slojeva s aktivacijskom funkcijom. Svaki od ovih modela ima svoje posebnosti kao što su preskočne veze u modelu Resnet ili primjerice faktorizacija konvolucijskih slojeva u modelu Inception. Navedeni modeli su korišteni u sljedećim eksperimentima.
+
+10. Eksperimenti 1/2 
+Cilj prvog eksperimenta je bio usporediti modele pri različitim stopama učenja. Drugi parametar koji je mjenjan je način učenja modela. U prvom slučaju modeli su inicijalizirani nasumično koristeći He inicijalizaciju te su učeni ispočetka na skupu podataka PatchCamelyon. U druga dva slučaja modeli su inicijalizirani prijenosom značajki sa skupa podataka ImageNet. Zatim je su u drugom slučaju mjenjani svi slojevi, a u trećem slučaju mjenjani samo zadnji potpuno povezani sloj. 
+
+11. Dodatne napomene
+Dodatne informacije koje su bile iste tijekom svih eksperimenata su sljedeće. Modeli su učeni algoritmom za učenje ADAM pri čemu je odabiran model u trenutku kada je bila najmanja greška na skupu za validaciju. Za funkciju gubitka korišten je gubitak unakrsne entropije, a za mjeru uspješnosti modela korištene su točnost, mjera F1 i površina ispod krivulje ROC.
+
+12. Eksperimenti 2/2
+Drugi niz eksperimenata se odnosio na analizu utjecaja transformacija poput rotacije za proširivanje skupa podataka. Odabran je model DenseNet jer je pokazao izvrsne performanse te zato što je imao mali broj parametara te se brzo učio. Pogledajmo korištene transformacije.
+
+13. Transformacije
+Tijekom eksperimenta uspoređene su transformacije rotacije, vertikalnog i horizontalnog zrcaljenja, promjene nijanse, zasićenja, svjetline i kontrasta boje te kombinacija transformacija koje su pokazale pozitivne rezultate. Navedene transformacije su korištene jer želimo da naš model postane invarijantant na njihovu primjenu na ulazne podatke. Rotacija može biti uzrokovana različitim strukturama limnfih čvorova te time što pozicija uzorka na preparatu nije kontrolirana. Također na slikama može doći do zrcaljenja zbog mogućnosti različitog umetanja uzorka u uređaj za skeniranje. Konačno promjene svojstava boje mogu biti uzrokovane razlikom u bojanju zbog različite koncentracije ili kvalitete bojila te zbog razlika u uređaju za skeniranje. Možemo ujedno primjetiti dodatan problem sa slikama s velikom rotacijom što dio slike izlazi van te također da je moguće da dio tumorskog tkiva koji se nalazi u središnjem području slike izađe iz njega te da se oznaka slike razlikuje od one koju želimo naučiti model.
+
+14. Rezultati - učenje ispočetka
+Usporedivši modele prilikom učenja ispočetk apokazalo se kako modeli ResNet i DenseNet imaju slične performanse, no da Resnet ima veću površinu ispod krivulje ROC, no međutim DenseNet model ima značajno manje parametara od modela Resnet. Oni su bili značajno bolji od AlexNet modela. Model Inception nije treniran ispočetka zbog ograničenja u računalnim resursima.
+
+15. Rezultati - učenje prijenosom značajki - svi slojevi
+Prilikom učenja prijenosom značajki i prilagođavanjem svih slojeva najboljim se pokazao model Inception-v3, a najgorim model AlexNet. Također možemo primjetiti kako je DenseNet model imao sličnu mjeru površine ispod krivulje modelu Inception. Bitno je napomenuti kako Inception ima značajno više parametara od modela ResNet i DenseNet.
+
+16. Rezultati - učenje prijenosom značajki - zadnji sloj
+Prilikom učenja prijenosom značajki i prilagođavanjem samo zadnjeg potpuno povezanog sloja Inception model se ponovno pokazao najboljim, a AlexNet najlošijim.
+
+17. Rezultati - usporedba načina učenja
+Kako bi napravili pregled rezultata odabrani su najbolji rezultati svih modela u svakoj od situacija te su prikazane njihove mjere površine ispod krivulje ROC. Do sada smo zasebno analizirali mjeru za svaku situaciju te smo vidjeli kako Inception-v3 pokazuje najbolje rezultate, a AlexNet najlošije te se zatim ističe model DenseNet koji je imao najmanje parametara, no dobre rezultate. 
+Usporedbom učenja ispočetka i učenja s prijenosom značajki i učenjem svih slojeva možemo vidjeti kako su svi modeli postignuli bolje performanse ako je korišten prijenos značajki. 
+Jedan od razloga zašto su takvi rezultati je taj što je model mogao naučiti bolje generalizirati na skupu podataka ImageNet koji je značajno veći od korištenog skupa podataka te su istraživači prilikom učenja modela na skupu podataka ImageNet koristili razne metode kako bi modeli postali invarijantni na male rotacije i promjene boje. 
+Usporedbom učenja prijenosom značajki i podešavanjem zadnjeg sloja pokazalo se kako model brže konvergira, no da postiže lošije rezultate jer su značajke u ranijim slojevima različite od značajki koje model nauči na skupu podataka ImageNet. DenseNet model je bio iznimka što možemo pripisati tome što on unutar jednog bloka koristi sve prethodno izračunate mape značajki za izračun sljedeće mape značajki, pa zato nije izgubio informaciju izračunatu u ranijim slojevima.
+Usporedbom različitih metoda učenjem prijenosom značajki pokazalo se kako je za korišteni skup podataka bolje prilagođavati sve slojeve.
+
+18. Rezultati - transformacije
+Rezultati usporedbe transformacija za proširivanje skupa podataka su prikazane na sljedećoj tablici. Korišten je model DenseNet. U prvom stupcu možemo vidjeti korištene transformacije, a u drugim stupcima mjere koje je model postizao. Možemo primjetiti kako su Rotacija slike za 360°i promjena zasićenja imali negativan utjecaj. Rotacija slike za 5°, horizontalno zrcaljenje, promjena nijanse, svjetline i kontrasta su imale mali pozitivan utjecaj. Vertikalno zrcaljenje je imalo najbolji utjecaj na rezultate, dok je kombinacija svih transformacija koje nisu pokazale negativno ponašanje pokazalo slične rezultate vertikalnom zrcaljenju.
+
+19. Zaključak 1/2
+U okviru ovog rada uspoređeni su modeli AlexNet, ResNet, DenseNet i Inception-v3 za zadatak klasifikacije histopatoloških snimaka limfnih čvorova. Najboljim se pokazao model Inception-v3 kada je učen prijenosom značajki sa skupa podataka ImageNet i prilagođavanjem svih parametara modela.
+Uspoređene su različite transformacije za proširivanje skupa podataka pri čemu je najbolji rezultat postignula transformacija vertikalnog zrcaljenja, dok su velika rotacija i promjena zasićenja pokazale negativni učinak.
+
+20. Zaključak 2/2
+U nastavku istraživanja potrebno je vrednovati modele na cjelokupnim snimkama snimljenim metodom WSI te istražiti primjene metoda interpretabilnosti na korištene modele. 
+
+21./22. Literatura
+Ovdje je navedena korištena literatura. 
+23. Hvala 
+
+
+
