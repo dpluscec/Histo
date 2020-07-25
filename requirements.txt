@@ -1,7 +1,7 @@
 h5py==2.9.0
 matplotlib==3.0.3
 numpy==1.16.2
-psutil==5.6.1
+psutil==5.6.6
 tables==3.5.1
 pandas==0.24.2
 scikit-learn==0.20.3
